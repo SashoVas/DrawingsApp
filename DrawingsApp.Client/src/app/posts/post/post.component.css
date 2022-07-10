@@ -1,0 +1,25 @@
+.like{
+    background-color: rgb(19,19,20);
+    border-radius:7px 0 0 7px;
+}
+.name{
+    font-size: 12px;
+}
+.post{
+    cursor: pointer;
+    border-radius:7px;
+}
+.img_copy{
+    width: 600px;
+    height: 600px;
+    background-color: brown;
+}
+.user_name:hover{
+    text-decoration: underline;
+}
+.post:hover{
+    border-color: rgb(129,131,132);
+}
+.aditional:hover{
+    background-color: rgb(70,70,70);
+}
