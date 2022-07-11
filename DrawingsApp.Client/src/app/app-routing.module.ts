@@ -5,6 +5,10 @@ const routes: Routes = [{
   path:"",
   pathMatch:"full",
   loadChildren:()=>import("./posts/posts.module").then(h=>h.PostsModule)
+},
+{
+  path:"images",
+  loadChildren:()=>import("./images/images.module").then(i=>i.ImagesModule)
 }];
 
 @NgModule({
