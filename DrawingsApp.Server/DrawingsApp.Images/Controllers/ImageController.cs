@@ -1,4 +1,4 @@
-﻿using DrawingsApp.Images.Data;
+﻿using DrawingsApp.Images.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DrawingsApp.Images.Controllers
@@ -7,16 +7,16 @@ namespace DrawingsApp.Images.Controllers
     [Route("[controller]")]
     public class ImageController : ControllerBase
     {
-        private readonly DrawingsAppDbContext context;
-        public ImageController(DrawingsAppDbContext context)
-        {
-            this.context = context;
-        }
+        private readonly IImageService imageService;
+
+        public ImageController(IImageService imageService)
+            => this.imageService = imageService;
+
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Index()
-        {
-            var ids = context.Images.ToList();
-            return Ok(ids);
-        }
+        public async Task<ActionResult<IEnumerable<string>>> Index() 
+            => Ok(await imageService.GetUserImages(""));
+        [HttpPost]
+        public async Task<ActionResult<string>> CreateImage(IFormFile image) 
+            => Ok(await imageService.CreateImage("smt", image));
     }
 }
