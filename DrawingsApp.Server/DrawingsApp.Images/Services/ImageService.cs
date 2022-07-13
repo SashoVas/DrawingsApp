@@ -11,8 +11,8 @@ namespace DrawingsApp.Images.Services
     {
         private const int ImgWidth = 700;
         private const int ImgHeight = 700;
-        private readonly DrawingsAppDbContext context;
-        public ImageService(DrawingsAppDbContext context) 
+        private readonly DrawingsAppImagesDbContext context;
+        public ImageService(DrawingsAppImagesDbContext context) 
             => this.context = context;
         public async Task<string> CreateImage(string userId,IFormFile inputImage)
         {

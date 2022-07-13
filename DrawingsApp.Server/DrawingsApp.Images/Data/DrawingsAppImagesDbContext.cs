@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DrawingsApp.Images.Data
 {
-    public class DrawingsAppDbContext : DbContext
+    public class DrawingsAppImagesDbContext : DbContext
     {
         public DbSet<ImageFile> Images { get; set; }
-        public DrawingsAppDbContext(DbContextOptions options) : base(options)
+        public DrawingsAppImagesDbContext(DbContextOptions options) : base(options)
         {
         }
     }

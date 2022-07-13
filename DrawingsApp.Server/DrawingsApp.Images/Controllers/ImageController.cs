@@ -1,8 +1,11 @@
 ﻿using DrawingsApp.Images.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace DrawingsApp.Images.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ImageController : ControllerBase
@@ -14,9 +17,10 @@ namespace DrawingsApp.Images.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> Index() 
-            => Ok(await imageService.GetUserImages(""));
+            => Ok(await imageService.GetUserImages(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+
         [HttpPost]
         public async Task<ActionResult<string>> CreateImage(IFormFile image) 
-            => Ok(await imageService.CreateImage("smt", image));
+            => Ok(await imageService.CreateImage(User.FindFirstValue(ClaimTypes.NameIdentifier), image));
     }
 }
