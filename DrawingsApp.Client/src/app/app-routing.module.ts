@@ -9,6 +9,10 @@ const routes: Routes = [{
 {
   path:"images",
   loadChildren:()=>import("./images/images.module").then(i=>i.ImagesModule)
+},
+{
+  path:"identity",
+  loadChildren:()=>import("./identity/identity.module").then(i=>i.IdentityModule)
 }];
 
 @NgModule({

@@ -17,9 +17,6 @@
 .user_name:hover{
     text-decoration: underline;
 }
-.post:hover{
-    border-color: rgb(129,131,132);
-}
 .aditional:hover{
     background-color: rgb(70,70,70);
 }

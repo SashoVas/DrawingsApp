@@ -22,9 +22,6 @@ canvas{
 {
     border-radius: 10px;
 }
-.default_border:hover{
-    border-color: rgb(129,131,132);
-}
 @media(max-width:1200px){
     .all{
         display:inline-flex;
