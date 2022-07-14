@@ -4,6 +4,6 @@ namespace DrawingsApp.Identity.Models
 {
     public class User:IdentityUser
     {
-        public string AvatarUrl { get; set; }
+        public string? AvatarUrl { get; set; }
     }
 }

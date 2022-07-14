@@ -7,7 +7,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <input type="text" placeholder="SearchGroup">
         <a class="btn btn-secodary text-light" routerLink="/images/create">Create Image</a>
-        <a class="btn btn-secodary text-light" routerLink="/identity/register">Register</a>
+        <a class="btn btn-secodary text-light" *ngIf="!isLogedIn()" routerLink="/identity/register">Register</a>
+        <a class="btn btn-secodary text-light" *ngIf="!isLogedIn()" routerLink="/identity/login">Login</a>
+        <a class="btn btn-secodary text-light" (click)="logOut()" *ngIf="isLogedIn()" >LogOut</a>
+
       </div>
     </div>
   </nav>

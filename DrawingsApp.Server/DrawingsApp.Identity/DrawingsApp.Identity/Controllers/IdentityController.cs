@@ -16,11 +16,11 @@ namespace DrawingsApp.Identity.Controllers
             this.configuration = configuration;
         }
         [HttpPost("Login")]
-        public async Task<ActionResult<string>> Login(LoginInputModel input)
+        public async Task<ActionResult<object>> Login(LoginInputModel input)
         {
             var secret = configuration.GetSection("AppSettings:Secret").Value;
             var token= await identityServer.Login(input.UserName, input.Password, secret);
-            return Ok(token);
+            return Ok(new {Token=token });
         }
         [HttpPost("Register")]
         public async Task<ActionResult> Register(RegisterInputModel input)

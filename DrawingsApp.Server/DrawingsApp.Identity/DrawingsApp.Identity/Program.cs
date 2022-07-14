@@ -15,6 +15,7 @@ builder.AddIdentity();
 builder.AddAuthenticationWithJWT();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.AddCors();
 builder.Services.AddTransient<IIdentityService, IdentityService>();
 var app = builder.Build();
 using (var serviceScope = app.Services.CreateScope())
@@ -30,7 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
