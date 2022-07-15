@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  identityApi:"https://localhost:7011/"
+  identityApi:"https://localhost:7011/",
+  imageApi:"https://localhost:7019/"
 };
 
 /*

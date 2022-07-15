@@ -16,6 +16,7 @@ builder.Services.AddDbContext<DrawingsAppImagesDbContext>(
 builder.AddAuthenticationWithJWT();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.AddCors();
 builder.Services.AddTransient<IImageService, ImageService>();
 var app = builder.Build();
 using (var serviceScope = app.Services.CreateScope())
@@ -31,7 +32,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 app.AddStaticFiles();
 app.UseAuthentication();

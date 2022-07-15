@@ -13,7 +13,8 @@ const routes: Routes = [{
 {
   path:"identity",
   loadChildren:()=>import("./identity/identity.module").then(i=>i.IdentityModule)
-}];
+},
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

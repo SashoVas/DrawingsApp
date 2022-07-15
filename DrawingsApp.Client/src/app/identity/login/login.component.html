@@ -1,27 +1,29 @@
-<div class="row">
-    <div class="col-lg-3"></div>
-    <div class="col-lg-6">
-        <div class="container-fluid">
-            <form class="default_border default_bg" [formGroup]="loginForm"  (ngSubmit)="submit()">
-                
-                <h1 class="text-center">Login</h1>
-                <div class="form-group">
-                    <label >Username</label>
-                    <input class="form-control" type="text" formControlName="username">
-                </div>
-                <div class="alert alert-danger p-2 mt-2" *ngIf="username?.touched && username?.errors?.['required']" >
-                    Required
-                </div>
-                <div class="form-group">
-                    <label >Password</label>
-                    <input class="form-control" type="password" formControlName="password">
-                </div>
-                <div class="alert alert-danger p-2 mt-2" *ngIf="password?.touched && password?.errors?.['required']" >
-                    Required
-                </div>
-                <button class="btn btn-secondary mt-2">Submit</button>
-            </form>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="container-fluid">
+                <form class="default_border default_bg" [formGroup]="loginForm"  (ngSubmit)="submit()">
+                    
+                    <h1 class="text-center">Login</h1>
+                    <div class="form-group">
+                        <label >Username</label>
+                        <input class="form-control" type="text" formControlName="username">
+                    </div>
+                    <div class="alert alert-danger p-2 mt-2" *ngIf="username?.touched && username?.errors?.['required']" >
+                        Required
+                    </div>
+                    <div class="form-group">
+                        <label >Password</label>
+                        <input class="form-control" type="password" formControlName="password">
+                    </div>
+                    <div class="alert alert-danger p-2 mt-2" *ngIf="password?.touched && password?.errors?.['required']" >
+                        Required
+                    </div>
+                    <button class="btn btn-secondary mt-2">Submit</button>
+                </form>
+            </div>
         </div>
+        <div class="col-lg-3"></div>
     </div>
-    <div class="col-lg-3"></div>
 </div>

@@ -3,11 +3,15 @@ import { CommonModule } from '@angular/common';
 import { PostComponent } from './post/post.component';
 import { LandingComponent } from './landing/landing.component';
 import { PostsRoutingModule } from './posts-routing.module';
+import { GroupComponent } from './group/group.component';
+import { CreateGroupComponent } from './create-group/create-group.component';
 
 @NgModule({
   declarations: [
     PostComponent,
-    LandingComponent
+    LandingComponent,
+    GroupComponent,
+    CreateGroupComponent
   ],
   imports: [
     CommonModule,

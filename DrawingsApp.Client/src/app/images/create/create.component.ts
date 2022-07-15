@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ImageService } from '../services/image.service';
 
 @Component({
   selector: 'app-create',
@@ -6,7 +7,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit,AfterViewInit {
- constructor(){
+ constructor(private imageService:ImageService){
   }
   ngOnInit(): void {
   }
@@ -25,6 +26,7 @@ export class CreateComponent implements OnInit,AfterViewInit {
     this.drawingBoard=this.canvas!.nativeElement.getContext('2d');
     this.canvas.nativeElement.height=700;
     this.canvas.nativeElement.width=700;
+    this.clear();
   }
   startLine(event:MouseEvent){
     if (this.isFilling)
@@ -111,8 +113,13 @@ export class CreateComponent implements OnInit,AfterViewInit {
     this.isFilling=!this.isFilling    
   }
   clear(){
-    this.drawingBoard?.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height)
+    //this.drawingBoard?.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height)
+    this.drawingBoard!.fillStyle = "white";
+    this.drawingBoard?.fillRect(0, 0,this.canvas.nativeElement.width, this.canvas.nativeElement.height);
     this.isFilling=false;
     this.isDrawing=false;
+  }
+  createDrawing(){
+    this.canvas.nativeElement.toBlob(blob=>this.imageService.sendImage(blob!).subscribe());
   }
 }

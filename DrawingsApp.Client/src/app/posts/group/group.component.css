@@ -1,0 +1,11 @@
+.profile-pic{
+    border: 3px solid white;
+    border-radius:50px ;
+}
+p{
+    color: rgb(90,90,90);
+    cursor: pointer;
+}
+p:hover{
+    color:white;
+}

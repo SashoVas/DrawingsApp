@@ -1,0 +1,10 @@
+.main{
+    border-radius: 8px;
+}
+input,textarea{
+    border-radius: 5px;
+    border: 2px solid rgb(52,53,54);
+}
+button{
+    border-radius: 25px;
+}
