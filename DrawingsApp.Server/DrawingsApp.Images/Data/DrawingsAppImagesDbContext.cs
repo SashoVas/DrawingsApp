@@ -1,4 +1,4 @@
-﻿using DrawingsApp.Images.Models;
+﻿using DrawingsApp.Images.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DrawingsApp.Images.Data

@@ -1,4 +1,4 @@
-﻿namespace DrawingsApp.Images.Models
+﻿namespace DrawingsApp.Images.Data.Models
 {
     public class ImageFile
     {

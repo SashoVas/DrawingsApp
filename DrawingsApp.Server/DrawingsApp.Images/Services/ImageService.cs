@@ -1,5 +1,5 @@
 ﻿using DrawingsApp.Images.Data;
-using DrawingsApp.Images.Models;
+using DrawingsApp.Images.Data.Models;
 using DrawingsApp.Images.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using SixLabors.ImageSharp;
