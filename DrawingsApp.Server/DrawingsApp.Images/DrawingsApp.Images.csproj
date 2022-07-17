@@ -21,9 +21,11 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DrawingsApp\DrawingsApp.csproj" />
   </ItemGroup>
 
 </Project>

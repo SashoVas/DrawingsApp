@@ -1,4 +1,5 @@
-﻿using DrawingsApp.Images.Services.Contracts;
+﻿using DrawingsApp.Controllers;
+using DrawingsApp.Images.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -6,9 +7,7 @@ using System.Security.Claims;
 namespace DrawingsApp.Images.Controllers
 {
     [Authorize]
-    [ApiController]
-    [Route("[controller]")]
-    public class ImageController : ControllerBase
+    public class ImageController : ApiController
     {
         private readonly IImageService imageService;
 

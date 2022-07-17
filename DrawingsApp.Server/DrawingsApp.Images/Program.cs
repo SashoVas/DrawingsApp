@@ -1,6 +1,7 @@
 using DrawingsApp.Images.Data;
 using DrawingsApp.Images.Services;
 using DrawingsApp.Images.Services.Contracts;
+using DrawingsApp.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using DrawingsApp.Images.Infrastructure;
 

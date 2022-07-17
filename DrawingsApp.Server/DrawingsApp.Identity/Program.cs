@@ -3,6 +3,8 @@ using DrawingsApp.Identity.Services;
 using DrawingsApp.Identity.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using DrawingsApp.Identity.Infrastructure;
+using DrawingsApp.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

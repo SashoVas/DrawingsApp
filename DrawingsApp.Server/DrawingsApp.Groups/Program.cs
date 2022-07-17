@@ -1,7 +1,7 @@
 using DrawingsApp.Groups.Data;
-using DrawingsApp.Groups.Infrastructure;
 using DrawingsApp.Groups.Services;
 using DrawingsApp.Groups.Services.Contracts;
+using DrawingsApp.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,11 +26,11 @@ using (var scope=app.Services.CreateScope())
     }
 }
     // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 app.UseAuthentication();

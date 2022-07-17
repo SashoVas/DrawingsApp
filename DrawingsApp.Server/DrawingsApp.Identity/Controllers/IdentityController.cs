@@ -1,12 +1,11 @@
-﻿using DrawingsApp.Identity.Models.InputModels;
+﻿using DrawingsApp.Controllers;
+using DrawingsApp.Identity.Models.InputModels;
 using DrawingsApp.Identity.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DrawingsApp.Identity.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class IdentityController : ControllerBase
+    public class IdentityController : ApiController
     {
         private readonly IIdentityService identityServer;
         private readonly IConfiguration configuration;

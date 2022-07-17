@@ -1,14 +1,13 @@
-﻿using DrawingsApp.Groups.Models.InputModels;
+﻿using DrawingsApp.Controllers;
+using DrawingsApp.Groups.Models.InputModels;
 using DrawingsApp.Groups.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DrawingsApp.Groups.Controllers
 {
-    [Route("[controller]")]
     [Authorize]
-    [ApiController]
-    public class GroupController : ControllerBase
+    public class GroupController : ApiController
     {
         private readonly IGroupService groupService;
         public GroupController(IGroupService groupService) 
