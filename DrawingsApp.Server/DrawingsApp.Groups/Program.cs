@@ -17,6 +17,7 @@ builder.Services.AddDbContext<DrawingsAppGroupsDbContext>(opitons => opitons.Use
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IGroupService, GroupService>();
+builder.Services.AddTransient<ITagService, TagService>();
 var app = builder.Build();
 using (var scope=app.Services.CreateScope())
 {

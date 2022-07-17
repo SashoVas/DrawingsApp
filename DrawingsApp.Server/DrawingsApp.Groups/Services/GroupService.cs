@@ -1,6 +1,5 @@
 ﻿using DrawingsApp.Groups.Data;
 using DrawingsApp.Groups.Data.Models;
-using DrawingsApp.Groups.Models.InputModels;
 using DrawingsApp.Groups.Models.OutputModels;
 using DrawingsApp.Groups.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -12,13 +11,18 @@ namespace DrawingsApp.Groups.Services
         private readonly DrawingsAppGroupsDbContext context;
         public GroupService(DrawingsAppGroupsDbContext context) 
             => this.context = context;
-        public async Task<int> CreateGroup(string title,string moreInfo)
+        public async Task<int> CreateGroup(string title,string moreInfo, List<int> tags)
         {
             var group = new Group 
             { 
                 MoreInfo= moreInfo,
                 Title= title,
+                GroupTags=tags.Select(t=>new GroupTag 
+                {
+                    TagId=t
+                }).ToList()
             };
+
             await context.Groups.AddAsync(group);
             await context.SaveChangesAsync();
             return group.Id;
