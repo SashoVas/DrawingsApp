@@ -18,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IGroupService, GroupService>();
 builder.Services.AddTransient<ITagService, TagService>();
+builder.Services.AddTransient<IPostService, PostService>();
 var app = builder.Build();
 using (var scope=app.Services.CreateScope())
 {

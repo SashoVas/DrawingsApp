@@ -1,6 +1,6 @@
 ﻿using DrawingsApp.Groups.Data;
 using DrawingsApp.Groups.Data.Models;
-using DrawingsApp.Groups.Models.OutputModels;
+using DrawingsApp.Groups.Models.OutputModels.Group;
 using DrawingsApp.Groups.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 

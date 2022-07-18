@@ -12,7 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 var defaultConnection = builder.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
-builder.Services.AddDbContext<DrawingsAppIdentityDbContext>(options=>options.UseSqlServer(defaultConnection));
+builder.Services.AddDbContext<DrawingsAppIdentityDbContext>(options => options.UseSqlServer(defaultConnection));
+
 builder.AddIdentity();
 builder.AddAuthenticationWithJWT();
 builder.Services.AddEndpointsApiExplorer();

@@ -1,5 +1,4 @@
-﻿using DrawingsApp.Groups.Models.InputModels;
-using DrawingsApp.Groups.Models.OutputModels;
+﻿using DrawingsApp.Groups.Models.OutputModels.Group;
 
 namespace DrawingsApp.Groups.Services.Contracts
 {

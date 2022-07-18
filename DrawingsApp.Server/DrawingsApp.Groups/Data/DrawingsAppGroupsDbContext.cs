@@ -8,6 +8,9 @@ namespace DrawingsApp.Groups.Data
         public DbSet<Group> Groups { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<GroupTag> GroupTag { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
         public DrawingsAppGroupsDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -19,6 +22,10 @@ namespace DrawingsApp.Groups.Data
                 .HasKey(gt=>new { gt.TagId,gt.GroupId})
                 .HasName("PrimaryKey_GroupTagId");
 
+            modelBuilder.Entity<UserGroup>()
+                .HasKey(ug => new { ug.UserId, ug.GroupId })
+                .HasName("PrimaryKey_UserGroupId");
+
             modelBuilder.Entity<Group>()
                 .HasMany(g => g.GroupTags)
                 .WithOne(gt => gt.Group)
@@ -28,6 +35,11 @@ namespace DrawingsApp.Groups.Data
                 .HasMany(t => t.GroupTags)
                 .WithOne(gt => gt.Tag)
                 .HasForeignKey(gt => gt.TagId);
+
+            modelBuilder.Entity<Group>()
+                .HasMany(g => g.Posts)
+                .WithOne(p => p.Group)
+                .HasForeignKey(p=>p.GroupId);
 
         }
     }

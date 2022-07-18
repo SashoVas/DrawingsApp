@@ -1,4 +1,4 @@
-﻿using DrawingsApp.Identity.Models;
+﻿using DrawingsApp.Identity.Data.Models;
 using DrawingsApp.Identity.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
