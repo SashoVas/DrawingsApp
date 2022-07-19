@@ -8,3 +8,10 @@ input,textarea{
 button{
     border-radius: 25px;
 }
+.btn:focus:not(:focus-visible) {
+    outline: 0;
+    box-shadow: none;
+  }
+.dropdown-item:hover{
+    background-color: black;
+}

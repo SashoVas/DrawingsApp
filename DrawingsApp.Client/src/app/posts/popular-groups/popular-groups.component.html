@@ -1,0 +1,42 @@
+<div class="default_bg default_border main mt-3 p-1 d-inline-flex flex-column" >
+    <div class="text-center">
+        <h5>Popular Groups</h5>
+    </div>
+    <div>
+        <div *ngFor="let group of [1,2,3,4,5]" class="d-flex p-1">
+            <p class="align-self-center mb-0 mx-1">{{group}}</p>      
+            <img class="align-self-center mx-1" src="../../../assets/resources/Untitled.png" width="30" height="30"  alt="">
+            <p class="align-self-center mb-0 mx-1 group-name">Group nameaaa</p>
+            <button class="btn btn-secondary btn-sm align-self-center mx-1">Join</button>
+        </div>
+    </div>
+    <div class="px-2 mt-2">
+        <button class="btn btn-secondary w-100 align-self-center mx-1">View All</button>
+    </div>
+    <div class="d-flex mt-2">
+        <button class="btn btn-secondary btn-sm align-self-center mx-1">Tag1</button>
+        <button class="btn btn-secondary btn-sm align-self-center mx-1">Tag2</button>
+        <button class="btn btn-secondary btn-sm align-self-center mx-1">Tag3</button>
+    </div>
+    <div>
+    </div>
+
+</div>
+<div class="default_bg default_border main mt-3 p-3 d-inline-flex flex-column">
+    <div class="text-center">
+        <h5>Favorite Groups</h5>
+    </div>
+    <div>
+        <div *ngFor="let group of [1,2,3,4,5]" class="d-flex p-1">   
+            <img class="align-self-center mx-1" src="../../../assets/resources/Untitled.png" width="30" height="30"  alt="">
+            <p class="align-self-center mb-0 mx-1 group-name">Group nameaaa</p>
+        </div>
+    </div>
+    <div class="px-2 mt-2">
+        <button class="btn btn-secondary w-100 align-self-center mx-1">View All</button>
+    </div>
+</div>
+<div class="default_bg default_border main mt-3 p-3 d-inline-flex sticky">
+    <button class="btn btn-secondary w-100 align-self-center no-wrap mx-1">Create Post</button>
+    <button class="btn btn-secondary w-100 align-self-center no-wrap mx-1">Create Group</button>
+</div>

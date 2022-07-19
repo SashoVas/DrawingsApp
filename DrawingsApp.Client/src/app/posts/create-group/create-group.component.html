@@ -10,12 +10,24 @@
                 <p class="mb-0"><b>Tags</b></p>
                 <hr class="mt-0">
                 <div class="d-flex">
-                    <button class="btn btn-outline-secondary mx-2">TagName1</button>
-                    <button class="btn btn-outline-secondary mx-2">TagName2</button>
-                    <button class="btn btn-outline-secondary mx-2">TagName3</button>
+                    <button class="btn btn-outline-secondary mx-2" data-bs-toggle="button" onclick="this.blur()" >TagName1</button>
+                    <button class="btn btn-outline-secondary mx-2" data-bs-toggle="button" onclick="this.blur()" >TagName2</button>
+                    <button class="btn btn-outline-secondary mx-2" data-bs-toggle="button" onclick="this.blur()">TagName3</button>
+
+                    <button class="btn btn-outline-secondary mx-2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        +
+                    </button>
+                    <ul class="dropdown-menu default_bg default_border" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item text-light" href="#" data-bs-toggle="modal" data-bs-target="#CreateTagModal">Create</a></li>
+                        <li><a class="dropdown-item text-light" href="#">TagName4</a></li>
+                        <li><a class="dropdown-item text-light" href="#">TagName5</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
         <div class="col-lg-3"></div>
     </div>
+</div>
+<div class="modal fade" id="CreateTagModal" tabindex="-1" aria-labelledby="#CreateTagModal" aria-hidden="true">
+    <app-create-tag></app-create-tag>
 </div>
