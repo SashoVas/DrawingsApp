@@ -7,6 +7,8 @@ import { GroupComponent } from './group/group.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { PopularGroupsComponent } from './popular-groups/popular-groups.component';
 import { CreateTagComponent } from './create-tag/create-tag.component';
+import { CreatePostComponent } from './create-post/create-post.component';
+import { UserImagesComponent } from './user-images/user-images.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { CreateTagComponent } from './create-tag/create-tag.component';
     GroupComponent,
     CreateGroupComponent,
     PopularGroupsComponent,
-    CreateTagComponent
+    CreateTagComponent,
+    CreatePostComponent,
+    UserImagesComponent
   ],
   imports: [
     CommonModule,

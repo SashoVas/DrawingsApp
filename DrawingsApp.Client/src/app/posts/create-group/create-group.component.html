@@ -5,8 +5,17 @@
             <h5 class="mb-0">Create a Group</h5>
             <hr class="mt-0">
             <div class="default_bg default_border d-flex flex-column p-2 main">
-                <input type="text" placeholder="Title" class="mt-3 default_bg">
-                <textarea class="mt-3 default_bg" name="" id="" cols="30" rows="7" placeholder="Text"></textarea>
+                <input type="text" placeholder="Title" class="mt-3 default_bg text-light">
+                <textarea class="mt-3 default_bg text-light" name="" id="" cols="30" rows="7" placeholder="Text"></textarea>
+                <p class="mb-0"><b>Group Type</b></p>
+                <div>
+                    <input type="radio" id="public" checked name="fav_language" value="Public">
+                    <label for="public">Public</label><br>
+                    <input type="radio" id="restricted" name="fav_language" value="Restricted">
+                    <label for="restricted">Restricted</label><br>
+                    <input type="radio" id="private" name="fav_language" value="Private">
+                    <label for="private">Private</label>
+                </div>
                 <p class="mb-0"><b>Tags</b></p>
                 <hr class="mt-0">
                 <div class="d-flex">
