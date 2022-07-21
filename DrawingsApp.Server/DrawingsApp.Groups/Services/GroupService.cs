@@ -11,12 +11,13 @@ namespace DrawingsApp.Groups.Services
         private readonly DrawingsAppGroupsDbContext context;
         public GroupService(DrawingsAppGroupsDbContext context) 
             => this.context = context;
-        public async Task<int> CreateGroup(string title,string moreInfo, List<int> tags)
+        public async Task<int> CreateGroup(string title,string moreInfo,GroupType groupType, List<int> tags)
         {
             var group = new Group 
             { 
                 MoreInfo= moreInfo,
                 Title= title,
+                GroupType=groupType,
                 GroupTags=tags.Select(t=>new GroupTag 
                 {
                     TagId=t
@@ -36,5 +37,6 @@ namespace DrawingsApp.Groups.Services
                     Title = g.Title,
                     Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList()
                 }).FirstOrDefaultAsync();
+
     }
 }
