@@ -2,8 +2,9 @@
 {
     public enum Role
     {
-        Pending=0,
-        Declined=1,
+        
+        Declined=0,
+        Pending=1,
         User=2,
         Admin=3
     }

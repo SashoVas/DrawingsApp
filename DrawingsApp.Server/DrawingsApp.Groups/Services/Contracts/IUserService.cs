@@ -1,4 +1,6 @@
-﻿namespace DrawingsApp.Groups.Services.Contracts
+﻿using DrawingsApp.Groups.Data.Models;
+
+namespace DrawingsApp.Groups.Services.Contracts
 {
     public interface IUserService
     {
@@ -8,5 +10,6 @@
         Task AcceptUser(string userId, int groupId);
         Task PromoteUser(string userId, int groupId);
         Task<bool> IsAdmin(string userId,int groupId);
+        Task<Role> GetRole(string userId,int groupId);
     }
 }

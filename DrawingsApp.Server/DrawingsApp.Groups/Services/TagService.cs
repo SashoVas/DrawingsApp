@@ -29,5 +29,17 @@ namespace DrawingsApp.Groups.Services
                 .Where(t => t.Id == id)
                 .Select(t => t.TagInfo)
                 .FirstOrDefaultAsync();
+
+        public async Task<bool> SetTagToGroup(string userId, int groupId,int tagId)
+        {
+            await dbContext.GroupTag
+                .AddAsync(new GroupTag
+                {
+                    GroupId = groupId,
+                    TagId = tagId
+                });
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

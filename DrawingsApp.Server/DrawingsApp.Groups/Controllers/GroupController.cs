@@ -3,7 +3,6 @@ using DrawingsApp.Groups.Models.InputModels.Group;
 using DrawingsApp.Groups.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace DrawingsApp.Groups.Controllers
 {
@@ -24,7 +23,7 @@ namespace DrawingsApp.Groups.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(CreateGroupInputModel input)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             if (!await userService.UserExists(userId))
             {
                 await userService.CreateUser(userId,User.Identity.Name);

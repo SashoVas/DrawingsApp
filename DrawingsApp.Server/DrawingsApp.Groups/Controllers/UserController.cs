@@ -3,7 +3,6 @@ using DrawingsApp.Groups.Models.InputModels.User;
 using DrawingsApp.Groups.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace DrawingsApp.Groups.Controllers
 {
@@ -18,7 +17,7 @@ namespace DrawingsApp.Groups.Controllers
         [HttpPost]
         public async Task<ActionResult> JoinGroup(int groupId)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             if (!await userService.UserExists(userId))
             {
                 await userService.CreateUser(userId, User.Identity.Name);
@@ -26,20 +25,20 @@ namespace DrawingsApp.Groups.Controllers
             await userService.JoinGroup(userId, groupId);
             return Created("",null);
         }
-        [HttpPatch("AcceptUser")]
+        [HttpPut("AcceptUser")]
         public async Task<ActionResult> AcceptUser(UpdateUserInputModel input)
         {
-            if (!await userService.IsAdmin(User.FindFirstValue(ClaimTypes.NameIdentifier),input.GroupId))
+            if (!await userService.IsAdmin(GetUserId(), input.GroupId))
             {
                 return Unauthorized();
             }
             await userService.AcceptUser(input.UserId, input.GroupId);
             return Ok();
         }
-        [HttpPatch("PromoteUser")]
+        [HttpPut("PromoteUser")]
         public async Task<ActionResult> PromoteUser(UpdateUserInputModel input)
         {
-            if (!await userService.IsAdmin(User.FindFirstValue(ClaimTypes.NameIdentifier), input.GroupId))
+            if (!await userService.IsAdmin(GetUserId(), input.GroupId))
             {
                 return Unauthorized();
             }

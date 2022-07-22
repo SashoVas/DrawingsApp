@@ -77,5 +77,11 @@ namespace DrawingsApp.Groups.Services
                 .Where(ug => ug.UserId == userId && ug.GroupId == groupId)
                 .Select(ug => ug.Role == Role.Admin)
                 .FirstOrDefaultAsync();
+
+        public async Task<Role> GetRole(string userId, int groupId) 
+            => await context.UserGroups
+                .Where(ug => ug.UserId == userId && ug.GroupId == groupId)
+                .Select(ug => ug.Role)
+                .FirstOrDefaultAsync();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace DrawingsApp.Controllers
 {
@@ -6,6 +7,7 @@ namespace DrawingsApp.Controllers
     [ApiController]
     public class ApiController: ControllerBase
     {
-        
+        protected string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
+    
 }
