@@ -41,5 +41,23 @@ namespace DrawingsApp.Groups.Controllers
             }
             return Created("", await postService.CreatePost(GetUserId(), input.Title, input.GroupId, input.ImgUrl));
         }
+        [HttpPut]
+        public async Task<ActionResult> UpdatePost(UpdatePostInputModel input)
+        {
+            if (!await postService.UpdatePost(GetUserId(), input.PostId, input.Title, input.ImgUrl))
+            {
+                return Unauthorized();
+            }
+            return Ok();
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePost(int id)
+        {
+            if (!await postService.DeletePost(GetUserId(),id))
+            {
+                return Unauthorized();
+            }
+            return Ok();
+        }
     }
 }

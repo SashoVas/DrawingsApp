@@ -10,27 +10,48 @@ namespace DrawingsApp.Groups.Services
     {
         private readonly DrawingsAppGroupsDbContext context;
         private readonly IUserService userService;
-        private readonly IGroupService groupService;
-        public PostService(DrawingsAppGroupsDbContext context, IUserService userService, IGroupService groupService)
+        public PostService(DrawingsAppGroupsDbContext context, IUserService userService)
         {
             this.context = context;
             this.userService = userService;
-            this.groupService = groupService;
         }
 
-        public async Task<int> CreatePost(string SenderId, string Title, int GroupId, string ImgUrl)
+        public async Task<int> CreatePost(string senderId, string title, int groupId, string imgUrl)
         {
             var post = new Post
             {
-                GroupId=GroupId,
-                SenderId= SenderId,
-                Title=Title,
-                ImgUrl=ImgUrl,
+                GroupId=groupId,
+                SenderId= senderId,
+                Title=title,
+                ImgUrl=imgUrl,
                 PostedOn=DateTime.UtcNow
             };
             await context.Posts.AddAsync(post);
             await context.SaveChangesAsync();
             return post.Id;
+        }
+
+        public async Task<bool> DeletePost(string userId,int postId)
+        {
+            var postData = await context.Posts
+                .Where(p => p.Id == postId)
+                .Select(p => new 
+                    { 
+                        p.SenderId,
+                        p.GroupId
+                    })
+                .FirstOrDefaultAsync();
+            if (postData is null || postData.SenderId!=userId || !await userService.IsAdmin(userId, postData.GroupId))
+            {
+                return false;
+            }
+            var post = new Post
+            {
+                Id = postId
+            };
+            context.Posts.Remove(post);
+            await context.SaveChangesAsync();
+            return true;
         }
 
         public  Task<List<PostOutputModel>> GetPosts(int groupId) 
@@ -60,5 +81,20 @@ namespace DrawingsApp.Groups.Services
                     SenderUserName = p.Sender.Username,
                     Title = p.Title
                 }).ToListAsync();
+
+        public async Task<bool> UpdatePost(string senderId, int postId, string title, string imgUrl)
+        {
+            var post =await context.Posts
+                .FindAsync(postId);
+            if (post.SenderId!=senderId)
+            {
+                return false;
+            }
+            post.ImgUrl = imgUrl;
+            post.Title = title;
+            context.Posts.Update(post);
+            await context.SaveChangesAsync();
+            return true;
+        }
     }
 }

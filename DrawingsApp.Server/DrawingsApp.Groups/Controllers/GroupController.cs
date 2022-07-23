@@ -18,8 +18,16 @@ namespace DrawingsApp.Groups.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id) =>
-            Ok(await groupService.GetGroup(id));
+        public async Task<IActionResult> Get(int id)
+        {
+            var group = await groupService.GetGroup(id);
+            if (group is null)
+            {
+                return NotFound();
+            }
+            return Ok(group);
+        }
+
         [HttpPost]
         public async Task<ActionResult> Create(CreateGroupInputModel input)
         {
