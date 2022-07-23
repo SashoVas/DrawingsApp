@@ -20,6 +20,7 @@ builder.Services.AddTransient<IGroupService, GroupService>();
 builder.Services.AddTransient<ITagService, TagService>();
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAsynchronousDbOperationsService, AsynchronousDbOperationsService>();
 var app = builder.Build();
 using (var scope=app.Services.CreateScope())
 {

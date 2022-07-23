@@ -41,6 +41,11 @@ namespace DrawingsApp.Groups.Data
                 .WithOne(p => p.Group)
                 .HasForeignKey(p=>p.GroupId);
 
+            modelBuilder.Entity<Post>()
+                .HasOne(p => p.Sender)
+                .WithMany(u => u.Posts)
+                .HasForeignKey(p => p.SenderId);
+
         }
     }
 }

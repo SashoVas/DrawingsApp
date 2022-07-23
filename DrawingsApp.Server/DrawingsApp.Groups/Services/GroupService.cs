@@ -38,5 +38,10 @@ namespace DrawingsApp.Groups.Services
                     Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList()
                 }).FirstOrDefaultAsync();
 
+        public Task<GroupType> GetGroupType(int id) 
+            => context.Groups
+                .Where(g => g.Id == id)
+                .Select(g => g.GroupType)
+                .FirstOrDefaultAsync();
     }
 }
