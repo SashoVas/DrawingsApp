@@ -18,7 +18,7 @@ namespace DrawingsApp.Groups.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
             var group = await groupService.GetGroup(id);
             if (group is null)
@@ -27,6 +27,9 @@ namespace DrawingsApp.Groups.Controllers
             }
             return Ok(group);
         }
+        [HttpGet]
+        public async Task<ActionResult> GetByName(string name) 
+            => Ok(await groupService.GetGropus(name));
 
         [HttpPost]
         public async Task<ActionResult> Create(CreateGroupInputModel input)
@@ -40,6 +43,27 @@ namespace DrawingsApp.Groups.Controllers
             await userService.JoinGroup(userId, groupId);
             await userService.PromoteUser(userId, groupId);
             return Created(nameof(Get), groupId);
+        }
+        [HttpPut]
+        public async Task<ActionResult> Update(UpdateGroupInputModel input)
+        {
+            if (!await userService.IsAdmin(GetUserId(),input.GroupId))
+            {
+                return Unauthorized();
+            }
+            await groupService.UpdateGroup(input.GroupId,input.Title,input.MoreInfo,input.GroupType,input.Tags);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            if (!await userService.IsAdmin(GetUserId(), id))
+            {
+                return Unauthorized();
+            }
+            await groupService.DeleteGroup(id);
+            return Ok();
         }
     }
 }

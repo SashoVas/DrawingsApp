@@ -29,12 +29,31 @@ namespace DrawingsApp.Groups.Services
             return group.Id;
         }
 
+        public async Task<bool> DeleteGroup(int groupId)
+        {
+            var group = new Group { Id = groupId };
+            context.Remove(group);
+            await context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<IEnumerable<GroupListingOutputModel>> GetGropus(string name) 
+            => await context.Groups
+                .Where(g => g.Title.ToLower().StartsWith(name.ToLower()))
+                .Take(10)
+                .Select(g => new GroupListingOutputModel
+                {
+                    Id = g.Id,
+                    Title = g.Title
+                }).ToListAsync();
+
         public Task<GroupOutputModel> GetGroup(int id) 
             => context.Groups.Where(g => g.Id == id)
                 .Select(g => new GroupOutputModel
                 {
                     MoreInfo = g.MoreInfo,
                     Title = g.Title,
+                    groupType=g.GroupType,
                     Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList()
                 }).FirstOrDefaultAsync();
 
@@ -43,5 +62,33 @@ namespace DrawingsApp.Groups.Services
                 .Where(g => g.Id == id)
                 .Select(g => g.GroupType)
                 .FirstOrDefaultAsync();
+
+        public async Task<bool> UpdateGroup(int groupId, string title, string moreInfo, GroupType groupType, List<int> tags)
+        {
+            var group =await context.Groups
+                .FindAsync(groupId);
+            if (group is null)
+            {
+                return false;
+            }
+            group.Title = title;
+            group.GroupType = groupType;
+            group.MoreInfo = moreInfo;
+            try
+            {
+                await context.GroupTag.AddRangeAsync(tags.Select(t => new GroupTag
+                {
+                    GroupId = groupId,
+                    TagId = t
+                }));
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            context.Update(group);
+            await context.SaveChangesAsync();
+            return true;
+        }
     }
 }
