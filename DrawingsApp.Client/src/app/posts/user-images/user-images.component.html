@@ -1,8 +1,6 @@
 <div class="countainer main mt-3 d-flex flex-wrap justify-content-center">
-    <div *ngFor="let img of [1,2,3,4,5,6,7,8,9,10]" class="m-2">
-        <img src="../../../assets/resources/Untitled.png" data-bs-toggle="modal" class="{{img==3?'selected':''}}" data-bs-target="#Modal" width="200" height="200"  alt="">
-          <!-- Modal -->
-
+    <div *ngFor="let img of data; index as i" class="m-2">
+        <img src="../../../assets/resources/Untitled.png" data-bs-toggle="modal" class="{{img.isSelected?'selected':''}}" data-bs-target="#Modal" width="200" height="200"  alt="" (click)="selectImage(i)">
     </div>
 </div>
 <div class="modal  fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
@@ -14,12 +12,12 @@
     </div>
     <div class="modal-body">
         <div class="d-flex justify-content-center w-100">
-            <img src="../../../assets/resources/Untitled.png" alt="">
+            <img [src]="selectedImage?.imgUrl" alt="">
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Select</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"(click)="selectForPost()">{{selectedImage?.isSelected ? "Dismis":"Select"}}</button>
     </div>
     </div>
 </div>
