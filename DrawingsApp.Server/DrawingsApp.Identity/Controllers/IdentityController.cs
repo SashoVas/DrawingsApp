@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DrawingsApp.Identity.Controllers
 {
-    public class IdentityController : ApiController
+    [Route("[controller]")]
+    [ApiController]
+    public class IdentityController : ControllerBase
     {
         private readonly IIdentityService identityServer;
         private readonly IConfiguration configuration;

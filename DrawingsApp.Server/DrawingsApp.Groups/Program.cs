@@ -1,6 +1,5 @@
 using DrawingsApp.Groups.Data;
-using DrawingsApp.Groups.Services;
-using DrawingsApp.Groups.Services.Contracts;
+using DrawingsApp.Groups.Infrastructure;
 using DrawingsApp.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,11 +15,7 @@ var defaultConnection = builder.Configuration.GetSection("ConnectionStrings:Defa
 builder.Services.AddDbContext<DrawingsAppGroupsDbContext>(opitons => opitons.UseSqlServer(defaultConnection));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IGroupService, GroupService>();
-builder.Services.AddTransient<ITagService, TagService>();
-builder.Services.AddTransient<IPostService, PostService>();
-builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IAsynchronousDbOperationsService, AsynchronousDbOperationsService>();
+builder.AddServices();
 var app = builder.Build();
 using (var scope=app.Services.CreateScope())
 {

@@ -57,8 +57,9 @@ namespace DrawingsApp.Groups.Services
         public  Task<List<PostOutputModel>> GetPosts(int groupId) 
             =>context.Posts
                 .Where(p => p.GroupId == groupId)
-                .OrderBy(p => p.PostedOn)
+                .OrderByDescending(p => p.PostedOn)
                 .Take(10)
+                //.TakeLast(10)
                 .Select(p => new PostOutputModel
                 {
                     PostedOn = p.PostedOn,
@@ -71,8 +72,9 @@ namespace DrawingsApp.Groups.Services
         public Task<List<PostOutputModel>> GetPostsByUser(string userId) 
             => context.Posts
                 .Where(p => p.Group.UserGrops.Any(gu => gu.UserId == userId))
-                .OrderBy(p => p.PostedOn)
+                .OrderByDescending(p => p.PostedOn)
                 .Take(10)
+                //.TakeLast(10)
                 .Select(p => new PostOutputModel
                 {
                     PostedOn = p.PostedOn,

@@ -1,5 +1,6 @@
 ﻿using DrawingsApp.Groups.Data;
 using DrawingsApp.Groups.Data.Models;
+using DrawingsApp.Groups.Models.OutputModels.User;
 using DrawingsApp.Groups.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 
@@ -83,5 +84,14 @@ namespace DrawingsApp.Groups.Services
                 .Where(ug => ug.UserId == userId && ug.GroupId == groupId)
                 .Select(ug => ug.Role)
                 .FirstOrDefaultAsync();
+
+        public async Task<IEnumerable<UserOutputModel>> GetUsersByGroup(int groupId) 
+            => await context.UserGroups
+                .Where(ug => ug.GroupId == groupId)
+                .Select(ug => new UserOutputModel
+                {
+                    UserId = ug.UserId,
+                    Username = ug.User.Username
+                }).ToListAsync();
     }
 }

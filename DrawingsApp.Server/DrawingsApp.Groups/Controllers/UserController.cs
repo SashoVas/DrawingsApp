@@ -1,18 +1,19 @@
 ﻿using DrawingsApp.Controllers;
 using DrawingsApp.Groups.Models.InputModels.User;
 using DrawingsApp.Groups.Services.Contracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DrawingsApp.Groups.Controllers
 {
-    [Authorize]
     public class UserController : ApiController
     {
         private readonly IUserService userService;
 
         public UserController(IUserService userService) 
             => this.userService = userService;
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetUsers(int id) 
+            => Ok(await userService.GetUsersByGroup(id));
 
         [HttpPost]
         public async Task<ActionResult> JoinGroup(int groupId)

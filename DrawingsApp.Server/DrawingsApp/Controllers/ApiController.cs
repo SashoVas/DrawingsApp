@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace DrawingsApp.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class ApiController: ControllerBase
