@@ -9,6 +9,7 @@ import { PopularGroupsComponent } from './popular-groups/popular-groups.componen
 import { CreateTagComponent } from './create-tag/create-tag.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { UserImagesComponent } from './user-images/user-images.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { UserImagesComponent } from './user-images/user-images.component';
   ],
   imports: [
     CommonModule,
-    PostsRoutingModule
+    PostsRoutingModule,
+    ReactiveFormsModule
   ],
   exports:
   [
