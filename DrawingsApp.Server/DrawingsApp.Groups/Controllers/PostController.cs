@@ -39,12 +39,12 @@ namespace DrawingsApp.Groups.Controllers
             {
                 return Unauthorized();
             }
-            return Created("", await postService.CreatePost(GetUserId(), input.Title, input.GroupId, input.ImgUrl));
+            return Created("", await postService.CreatePost(GetUserId(), input.Title, input.GroupId, input.ImgUrls));
         }
         [HttpPut]
         public async Task<ActionResult> UpdatePost(UpdatePostInputModel input)
         {
-            if (!await postService.UpdatePost(GetUserId(), input.PostId, input.Title, input.ImgUrl))
+            if (!await postService.UpdatePost(GetUserId(), input.PostId, input.Title))
             {
                 return Unauthorized();
             }

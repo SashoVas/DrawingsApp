@@ -16,14 +16,14 @@ namespace DrawingsApp.Groups.Services
             this.userService = userService;
         }
 
-        public async Task<int> CreatePost(string senderId, string title, int groupId, string imgUrl)
+        public async Task<int> CreatePost(string senderId, string title, int groupId, List<string> imgUrls)
         {
             var post = new Post
             {
                 GroupId=groupId,
                 SenderId= senderId,
                 Title=title,
-                ImgUrl=imgUrl,
+                Images=imgUrls.Select(i=>new Image {Id=i }).ToList(),
                 PostedOn=DateTime.UtcNow
             };
             await context.Posts.AddAsync(post);
@@ -64,7 +64,7 @@ namespace DrawingsApp.Groups.Services
                 {
                     PostedOn = p.PostedOn,
                     Id = p.Id,
-                    ImgUrl = p.ImgUrl,
+                    ImgUrls = p.Images.Select(i=>i.Id).ToList(),
                     SenderUserName = p.Sender.Username,
                     Title = p.Title
                 }).ToListAsync();
@@ -79,12 +79,12 @@ namespace DrawingsApp.Groups.Services
                 {
                     PostedOn = p.PostedOn,
                     Id = p.Id,
-                    ImgUrl = p.ImgUrl,
+                    ImgUrls = p.Images.Select(i => i.Id).ToList(),
                     SenderUserName = p.Sender.Username,
                     Title = p.Title
                 }).ToListAsync();
 
-        public async Task<bool> UpdatePost(string senderId, int postId, string title, string imgUrl)
+        public async Task<bool> UpdatePost(string senderId, int postId, string title)
         {
             var post =await context.Posts
                 .FindAsync(postId);
@@ -92,7 +92,6 @@ namespace DrawingsApp.Groups.Services
             {
                 return false;
             }
-            post.ImgUrl = imgUrl;
             post.Title = title;
             context.Posts.Update(post);
             await context.SaveChangesAsync();

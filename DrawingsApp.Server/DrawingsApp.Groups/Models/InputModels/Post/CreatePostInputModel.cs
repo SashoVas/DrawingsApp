@@ -2,8 +2,8 @@
 {
     public class CreatePostInputModel
     {
-        public string ImgUrl { get; set; }
         public string Title { get; set; }
         public int GroupId { get; set; }
+        public List<string> ImgUrls { get; set; }
     }
 }
