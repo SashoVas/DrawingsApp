@@ -9,6 +9,7 @@
             Posts = new HashSet<Post>();
         }
         public int Id { get; set; }
+        public string? ImgUrl { get; set; }
         public string Title { get; set; }
         public string MoreInfo { get; set; }
         public GroupType GroupType { get; set; }

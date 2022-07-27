@@ -28,6 +28,9 @@ namespace DrawingsApp.Groups.Controllers
         [HttpGet]
         public async Task<ActionResult> GetByName(string name) 
             => Ok(await groupService.GetGropus(name));
+        [HttpGet("User")]
+        public async Task<ActionResult> GetGroupsByUser() 
+            => Ok(await groupService.GetGropusByUser(GetUserId()));
 
         [HttpPost]
         public async Task<ActionResult> Create(CreateGroupInputModel input)
@@ -37,7 +40,7 @@ namespace DrawingsApp.Groups.Controllers
             {
                 await userService.CreateUser(userId,User.Identity.Name);
             }
-            var groupId = await groupService.CreateGroup(input.Title, input.MoreInfo, input.GroupType, input.Tags);
+            var groupId = await groupService.CreateGroup(input.Title, input.MoreInfo,input.ImgUrl, input.GroupType, input.Tags);
             await userService.JoinGroup(userId, groupId);
             await userService.PromoteUser(userId, groupId);
             return Created(nameof(Get), groupId);
@@ -49,7 +52,7 @@ namespace DrawingsApp.Groups.Controllers
             {
                 return Unauthorized();
             }
-            await groupService.UpdateGroup(input.GroupId,input.Title,input.MoreInfo,input.GroupType,input.Tags);
+            await groupService.UpdateGroup(input.GroupId,input.Title,input.MoreInfo,input.ImgUrl,input.GroupType,input.Tags);
             return Ok();
         }
 

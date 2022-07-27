@@ -11,13 +11,14 @@ namespace DrawingsApp.Groups.Services
         private readonly DrawingsAppGroupsDbContext context;
         public GroupService(DrawingsAppGroupsDbContext context) 
             => this.context = context;
-        public async Task<int> CreateGroup(string title,string moreInfo,GroupType groupType, List<int> tags)
+        public async Task<int> CreateGroup(string title,string moreInfo,string imgUrl,GroupType groupType, List<int> tags)
         {
             var group = new Group 
             { 
                 MoreInfo= moreInfo,
                 Title= title,
                 GroupType=groupType,
+                ImgUrl=imgUrl,
                 GroupTags=tags.Select(t=>new GroupTag 
                 {
                     TagId=t
@@ -44,6 +45,17 @@ namespace DrawingsApp.Groups.Services
                 .Select(g => new GroupListingOutputModel
                 {
                     Id = g.Id,
+                    ImgUrl=g.ImgUrl,
+                    Title = g.Title
+                }).ToListAsync();
+
+        public async Task<IEnumerable<GroupListingOutputModel>> GetGropusByUser(string userId) 
+            => await context.Groups
+                .Where(g => g.UserGrops.Any(ug => ug.UserId == userId))
+                .Select(g => new GroupListingOutputModel
+                {
+                    Id = g.Id,
+                    ImgUrl=g.ImgUrl,
                     Title = g.Title
                 }).ToListAsync();
 
@@ -53,6 +65,7 @@ namespace DrawingsApp.Groups.Services
                 {
                     MoreInfo = g.MoreInfo,
                     Title = g.Title,
+                    ImgUrl=g.ImgUrl,
                     groupType=g.GroupType,
                     Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList()
                 }).FirstOrDefaultAsync();
@@ -63,7 +76,7 @@ namespace DrawingsApp.Groups.Services
                 .Select(g => g.GroupType)
                 .FirstOrDefaultAsync();
 
-        public async Task<bool> UpdateGroup(int groupId, string title, string moreInfo, GroupType groupType, List<int> tags)
+        public async Task<bool> UpdateGroup(int groupId, string title, string moreInfo,string imgUrl, GroupType groupType, List<int> tags)
         {
             var group =await context.Groups
                 .FindAsync(groupId);
@@ -74,6 +87,7 @@ namespace DrawingsApp.Groups.Services
             group.Title = title;
             group.GroupType = groupType;
             group.MoreInfo = moreInfo;
+            group.ImgUrl = imgUrl;
             try
             {
                 await context.GroupTag.AddRangeAsync(tags.Select(t => new GroupTag
