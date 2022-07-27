@@ -9,3 +9,26 @@ p{
 p:hover{
     color:white;
 }
+
+button{
+    border-radius: 20px;
+}
+img{
+    border-radius: 50px;
+}
+.main{
+    border-radius:7px;
+}
+.group-name{
+    width: 150px;
+}
+.sticky{
+    position: sticky;
+    top: 65px;
+}
+.no-wrap{
+    white-space: nowrap;
+}
+.join{
+    margin-left: 2%;
+}

@@ -10,6 +10,7 @@ import { ITag } from 'src/app/core/interfaces/ITag';
 export class CreateGroupComponent implements OnInit {
   createGroupForm:FormGroup
   tags:Array<ITag>=[{id:1,name:"Sport",isSelected:false},{id:2,name:"News",isSelected:false},{id:3,name:"Gaming",isSelected:false},];
+  selectedTags:Array<ITag>=[];
   groupType=1;
   constructor(private fb:FormBuilder) {
     this.createGroupForm=fb.group({
@@ -23,8 +24,9 @@ export class CreateGroupComponent implements OnInit {
   get title(){
     return this.createGroupForm.get("title");
   }
-  selectTag(tagIndex:number){
-    this.tags[tagIndex].isSelected=!this.tags[tagIndex].isSelected;
+  selectTag(tag:ITag){
+    tag.isSelected=!tag.isSelected;
+    this.selectedTags=this.tags.filter(t=>t.isSelected);
   }
   createGroup(){
     console.log(this.createGroupForm.value);

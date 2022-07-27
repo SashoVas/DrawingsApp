@@ -10,14 +10,12 @@
                         <b class="mb-0">Choose Group</b>
                         <hr class="mt-0">
                         <div class="btn-group border">
-                            <button type="button" disabled class="btn btn-secodary text-light group-name">No Group</button>
+                            <button type="button" disabled class="btn btn-secodary text-light group-name">{{group.name}}</button>
                             <button type="button" class="btn btn-secodary dropdown-toggle dropdown-toggle-split text-light" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="visually-hidden">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">No Group</a></li>
-                            <li><a class="dropdown-item" href="#">Group1</a></li>
-                            <li><a class="dropdown-item" href="#">Group2</a></li>
+                            <li *ngFor="let g of groups"><a class="dropdown-item" (click)="group=g">{{g.name}}</a></li>
                             </ul>
                         </div>
                     </div>

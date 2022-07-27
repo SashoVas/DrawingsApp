@@ -15,3 +15,6 @@ button{
 .dropdown-item:hover{
     background-color: black;
 }
+.tag{
+    border-color: white;
+}
