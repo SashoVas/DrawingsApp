@@ -62,8 +62,9 @@ namespace DrawingsApp.Groups.Services
                 //.TakeLast(10)
                 .Select(p => new PostOutputModel
                 {
-                    PostedOn = p.PostedOn,
+                    PostedOn = p.PostedOn.ToString("yyyy/MM/d"),
                     Id = p.Id,
+                    GroupName=p.Group.Title,
                     ImgUrls = p.Images.Select(i=>i.Id).ToList(),
                     SenderUserName = p.Sender.Username,
                     Title = p.Title
@@ -77,8 +78,9 @@ namespace DrawingsApp.Groups.Services
                 //.TakeLast(10)
                 .Select(p => new PostOutputModel
                 {
-                    PostedOn = p.PostedOn,
+                    PostedOn = p.PostedOn.ToString("yyyy/MM/d"),
                     Id = p.Id,
+                    GroupName=p.Group.Title,
                     ImgUrls = p.Images.Select(i => i.Id).ToList(),
                     SenderUserName = p.Sender.Username,
                     Title = p.Title

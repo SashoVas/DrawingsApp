@@ -6,9 +6,9 @@
             <p class="mb-0"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
         </div>
         <div class="p-3 pb-0">
-            <p class="name"><b class="user_name">GroupName</b> <span class="text-secondary"> posted by <span class="user_name">Someone</span>  14 hours ago</span></p>
+            <p class="name"><b class="user_name">{{post.groupName}}</b> <span class="text-secondary"> posted by <span class="user_name">{{post.senderUserName}}</span> on {{post.postedOn}}</span></p>
             <div>
-                <p>Heading</p>
+                <p>{{post.title}}</p>
                 <div class="d-flex justify-content-center w-100">
                     <img src="../../../assets/resources/Untitled.png" class="img-fluid" alt="">
                 </div>

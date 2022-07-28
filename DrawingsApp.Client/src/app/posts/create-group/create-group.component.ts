@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ITag } from 'src/app/core/interfaces/ITag';
+import { GroupService } from '../services/group.service';
 
 @Component({
   selector: 'app-create-group',
@@ -12,7 +13,7 @@ export class CreateGroupComponent implements OnInit {
   tags:Array<ITag>=[{id:1,name:"Sport",isSelected:false},{id:2,name:"News",isSelected:false},{id:3,name:"Gaming",isSelected:false},];
   selectedTags:Array<ITag>=[];
   groupType=1;
-  constructor(private fb:FormBuilder) {
+  constructor(private fb:FormBuilder,private groupService:GroupService) {
     this.createGroupForm=fb.group({
       "title":['',Validators.required],
       "moreInfo":['']
@@ -32,5 +33,9 @@ export class CreateGroupComponent implements OnInit {
     console.log(this.createGroupForm.value);
     console.log(this.tags.filter(t=>t.isSelected).map(t=>t.id))
     console.log(this.groupType);
+    this.groupService.createGroup(this.createGroupForm.value.title,
+      this.createGroupForm.value.moreInfo,
+      "",this.groupType,this.tags.filter(t=>t.isSelected).map(t=>t.id))
+    .subscribe();
   }
 }

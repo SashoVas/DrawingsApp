@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { IPost } from 'src/app/core/interfaces/IPost';
 
 @Component({
   selector: 'app-landing',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 
-  constructor() { }
+  posts:Array<IPost>=[];
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.posts=this.activatedRoute.snapshot.data['postsData'];
+    console.log(this.posts);
   }
 
 }

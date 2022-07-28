@@ -4,15 +4,16 @@ import { CreateGroupComponent } from './create-group/create-group.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { GroupComponent } from './group/group.component';
 import { LandingComponent } from './landing/landing.component';
+import { GroupResolver } from './resolvers/group.resolver';
+import { LandingResolver } from './resolvers/landing.resolver';
 
 const routes: Routes = [{
   path:"",
   pathMatch:"full",
-  component:LandingComponent
-},
-{
-  path:"group",
-  component:GroupComponent
+  component:LandingComponent,
+  resolve:{
+    postsData:LandingResolver
+  }
 },
 {
   path:"group/create",
@@ -21,7 +22,15 @@ const routes: Routes = [{
 {
   path:"group/create/post",
   component:CreatePostComponent
+},
+{
+  path:"group/:id",
+  component:GroupComponent,
+  resolve:{
+    data:GroupResolver
+  }
 }
+
 ];
 
 @NgModule({

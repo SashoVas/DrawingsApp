@@ -63,11 +63,13 @@ namespace DrawingsApp.Groups.Services
             => context.Groups.Where(g => g.Id == id)
                 .Select(g => new GroupOutputModel
                 {
+                    Id=g.Id,
                     MoreInfo = g.MoreInfo,
                     Title = g.Title,
                     ImgUrl=g.ImgUrl,
+                    Users=g.UserGrops.Count(),
                     groupType=g.GroupType,
-                    Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList()
+                    Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList(),
                 }).FirstOrDefaultAsync();
 
         public Task<GroupType> GetGroupType(int id) 

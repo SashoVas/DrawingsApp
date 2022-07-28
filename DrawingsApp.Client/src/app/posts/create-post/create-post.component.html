@@ -9,13 +9,13 @@
                     <div>
                         <b class="mb-0">Choose Group</b>
                         <hr class="mt-0">
-                        <div class="btn-group border">
-                            <button type="button" disabled class="btn btn-secodary text-light group-name">{{group.name}}</button>
+                        <div class="btn-group border" *ngIf="groups.length>0">
+                            <button type="button" disabled class="btn btn-secodary text-light group-name">{{group.title}}</button>
                             <button type="button" class="btn btn-secodary dropdown-toggle dropdown-toggle-split text-light" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="visually-hidden">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu">
-                            <li *ngFor="let g of groups"><a class="dropdown-item" (click)="group=g">{{g.name}}</a></li>
+                            <li *ngFor="let g of groups"><a class="dropdown-item" (click)="group=g">{{g.title}}</a></li>
                             </ul>
                         </div>
                     </div>

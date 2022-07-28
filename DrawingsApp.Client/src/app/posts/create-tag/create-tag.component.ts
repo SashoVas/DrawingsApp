@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-tag',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-tag.component.css']
 })
 export class CreateTagComponent implements OnInit {
-
-  constructor() { }
-
+  createTagForm:FormGroup;
+  constructor(private fb:FormBuilder) { 
+    this.createTagForm=fb.group({
+      "name":['',Validators.required]
+    })
+  }
+  get name(){
+    return this.createTagForm.get("name");
+  }
   ngOnInit(): void {
   }
-
+  createTag(){
+    console.log(this.createTagForm.value)
+  }
 }

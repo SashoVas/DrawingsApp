@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IGroup } from 'src/app/core/interfaces/IGroup';
+import { GroupService } from '../services/group.service';
+import { PostService } from '../services/post.service';
 import { UserImagesComponent } from '../user-images/user-images.component';
 
 @Component({
@@ -10,9 +13,9 @@ import { UserImagesComponent } from '../user-images/user-images.component';
 export class CreatePostComponent implements OnInit {
   @ViewChild("images") images!:UserImagesComponent;
   createPostForm:FormGroup;
-  groups:Array<any>=[{id:0,name:"No group"},{id:1,name:"GroupName"},{id:2,name:"GroupName"},{id:3,name:"GroupName"},{id:4,name:"GroupName"},{id:5,name:"GroupName"},]
-  group=this.groups[0];
-  constructor(private fb:FormBuilder) {
+  groups:Array<IGroup>=[];
+  group!:IGroup;
+  constructor(private fb:FormBuilder,private postService:PostService,private groupService:GroupService) {
     this.createPostForm=fb.group({
       "title":['',Validators.required],
       "explanation":[''],
@@ -20,14 +23,15 @@ export class CreatePostComponent implements OnInit {
    }
    
   ngOnInit(): void {
-    
+    this.groupService.getGroupsByUser().subscribe(groups=>{
+      this.groups=groups
+      this.group=groups[0]
+    });
   }
   get title(){
     return this.createPostForm.get("title");
   }
   createPost(){
-    console.log(this.images.getSelectedImages());
-    console.log(this.createPostForm.value)
-    console.log(this.group.id)
+    this.postService.createPost(this.createPostForm.value.title,this.group.id,this.images.getSelectedImages()).subscribe();
   }
 }
