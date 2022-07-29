@@ -14,7 +14,7 @@ namespace DrawingsApp.Images.Controllers
         public ImageController(IImageService imageService)
             => this.imageService = imageService;
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id?}")]
         public async Task<ActionResult<IEnumerable<string>>> Index(string? id) 
             => Ok(await imageService.GetUserImages(id??User.FindFirstValue(ClaimTypes.NameIdentifier)));
 
