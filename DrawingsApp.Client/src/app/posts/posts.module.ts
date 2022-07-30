@@ -10,6 +10,9 @@ import { CreateTagComponent } from './create-tag/create-tag.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { UserImagesComponent } from './user-images/user-images.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PostFullComponent } from './post-full/post-full.component';
+import { CommentComponent } from './comment/comment.component';
+import { CommentListComponent } from './comment-list/comment-list.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     PopularGroupsComponent,
     CreateTagComponent,
     CreatePostComponent,
-    UserImagesComponent
+    UserImagesComponent,
+    PostFullComponent,
+    CommentComponent,
+    CommentListComponent
   ],
   imports: [
     CommonModule,

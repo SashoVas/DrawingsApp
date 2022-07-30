@@ -4,6 +4,7 @@ import { CreateGroupComponent } from './create-group/create-group.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { GroupComponent } from './group/group.component';
 import { LandingComponent } from './landing/landing.component';
+import { PostFullComponent } from './post-full/post-full.component';
 import { GroupResolver } from './resolvers/group.resolver';
 import { LandingResolver } from './resolvers/landing.resolver';
 
@@ -14,6 +15,10 @@ const routes: Routes = [{
   resolve:{
     postsData:LandingResolver
   }
+},
+{
+  path:"post",
+  component:PostFullComponent
 },
 {
   path:"group/create",
