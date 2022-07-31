@@ -35,6 +35,10 @@ namespace DrawingsApp.Groups.Controllers
         [HttpPost]
         public async Task<ActionResult> CreatePost(CreatePostInputModel input)
         {
+            if (input.ImgUrls.Count()>5)
+            {
+                return BadRequest();
+            }
             if ((int)(await userService.GetRole(GetUserId(),input.GroupId))<2)
             {
                 return Unauthorized();

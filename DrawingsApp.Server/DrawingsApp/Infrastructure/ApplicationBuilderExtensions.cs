@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using DrawingsApp.Data.Seeders;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -38,6 +40,22 @@ namespace DrawingsApp.Infrastructure
                  .AllowAnyHeader()
                  .AllowCredentials());
             });
+        }
+        public static void SettupDb<T>(this WebApplication app,Type seederType=null) where T : DbContext
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                using (var context = scope.ServiceProvider.GetService<T>()!)
+                {
+                    context.Database.EnsureCreated();
+                    
+                    if (!(seederType is null))
+                    {
+                        var seeder=(ISeeder)Activator.CreateInstance(seederType,context)!;
+                        seeder.Seed();
+                    }
+                }
+            }
         }
     }
 }

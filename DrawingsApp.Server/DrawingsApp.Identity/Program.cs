@@ -6,11 +6,7 @@ using DrawingsApp.Identity.Infrastructure;
 using DrawingsApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 var defaultConnection = builder.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
 builder.Services.AddDbContext<DrawingsAppIdentityDbContext>(options => options.UseSqlServer(defaultConnection));
 
@@ -21,14 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.AddCors();
 builder.Services.AddTransient<IIdentityService, IdentityService>();
 var app = builder.Build();
-using (var serviceScope = app.Services.CreateScope())
-{
-    using (var context=serviceScope.ServiceProvider.GetService<DrawingsAppIdentityDbContext>()!)
-    {
-        context.Database.EnsureCreated();
-    }
-}
-// Configure the HTTP request pipeline.
+app.SettupDb<DrawingsAppIdentityDbContext>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

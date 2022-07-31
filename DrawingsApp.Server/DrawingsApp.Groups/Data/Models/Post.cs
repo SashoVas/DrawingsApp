@@ -1,4 +1,7 @@
-﻿namespace DrawingsApp.Groups.Data.Models
+﻿using DrawingsApp.Data;
+using System.ComponentModel.DataAnnotations;
+
+namespace DrawingsApp.Groups.Data.Models
 {
     public class Post
     {
@@ -8,6 +11,7 @@
         }
         public int Id { get; set; }
         public DateTime PostedOn { get; set; }
+        [MaxLength(DataConstants.TitleMaxLength)]
         public string Title { get; set; }
         public string SenderId { get; set; }
         public User Sender { get; set; }
