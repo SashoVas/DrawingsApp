@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawingsApp.Identity", "Dra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawingsApp.Images", "DrawingsApp.Images\DrawingsApp.Images.csproj", "{0EA57965-1CC3-41BC-8ADF-B50B636D0D2A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawingsApp.Comments", "DrawingsApp.Comments\DrawingsApp.Comments.csproj", "{08401580-7B4B-4CE4-B70D-D1CBAF9A2456}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0EA57965-1CC3-41BC-8ADF-B50B636D0D2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EA57965-1CC3-41BC-8ADF-B50B636D0D2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EA57965-1CC3-41BC-8ADF-B50B636D0D2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08401580-7B4B-4CE4-B70D-D1CBAF9A2456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08401580-7B4B-4CE4-B70D-D1CBAF9A2456}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08401580-7B4B-4CE4-B70D-D1CBAF9A2456}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08401580-7B4B-4CE4-B70D-D1CBAF9A2456}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

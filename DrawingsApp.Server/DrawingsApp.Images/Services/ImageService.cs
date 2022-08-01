@@ -10,8 +10,8 @@ namespace DrawingsApp.Images.Services
     {
         private const int ImgWidth = 700;
         private const int ImgHeight = 700;
-        private readonly MongoDbRepository repo;
-        public ImageService( MongoDbRepository repo)
+        private readonly MongoDbImagesRepository repo;
+        public ImageService( MongoDbImagesRepository repo)
         {
             this.repo = repo;
         }

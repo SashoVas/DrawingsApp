@@ -3,10 +3,10 @@ using MongoDB.Driver;
 
 namespace DrawingsApp.Images.Data
 {
-    public class MongoDbRepository
+    public class MongoDbImagesRepository
     {
         private readonly IMongoCollection<ImageFile> collection;
-        public MongoDbRepository(IConfiguration configuration)
+        public MongoDbImagesRepository(IConfiguration configuration)
         {
             var client=new MongoClient(configuration.GetSection("MongoDbSettings:ConnectionString").Value);
             var db = client.GetDatabase(configuration.GetSection("MongoDbSettings:DataBase").Value);

@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 var defaultConnection = builder.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
-builder.Services.AddSingleton<MongoDbRepository>();
+builder.Services.AddSingleton<MongoDbImagesRepository>();
 builder.AddAuthenticationWithJWT();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
