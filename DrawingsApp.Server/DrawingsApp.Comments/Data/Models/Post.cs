@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DrawingsApp.Comments.Data.Models
 {
-    public class Post
+    public class Post: ICommentable
     {
         public Post()
         {

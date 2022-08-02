@@ -1,6 +1,6 @@
 ﻿namespace DrawingsApp.Comments.Data.Models
 {
-    public class Comment
+    public class Comment: ICommentable
     {
         public Comment()
         {

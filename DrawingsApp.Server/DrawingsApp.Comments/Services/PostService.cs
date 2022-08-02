@@ -34,5 +34,7 @@ namespace DrawingsApp.Comments.Services
             return true;
         }
         public Task<Post> GetPost(int id) => repo.GetPost(id);
+
+        public Task<IEnumerable<Post>> GetPosts() => repo.GetPosts();
     }
 }
