@@ -1,4 +1,5 @@
 using DrawingsApp.Comments.Data;
+using DrawingsApp.Comments.Messages;
 using DrawingsApp.Comments.Services;
 using DrawingsApp.Comments.Services.Contracts;
 using DrawingsApp.Infrastructure;
@@ -11,6 +12,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.AddCors();
 builder.AddAuthenticationWithJWT();
+builder.AddMessages(typeof(PostCreatedConsumer));
 builder.Services.AddSingleton<MongoDbCommentsRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

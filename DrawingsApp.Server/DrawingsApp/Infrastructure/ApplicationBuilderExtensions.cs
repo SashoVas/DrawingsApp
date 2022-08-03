@@ -1,4 +1,5 @@
 ﻿using DrawingsApp.Data.Seeders;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +57,28 @@ namespace DrawingsApp.Infrastructure
                     }
                 }
             }
+        }
+        public static void AddMessages(this WebApplicationBuilder builder,params Type[] consumers)
+        {
+            builder.Services.AddMassTransit(x =>
+            {
+                foreach (var consumer in consumers)
+                {
+                    x.AddConsumer(consumer);
+                }
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("localhost", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+                    foreach (var consumer in consumers)
+                    {
+                        cfg.ReceiveEndpoint(consumer.FullName,endpoint=>endpoint.ConfigureConsumer(context,consumer));
+                    }
+                });
+            });
         }
     }
 }

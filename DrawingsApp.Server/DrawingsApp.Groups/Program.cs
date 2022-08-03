@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.AddCors();
 builder.AddAuthenticationWithJWT();
+builder.AddMessages();
 var defaultConnection = builder.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
 builder.Services.AddDbContext<DrawingsAppGroupsDbContext>(options => options.UseSqlServer(defaultConnection));
 builder.Services.AddEndpointsApiExplorer();

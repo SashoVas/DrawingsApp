@@ -2,20 +2,24 @@
 using DrawingsApp.Groups.Models.InputModels.Post;
 using DrawingsApp.Groups.Models.OutputModels.Post;
 using DrawingsApp.Groups.Services.Contracts;
+using DrawingsApp.Messages.Post;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DrawingsApp.Groups.Controllers
 {
     public class PostController : ApiController
     {
+        private readonly IBus publisher;
         private readonly IPostService postService;
         private readonly IUserService userService;
         private readonly IAsynchronousDbOperationsService asynchronousDbOperationsService;
-        public PostController(IPostService postService, IUserService userService, IAsynchronousDbOperationsService asynchronousDbOperationsService)
+        public PostController(IPostService postService, IUserService userService, IAsynchronousDbOperationsService asynchronousDbOperationsService, IBus publisher)
         {
             this.postService = postService;
             this.userService = userService;
             this.asynchronousDbOperationsService = asynchronousDbOperationsService;
+            this.publisher = publisher;
         }
 
         [HttpGet("Group/{id}")]
@@ -43,7 +47,19 @@ namespace DrawingsApp.Groups.Controllers
             {
                 return Unauthorized();
             }
-            return Created("", await postService.CreatePost(GetUserId(), input.Title, input.GroupId, input.ImgUrls));
+            var id = await postService.CreatePost(GetUserId(), input.Title, input.GroupId, input.ImgUrls);
+            await publisher.Publish(new PostCreatedMessage 
+            {
+                GroupId=input.GroupId,
+                GroupName="smt",
+                Images=input.ImgUrls,
+                SenderId=GetUserId(),
+                SenderName=User.Identity.Name,
+                Id=id,
+                PostedOn=DateTime.UtcNow,
+                Title=input.Title
+            });
+            return Created("",id);
         }
         [HttpPut]
         public async Task<ActionResult> UpdatePost(UpdatePostInputModel input)
