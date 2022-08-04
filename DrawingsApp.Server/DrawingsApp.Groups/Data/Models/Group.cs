@@ -13,9 +13,10 @@ namespace DrawingsApp.Groups.Data.Models
         }
         public int Id { get; set; }
         public string? ImgUrl { get; set; }
-        [MaxLength(DataConstants.TitleMaxLength)]
+        [MaxLength(DataConstants.GroupTitleMaxLenght)]
+        [MinLength(DataConstants.GroupTitleMinLenght)]
         public string Title { get; set; }
-        [MaxLength(DataConstants.MoreInfoMaxLength)]
+        [MaxLength(DataConstants.GroupMoreInfoMaxLength)]
         public string MoreInfo { get; set; }
         public GroupType GroupType { get; set; }
         public ICollection<GroupTag> GroupTags { get; set; }

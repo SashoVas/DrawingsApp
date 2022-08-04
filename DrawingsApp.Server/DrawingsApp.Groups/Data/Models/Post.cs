@@ -11,7 +11,8 @@ namespace DrawingsApp.Groups.Data.Models
         }
         public int Id { get; set; }
         public DateTime PostedOn { get; set; }
-        [MaxLength(DataConstants.TitleMaxLength)]
+        [MaxLength(DataConstants.PostTitleMaxLength)]
+        [MinLength(DataConstants.PostTitleMinLength)]
         public string Title { get; set; }
         public string SenderId { get; set; }
         public User Sender { get; set; }
