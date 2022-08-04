@@ -13,13 +13,20 @@ namespace DrawingsApp.Groups.Controllers
         private readonly IBus publisher;
         private readonly IPostService postService;
         private readonly IUserService userService;
+        private readonly IGroupService groupService;
         private readonly IAsynchronousDbOperationsService asynchronousDbOperationsService;
-        public PostController(IPostService postService, IUserService userService, IAsynchronousDbOperationsService asynchronousDbOperationsService, IBus publisher)
+        public PostController(
+            IPostService postService,
+            IUserService userService,
+            IAsynchronousDbOperationsService asynchronousDbOperationsService,
+            IBus publisher,
+            IGroupService groupService)
         {
             this.postService = postService;
             this.userService = userService;
             this.asynchronousDbOperationsService = asynchronousDbOperationsService;
             this.publisher = publisher;
+            this.groupService = groupService;
         }
 
         [HttpGet("Group/{id}")]
@@ -51,13 +58,14 @@ namespace DrawingsApp.Groups.Controllers
             await publisher.Publish(new PostCreatedMessage 
             {
                 GroupId=input.GroupId,
-                GroupName="smt",
+                GroupName=await groupService.GetGroupName(input.GroupId),
                 Images=input.ImgUrls,
                 SenderId=GetUserId(),
                 SenderName=User.Identity.Name,
                 Id=id,
                 PostedOn=DateTime.UtcNow,
-                Title=input.Title
+                Title=input.Title,
+                Description=input.Description
             });
             return Created("",id);
         }
@@ -68,6 +76,12 @@ namespace DrawingsApp.Groups.Controllers
             {
                 return Unauthorized();
             }
+            await publisher.Publish(new PostUpdateMessage
+            {
+                Id = input.PostId,
+                Description = input.Description,
+                Title = input.Title
+            });
             return Ok();
         }
         [HttpDelete("{id}")]
@@ -77,6 +91,10 @@ namespace DrawingsApp.Groups.Controllers
             {
                 return Unauthorized();
             }
+            await publisher.Publish(new PostDeleteMessage
+            {
+                Id=id
+            });
             return Ok();
         }
     }

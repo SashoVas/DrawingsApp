@@ -12,6 +12,6 @@
         public string UserName { get; set; }
         public int PostId { get; set; }
         public DateTime CommentedOn { get; set; } = DateTime.UtcNow;
-        public List<Comment> Comments { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

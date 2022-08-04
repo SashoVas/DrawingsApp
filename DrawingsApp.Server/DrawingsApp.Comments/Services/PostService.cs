@@ -16,25 +16,43 @@ namespace DrawingsApp.Comments.Services
             int groupId,
             string groupName,
             string title,
-            string explanation,
+            string description,
             string senderId,
-            string senderName)
+            string senderName,
+            ICollection<string> ImgUrls)
         {
             await repo.CreatePost(new Post
             {
                 PostedOn = DateTime.UtcNow,
                 SenderId = senderId,
                 SenderName =senderName,
-                Explanation = explanation,
+                Description = description,
                 GroupId = groupId,
                 OuterId = outerId,
                 GroupName = groupName,
-                Title = title
+                Title = title,
+                ImgUrls=ImgUrls
             }) ;
             return true;
         }
+
+        public async Task DeletePost(int outerid)
+        {
+            var post = await repo.GetPost(outerid);
+            post.IsDeleated = true;
+            await repo.UpdatePost(post);
+        }
+
         public Task<Post> GetPost(int id) => repo.GetPost(id);
 
         public Task<IEnumerable<Post>> GetPosts() => repo.GetPosts();
+
+        public async Task UpdatePost(int outerId,string title,string description)
+        {
+            var post = await repo.GetPost(outerId);
+            post.Title = title;
+            post.Description = description;
+            await repo.UpdatePost(post);
+        }
     }
 }

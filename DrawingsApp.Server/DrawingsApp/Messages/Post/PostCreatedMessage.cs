@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DrawingsApp.Messages.Post
+﻿namespace DrawingsApp.Messages.Post
 {
     public class PostCreatedMessage
     {
@@ -15,7 +9,7 @@ namespace DrawingsApp.Messages.Post
         public string SenderName { get; set; }
         public int GroupId { get; set; }
         public string GroupName { get; set; }
-        public string Explanation { get; set; }
+        public string Description { get; set; }
         public ICollection<string> Images { get; set; }
     }
 }

@@ -11,9 +11,15 @@ namespace DrawingsApp.Comments.Messages
         public PostCreatedConsumer(IPostService postService) 
             => this.postService = postService;
 
-        public async Task Consume(ConsumeContext<PostCreatedMessage> context)
-        {
-            await postService.CreatePost(context.Message.Id,context.Message.GroupId,context.Message.GroupName,context.Message.Title,context.Message.Explanation,context.Message.SenderId,context.Message.SenderName);     
-        }
+        public async Task Consume(ConsumeContext<PostCreatedMessage> context) 
+            => await postService.CreatePost(
+                context.Message.Id,
+                context.Message.GroupId,
+                context.Message.GroupName,
+                context.Message.Title,
+                context.Message.Description,
+                context.Message.SenderId,
+                context.Message.SenderName,
+                context.Message.Images);
     }
 }

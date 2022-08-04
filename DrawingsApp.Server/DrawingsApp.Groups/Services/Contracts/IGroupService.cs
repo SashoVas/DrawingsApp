@@ -12,5 +12,6 @@ namespace DrawingsApp.Groups.Services.Contracts
         Task<bool> DeleteGroup(int groupId);
         Task<IEnumerable<GroupListingOutputModel>> GetGropus(string name);
         Task<IEnumerable<GroupListingOutputModel>> GetGropusByUser(string userId);
+        Task<string> GetGroupName(int groupId);
     }
 }

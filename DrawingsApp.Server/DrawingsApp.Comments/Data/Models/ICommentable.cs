@@ -2,7 +2,7 @@
 {
     public interface ICommentable
     {
-        List<Comment> Comments { get; set; }
+        ICollection<Comment> Comments { get; set; }
 
     }
 }

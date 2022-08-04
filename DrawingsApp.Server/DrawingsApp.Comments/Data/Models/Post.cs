@@ -18,8 +18,10 @@ namespace DrawingsApp.Comments.Data.Models
         public int GroupId { get; set; }
         public string GroupName { get; set; }
         public string SenderId { get; set; }
-        public string Explanation { get; set; }
+        public string Description { get; set; }
         public string SenderName { get; set; }
-        public List<Comment> Comments { get; set; }
+        public bool IsDeleated { get; set; } = false;
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<string> ImgUrls { get; set; }
     }
 }
