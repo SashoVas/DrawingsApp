@@ -87,8 +87,10 @@ namespace DrawingsApp.Groups.Services
             var like =await context.Likes
                 .Where(l => l.PostId == postId && l.UserId == userId)
                 .FirstOrDefaultAsync();
+            bool isNewLike = false;
             if (like is null)
             {
+                isNewLike = true;
                 await context.Likes.AddAsync(new PostUserLikes 
                 { 
                     PostId=postId,
@@ -100,7 +102,7 @@ namespace DrawingsApp.Groups.Services
                 context.Likes.Remove(like);
             }
             await context.SaveChangesAsync();
-            return true;
+            return isNewLike;
         }
 
         public async Task<bool> UpdatePost(string senderId, int postId, string title)

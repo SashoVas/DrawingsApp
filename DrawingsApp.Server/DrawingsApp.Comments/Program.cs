@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.AddCors();
 builder.AddAuthenticationWithJWT();
-builder.AddMessages(typeof(PostCreatedConsumer),typeof(PostDeletedConsumer),typeof(PostUpdatedConsumer));
+builder.AddMessages(typeof(PostCreatedConsumer),typeof(PostDeletedConsumer),typeof(PostUpdatedConsumer),typeof(PostLikedConsumer));
 builder.Services.AddSingleton<MongoDbCommentsRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

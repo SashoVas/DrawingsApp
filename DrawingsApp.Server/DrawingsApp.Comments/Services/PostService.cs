@@ -47,6 +47,20 @@ namespace DrawingsApp.Comments.Services
 
         public Task<IEnumerable<Post>> GetPosts() => repo.GetPosts();
 
+        public async Task LikePost(int outerId, bool isNewLike)
+        {
+            var post =await repo.GetPost(outerId);
+            if (isNewLike)
+            {
+                post.Likes++;
+            }
+            else
+            {
+                post.Likes--;
+            }
+            await repo.UpdatePost(post);
+        }
+
         public async Task UpdatePost(int outerId,string title,string description)
         {
             var post = await repo.GetPost(outerId);

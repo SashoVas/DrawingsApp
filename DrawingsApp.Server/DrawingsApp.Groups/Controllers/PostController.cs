@@ -104,10 +104,16 @@ namespace DrawingsApp.Groups.Controllers
             {
                 return Unauthorized();
             }
-            if (!await postService.LikePost(GetUserId(),input.PostId))
-            {
-                return NotFound();
-            }
+            var isNewLike = await postService.LikePost(GetUserId(), input.PostId);
+
+            await publisher.Publish(new PostLikeMessage 
+            { 
+                GroupId=input.GroupId,
+                PostId=input.PostId,
+                UserId=GetUserId(),
+                UserName=User.Identity.Name,
+                IsNewLike=isNewLike
+            });
             return Created("",null);
         }
     }
