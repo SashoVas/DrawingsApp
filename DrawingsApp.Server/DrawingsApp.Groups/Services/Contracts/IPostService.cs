@@ -9,5 +9,6 @@ namespace DrawingsApp.Groups.Services.Contracts
         Task<int> CreatePost(string senderId, string title, int groupId, List<string> imgUrls);
         Task<bool> UpdatePost(string senderId,int postId, string title);
         Task<bool> DeletePost(string userId, int postId);
+        Task<bool> LikePost( string userId,int postId);
     }
 }

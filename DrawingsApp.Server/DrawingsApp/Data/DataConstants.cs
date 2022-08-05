@@ -3,7 +3,7 @@
     public static class DataConstants
     {
         public const int GroupTitleMaxLenght=100;
-        public const int GroupTitleMinLenght=100;
+        public const int GroupTitleMinLenght=3;
         public const int GroupMoreInfoMaxLength = 1000;
         public const int PostTitleMaxLength = 300;
         public const int PostTitleMinLength = 3;

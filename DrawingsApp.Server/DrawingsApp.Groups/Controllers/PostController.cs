@@ -97,5 +97,18 @@ namespace DrawingsApp.Groups.Controllers
             });
             return Ok();
         }
+        [HttpPost("Like")]
+        public async Task<ActionResult>LikePost(LikePostInputModel input)
+        {
+            if ((int)(await userService.GetRole(GetUserId(), input.GroupId)) < 2)
+            {
+                return Unauthorized();
+            }
+            if (!await postService.LikePost(GetUserId(),input.PostId))
+            {
+                return NotFound();
+            }
+            return Created("",null);
+        }
     }
 }

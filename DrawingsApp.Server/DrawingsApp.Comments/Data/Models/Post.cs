@@ -16,6 +16,7 @@ namespace DrawingsApp.Comments.Data.Models
         public DateTime PostedOn { get; set; }
         public string Title { get; set; }
         public int GroupId { get; set; }
+        public int Likes { get; set; }
         public string GroupName { get; set; }
         public string SenderId { get; set; }
         public string Description { get; set; }

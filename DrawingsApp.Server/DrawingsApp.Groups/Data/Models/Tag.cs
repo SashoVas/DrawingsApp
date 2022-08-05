@@ -13,7 +13,7 @@ namespace DrawingsApp.Groups.Data.Models
         [MaxLength(DataConstants.TagNameMaxLength)]
         [MinLength(DataConstants.TagNameMinLength)]
         public string TagName { get; set; }
-        [MaxLength(DataConstants.TagInfoMaxLenght)]
+        [MaxLength(DataConstants.TagInfoMaxLength)]
         public string TagInfo { get; set; }
         public ICollection<GroupTag> GroupTags { get; set; }
 

@@ -35,21 +35,15 @@ namespace DrawingsApp.Groups.Services
         {
             var postData = await context.Posts
                 .Where(p => p.Id == postId)
-                .Select(p => new 
-                    { 
-                        p.SenderId,
-                        p.GroupId
-                    })
+                .Include(p=>p.Likes)
                 .FirstOrDefaultAsync();
             if (postData is null || postData.SenderId!=userId || !await userService.IsAdmin(userId, postData.GroupId))
             {
                 return false;
             }
-            var post = new Post
-            {
-                Id = postId
-            };
-            context.Posts.Remove(post);
+
+            context.Likes.RemoveRange(postData.Likes);
+            context.Posts.Remove(postData);
             await context.SaveChangesAsync();
             return true;
         }
@@ -67,7 +61,8 @@ namespace DrawingsApp.Groups.Services
                     GroupName=p.Group.Title,
                     ImgUrls = p.Images.Select(i=>i.Id).ToList(),
                     SenderUserName = p.Sender.Username,
-                    Title = p.Title
+                    Title = p.Title,
+                    Likes=p.Likes.Count()
                 }).ToListAsync();
 
         public Task<List<PostOutputModel>> GetPostsByUser(string userId) 
@@ -83,8 +78,30 @@ namespace DrawingsApp.Groups.Services
                     GroupName=p.Group.Title,
                     ImgUrls = p.Images.Select(i => i.Id).ToList(),
                     SenderUserName = p.Sender.Username,
-                    Title = p.Title
+                    Title = p.Title,
+                    Likes=p.Likes.Count()
                 }).ToListAsync();
+
+        public async Task<bool> LikePost(string userId,int postId)
+        {
+            var like =await context.Likes
+                .Where(l => l.PostId == postId && l.UserId == userId)
+                .FirstOrDefaultAsync();
+            if (like is null)
+            {
+                await context.Likes.AddAsync(new PostUserLikes 
+                { 
+                    PostId=postId,
+                    UserId=userId
+                });
+            }
+            else
+            {
+                context.Likes.Remove(like);
+            }
+            await context.SaveChangesAsync();
+            return true;
+        }
 
         public async Task<bool> UpdatePost(string senderId, int postId, string title)
         {

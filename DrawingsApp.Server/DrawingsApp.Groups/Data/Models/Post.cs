@@ -8,6 +8,7 @@ namespace DrawingsApp.Groups.Data.Models
         public Post()
         {
             Images = new HashSet<Image>();
+            Likes = new HashSet<PostUserLikes>();
         }
         public int Id { get; set; }
         public DateTime PostedOn { get; set; }
@@ -19,5 +20,6 @@ namespace DrawingsApp.Groups.Data.Models
         public int GroupId { get; set; }
         public Group Group { get; set; }
         public ICollection<Image> Images { get; set; }
+        public ICollection<PostUserLikes> Likes { get; set; }
     }
 }

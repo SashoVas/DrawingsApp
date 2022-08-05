@@ -8,6 +8,7 @@
         public string Title { get; set; }
         public string GroupName { get; set; }
         public string SenderUserName { get; set; }
+        public int Likes { get; set; }
 
     }
 }

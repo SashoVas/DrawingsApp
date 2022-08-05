@@ -11,6 +11,7 @@ namespace DrawingsApp.Groups.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<PostUserLikes> Likes { get; set; }
         public DrawingsAppGroupsDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -25,6 +26,10 @@ namespace DrawingsApp.Groups.Data
             modelBuilder.Entity<UserGroup>()
                 .HasKey(ug => new { ug.UserId, ug.GroupId })
                 .HasName("PrimaryKey_UserGroupId");
+
+            modelBuilder.Entity<PostUserLikes>()
+                .HasKey(l => new { l.UserId, l.PostId })
+                .HasName("PrimaryKey_PostUserLikesId");
 
             modelBuilder.Entity<Group>()
                 .HasMany(g => g.GroupTags)
@@ -51,6 +56,15 @@ namespace DrawingsApp.Groups.Data
                 .WithOne(i => i.Post)
                 .HasForeignKey(i => i.PostId);
 
+            modelBuilder.Entity<Post>()
+                .HasMany(p => p.Likes)
+                .WithOne(l => l.Post)
+                .HasForeignKey(l => l.PostId);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.LikedPosts)
+                .WithOne(lp => lp.User)
+                .HasForeignKey(lp => lp.UserId);
         }
     }
 }
