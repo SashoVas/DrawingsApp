@@ -5,7 +5,9 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <input type="text" placeholder="SearchGroup">
+        <form [formGroup]="searchGroupForm"><input type="text" formControlName="groupName" placeholder="SearchGroup" ></form>
+        
+        <button class="btn btn-light" (click)="search()">Search</button>
         <a class="btn btn-secodary text-light" routerLink="/images/create">Create Image</a>
         <a class="btn btn-secodary text-light" routerLink="/group/create">Create Group</a>
         <a class="btn btn-secodary text-light" routerLink="/group/create/post">Create Post</a>

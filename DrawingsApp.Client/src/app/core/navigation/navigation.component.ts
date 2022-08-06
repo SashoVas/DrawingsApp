@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵclearResolutionOfComponentResourcesQueue } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 
 @Component({
@@ -7,8 +9,12 @@ import { AccountService } from '../services/account.service';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit {
-
-  constructor(private accountService:AccountService) { }
+  searchGroupForm:FormGroup;
+  constructor(private accountService:AccountService,private router:Router,private fb:FormBuilder) {
+    this.searchGroupForm=fb.group({
+      "groupName":[""]
+    });
+   }
 
   ngOnInit(): void {
   }
@@ -17,5 +23,8 @@ export class NavigationComponent implements OnInit {
   }
   logOut(){
     this.accountService.logOut();
+  }
+  search(){
+    this.router.navigate(["/group/search/"+this.searchGroupForm.value.groupName]);
   }
 }

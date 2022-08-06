@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { CreatePostComponent } from './create-post/create-post.component';
+import { GroupListingComponent } from './group-listing/group-listing.component';
 import { GroupComponent } from './group/group.component';
 import { LandingComponent } from './landing/landing.component';
 import { PostFullComponent } from './post-full/post-full.component';
@@ -23,6 +24,10 @@ const routes: Routes = [{
 {
   path:"group/create",
   component:CreateGroupComponent
+},
+{
+  path:"group/search/:name",
+  component:GroupListingComponent
 },
 {
   path:"group/create/post",
