@@ -15,7 +15,7 @@ namespace DrawingsApp.Groups.Controllers
         public async Task<ActionResult> GetUsers(int id) 
             => Ok(await userService.GetUsersByGroup(id));
 
-        [HttpPost]
+        [HttpPost("{groupId}")]
         public async Task<ActionResult> JoinGroup(int groupId)
         {
             var userId = GetUserId();

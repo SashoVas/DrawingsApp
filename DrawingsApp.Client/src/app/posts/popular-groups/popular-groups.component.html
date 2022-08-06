@@ -3,10 +3,10 @@
         <h5>Popular Groups</h5>
     </div>
     <div>
-        <div *ngFor="let group of [1,2,3,4,5]" class="d-flex p-1">
-            <p class="align-self-center mb-0 mx-1">{{group}}</p>      
+        <div *ngFor="let group of topGroups;let i=index" class="d-flex p-1">
+            <p class="align-self-center mb-0 mx-1">{{i}}</p>      
             <img class="align-self-center mx-1" src="../../../assets/resources/Untitled.png" width="30" height="30"  alt="">
-            <p class="align-self-center mb-0 mx-1 group-name">Group nameaaa</p>
+            <p routerLink="group/{{group.id}}" class="align-self-center mb-0 mx-1 group-name pointer">{{group.title}}</p>
             <button class="btn btn-secondary btn-sm align-self-center mx-1">Join</button>
         </div>
     </div>
@@ -24,12 +24,12 @@
 </div>
 <div class="default_bg default_border main mt-3 p-3 d-inline-flex flex-column">
     <div class="text-center">
-        <h5>Favorite Groups</h5>
+        <h5>Your Groups</h5>
     </div>
     <div>
-        <div *ngFor="let group of [1,2,3,4,5]" class="d-flex p-1">   
+        <div *ngFor="let group of yourGroups" class="d-flex p-1">   
             <img class="align-self-center mx-1" src="../../../assets/resources/Untitled.png" width="30" height="30"  alt="">
-            <p class="align-self-center mb-0 mx-1 group-name">Group nameaaa</p>
+            <p class="align-self-center mb-0 mx-1 group-name pointer" routerLink="group/{{group.id}}">{{group.title}}</p>
         </div>
     </div>
     <div class="px-2 mt-2">

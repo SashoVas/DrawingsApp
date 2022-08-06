@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IGroup } from 'src/app/core/interfaces/IGroup';
+import { GroupService } from '../services/group.service';
 
 @Component({
   selector: 'app-popular-groups',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PopularGroupsComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private groupService:GroupService) { }
+  topGroups:Array<IGroup>=[];
+  yourGroups:Array<IGroup>=[]
   ngOnInit(): void {
+    this.groupService.getTopGroups().subscribe(data=>this.topGroups=data);
+    this.groupService.getGroupsByUser().subscribe(data=>this.yourGroups=data)
   }
 
 }

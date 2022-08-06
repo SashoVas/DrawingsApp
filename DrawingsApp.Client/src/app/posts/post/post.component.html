@@ -6,7 +6,7 @@
             <p class="mb-0"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
         </div>
         <div class="p-3 pb-0">
-            <p class="name"><b class="user_name">{{post.groupName}}</b> <span class="text-secondary"> posted by <span class="user_name">{{post.senderUserName}}</span> on {{post.postedOn}}</span></p>
+            <p class="name"><b routerLink="group/{{post.groupId}}" class="user_name">{{post.groupName}}</b> <span class="text-secondary"> posted by <span class="user_name">{{post.senderUserName}}</span> on {{post.postedOn}}</span></p>
             <div>
                 <p>{{post.title}}</p>
                 <div class="d-flex justify-content-center w-100">

@@ -13,3 +13,6 @@ body{
 .default_border:hover{
     border-color: rgb(129,131,132);
 }
+.pointer{
+    cursor: pointer;
+}

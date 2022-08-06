@@ -23,14 +23,14 @@
                     <p class="mb-0"><b>Tags</b></p>
                     <hr class="mt-0">
                     <div class="d-flex">
-                        <button *ngFor="let tag of selectedTags;let i =index;"  class="btn btn-outline-danger text-light mx-2 tag" data-bs-toggle="button" (click)="selectTag(tag)"  >{{tag.name}}</button>
+                        <button *ngFor="let tag of selectedTags;let i =index;"  class="btn btn-outline-danger text-light mx-2 tag" data-bs-toggle="button" (click)="selectTag(tag)"  >{{tag.tagName}}</button>
                         
                         <button class="btn btn-outline-secondary mx-2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             +
                         </button>
                         <ul class="dropdown-menu default_bg default_border" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item text-light" data-bs-toggle="modal" data-bs-target="#CreateTagModal">Create</a></li>
-                            <li *ngFor="let tag of tags; let i =index"><a (click)="selectTag(tag)" class="dropdown-item text-light">{{tag.name}}</a></li>
+                            <li><a class="dropdown-item text-light pointer" data-bs-toggle="modal" data-bs-target="#CreateTagModal">Create</a></li>
+                            <li *ngFor="let tag of tags; let i =index"><a (click)="selectTag(tag)" class="dropdown-item text-light pointer">{{tag.tagName}}</a></li>
                         </ul>
                     </div>
                     <div class="d-flex flex-row-reverse p-3">

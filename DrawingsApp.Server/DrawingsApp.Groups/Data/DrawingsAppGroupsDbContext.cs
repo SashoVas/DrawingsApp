@@ -59,12 +59,14 @@ namespace DrawingsApp.Groups.Data
             modelBuilder.Entity<Post>()
                 .HasMany(p => p.Likes)
                 .WithOne(l => l.Post)
-                .HasForeignKey(l => l.PostId);
+                .HasForeignKey(l => l.PostId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.LikedPosts)
                 .WithOne(lp => lp.User)
-                .HasForeignKey(lp => lp.UserId);
+                .HasForeignKey(lp => lp.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

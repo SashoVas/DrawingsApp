@@ -84,6 +84,17 @@ namespace DrawingsApp.Groups.Services
                 .Select(g => g.GroupType)
                 .FirstOrDefaultAsync();
 
+        public async Task<IEnumerable<GroupListingOutputModel>> GetTopGroups() 
+            => await context.Groups
+                .OrderBy(g => g.UserGrops.Count())
+                .Take(10)
+                .Select(g => new GroupListingOutputModel
+                {
+                    Id = g.Id,
+                    ImgUrl = g.ImgUrl,
+                    Title = g.Title
+                }).ToListAsync();
+
         public async Task<bool> UpdateGroup(int groupId, string title, string moreInfo,string imgUrl, GroupType groupType, List<int> tags)
         {
             var group =await context.Groups

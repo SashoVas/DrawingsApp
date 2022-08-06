@@ -4,5 +4,6 @@ export interface IPost{
     postedOn:string,
     title:string,
     senderUserName:string,
-    groupName:string
+    groupName:string,
+    groupId:number
 }

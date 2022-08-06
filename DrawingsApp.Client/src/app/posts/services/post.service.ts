@@ -16,7 +16,7 @@ export class PostService {
   getPostByGroup(id:string):Observable<any>{
     return this.http.get<Array<IPost>>(environment.groupApi+"Post/Group/"+id);
   }
-  createPost(title:string,groupId:number,imgUrls:Array<string>):Observable<any>{
-    return this.http.post(environment.groupApi+"Post",{title,groupId,imgUrls});
+  createPost(title:string,groupId:number,description:string,imgUrls:Array<string>):Observable<any>{
+    return this.http.post(environment.groupApi+"Post",{title,groupId,description,imgUrls});
   }
 }

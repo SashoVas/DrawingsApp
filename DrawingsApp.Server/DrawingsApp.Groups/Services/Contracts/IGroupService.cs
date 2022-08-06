@@ -13,5 +13,6 @@ namespace DrawingsApp.Groups.Services.Contracts
         Task<IEnumerable<GroupListingOutputModel>> GetGropus(string name);
         Task<IEnumerable<GroupListingOutputModel>> GetGropusByUser(string userId);
         Task<string> GetGroupName(int groupId);
+        Task<IEnumerable<GroupListingOutputModel>> GetTopGroups();
     }
 }

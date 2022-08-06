@@ -33,7 +33,7 @@ namespace DrawingsApp.Groups.Services
 
         public async Task<IEnumerable<TagOutputModel>> GetTags(string name) 
             =>await context.Tags
-                .Where(t => t.TagName.StartsWith(name))
+                .Where(t => t.TagName.StartsWith(name??""))
                 .Select(t => new TagOutputModel
                 {
                     TagId = t.Id,

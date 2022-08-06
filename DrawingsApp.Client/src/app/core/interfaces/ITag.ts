@@ -1,5 +1,5 @@
 export interface ITag{
-    id:number,
-    name:string,
+    tagId:number,
+    tagName:string,
     isSelected:boolean
 }

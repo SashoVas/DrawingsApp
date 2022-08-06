@@ -23,7 +23,7 @@ namespace DrawingsApp.Groups.Services
                 GroupId=groupId,
                 SenderId= senderId,
                 Title=title,
-                Images=imgUrls.Select(i=>new Image {Id=i }).ToList(),
+                Images=imgUrls.Select(i=>new Image {Url=i }).ToList(),
                 PostedOn=DateTime.UtcNow
             };
             await context.Posts.AddAsync(post);
@@ -59,10 +59,11 @@ namespace DrawingsApp.Groups.Services
                     PostedOn = p.PostedOn.ToString("yyyy/MM/d"),
                     Id = p.Id,
                     GroupName=p.Group.Title,
-                    ImgUrls = p.Images.Select(i=>i.Id).ToList(),
+                    ImgUrls = p.Images.Select(i=>i.Url).ToList(),
                     SenderUserName = p.Sender.Username,
                     Title = p.Title,
-                    Likes=p.Likes.Count()
+                    Likes=p.Likes.Count(),
+                    GroupId=p.GroupId
                 }).ToListAsync();
 
         public Task<List<PostOutputModel>> GetPostsByUser(string userId) 
@@ -76,10 +77,11 @@ namespace DrawingsApp.Groups.Services
                     PostedOn = p.PostedOn.ToString("yyyy/MM/d"),
                     Id = p.Id,
                     GroupName=p.Group.Title,
-                    ImgUrls = p.Images.Select(i => i.Id).ToList(),
+                    ImgUrls = p.Images.Select(i => i.Url).ToList(),
                     SenderUserName = p.Sender.Username,
                     Title = p.Title,
-                    Likes=p.Likes.Count()
+                    Likes=p.Likes.Count(),
+                    GroupId=p.GroupId
                 }).ToListAsync();
 
         public async Task<bool> LikePost(string userId,int postId)

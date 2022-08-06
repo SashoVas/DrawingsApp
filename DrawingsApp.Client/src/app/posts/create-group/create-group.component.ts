@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ITag } from 'src/app/core/interfaces/ITag';
 import { GroupService } from '../services/group.service';
+import { TagsService } from '../services/tags.service';
 
 @Component({
   selector: 'app-create-group',
@@ -10,10 +12,10 @@ import { GroupService } from '../services/group.service';
 })
 export class CreateGroupComponent implements OnInit {
   createGroupForm:FormGroup
-  tags:Array<ITag>=[{id:1,name:"Sport",isSelected:false},{id:2,name:"News",isSelected:false},{id:3,name:"Gaming",isSelected:false},];
+  tags:Array<ITag>=[];
   selectedTags:Array<ITag>=[];
   groupType=1;
-  constructor(private fb:FormBuilder,private groupService:GroupService) {
+  constructor(private fb:FormBuilder,private groupService:GroupService,private tagService:TagsService,private router:Router) {
     this.createGroupForm=fb.group({
       "title":['',Validators.required],
       "moreInfo":['']
@@ -21,6 +23,7 @@ export class CreateGroupComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.tagService.getTags().subscribe(data=>this.tags=data);
   }
   get title(){
     return this.createGroupForm.get("title");
@@ -31,11 +34,11 @@ export class CreateGroupComponent implements OnInit {
   }
   createGroup(){
     console.log(this.createGroupForm.value);
-    console.log(this.tags.filter(t=>t.isSelected).map(t=>t.id))
+    console.log(this.tags.filter(t=>t.isSelected).map(t=>t.tagId))
     console.log(this.groupType);
     this.groupService.createGroup(this.createGroupForm.value.title,
       this.createGroupForm.value.moreInfo,
-      "",this.groupType,this.tags.filter(t=>t.isSelected).map(t=>t.id))
-    .subscribe();
+      "",this.groupType,this.tags.filter(t=>t.isSelected).map(t=>t.tagId))
+    .subscribe(r=>this.router.navigate(["/"]));
   }
 }

@@ -31,6 +31,9 @@ namespace DrawingsApp.Groups.Controllers
         [HttpGet("User")]
         public async Task<ActionResult> GetGroupsByUser() 
             => Ok(await groupService.GetGropusByUser(GetUserId()));
+        [HttpGet("Top")]
+        public async Task<ActionResult> GetTopGroups()
+            => Ok(await groupService.GetTopGroups());
 
         [HttpPost]
         public async Task<ActionResult> Create(CreateGroupInputModel input)

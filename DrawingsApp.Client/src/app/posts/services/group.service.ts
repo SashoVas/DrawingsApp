@@ -20,4 +20,8 @@ export class GroupService {
   createGroup(title:string,moreInfo:string,imgUrl:string,groupType:number,tags:Array<number>):Observable<any>{
     return this.http.post(environment.groupApi+"Group",{title,moreInfo,imgUrl,groupType,tags});
   }
+  getTopGroups():Observable<any>{
+    return this.http.get<Array<IGroup>>(environment.groupApi+"Group/Top");
+  }
+  
 }
