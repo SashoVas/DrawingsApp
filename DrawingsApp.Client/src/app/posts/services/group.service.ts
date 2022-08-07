@@ -23,7 +23,11 @@ export class GroupService {
   getTopGroups():Observable<any>{
     return this.http.get<Array<IGroup>>(environment.groupApi+"Group/Top");
   }
-  getGroupsByName(name:string):Observable<any>{
-    return this.http.get<Array<IGroup>>(environment.groupApi+"Group?name="+name);
+  getGroupsByName(name:string,userId:string|null,order:number,tags:Array<number>):Observable<any>{
+    let tagsString="";
+    for(let i=0;i<tags.length;i++){
+      tagsString+="&tags["+i+"]="+tags[i];
+    }
+    return this.http.get<Array<IGroup>>(environment.groupApi+"Group?name="+name+"&userId="+(userId!=null?userId:"")+"&order="+order+tagsString);
   }
 }

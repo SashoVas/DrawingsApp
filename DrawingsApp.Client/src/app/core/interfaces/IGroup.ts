@@ -5,5 +5,6 @@ export interface IGroup{
     imgUrl:string,
     groupType:number,
     tags:Array<string>,
-    users:number
+    users:number,
+    role:number
 }

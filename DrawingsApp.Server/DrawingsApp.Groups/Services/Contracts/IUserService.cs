@@ -13,5 +13,6 @@ namespace DrawingsApp.Groups.Services.Contracts
         Task PromoteUser(string userId, int groupId);
         Task<bool> IsAdmin(string userId,int groupId);
         Task<Role> GetRole(string userId,int groupId);
+        Task<bool> LeaveGroup(string userId, int groupId);
     }
 }

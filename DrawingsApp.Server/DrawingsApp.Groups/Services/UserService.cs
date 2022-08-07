@@ -93,5 +93,19 @@ namespace DrawingsApp.Groups.Services
                     UserId = ug.UserId,
                     Username = ug.User.Username
                 }).ToListAsync();
+
+        public async Task<bool> LeaveGroup(string userId, int groupId)
+        {
+            var userGroup =await context.UserGroups
+                .Where(ug => ug.UserId == userId && ug.GroupId == groupId)
+                .FirstOrDefaultAsync();
+            if (userGroup == null)
+            {
+                return false;
+            }
+            context.UserGroups.Remove(userGroup);
+            await context.SaveChangesAsync();
+            return true;
+        }
     }
 }

@@ -3,7 +3,7 @@
     public enum Role
     {
         
-        Declined=0,
+        NotInGroup=0,
         Pending=1,
         User=2,
         Admin=3

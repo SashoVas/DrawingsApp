@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { IGroup } from 'src/app/core/interfaces/IGroup';
+import { ITag } from 'src/app/core/interfaces/ITag';
 import { GroupService } from '../services/group.service';
+import { TagsService } from '../services/tags.service';
 
 @Component({
   selector: 'app-group-listing',
@@ -13,21 +14,30 @@ import { GroupService } from '../services/group.service';
 export class GroupListingComponent implements OnInit {
   groups:Array<IGroup>=[];
   form!:FormGroup;
-  constructor(private groupService:GroupService,private activatedRoute:ActivatedRoute,private fb:FormBuilder ) {
+  groupType:number|null=null;
+  selectedTags:Array<ITag>=[];
+  order:number=0;
+  tags:Array<ITag>=[];
+  constructor(private groupService:GroupService,private activatedRoute:ActivatedRoute,private fb:FormBuilder,private tagService:TagsService ) {
     
    }
 
   ngOnInit(): void {
     this.fetchData(this.activatedRoute.snapshot.params["name"]);
     this.form=this.fb.group({
-      "groupName":[this.activatedRoute.snapshot.params["name"]]
+      "name":[this.activatedRoute.snapshot.params["name"]],
     });
+    this.tagService.getTags().subscribe(data=>this.tags=data);
   }
   fetchData(name:string){
-    this.groupService.getGroupsByName(name).subscribe(data=>this.groups=data);
+    this.groupService.getGroupsByName(name,null,this.order,this.selectedTags.map(t=>t.tagId)).subscribe(data=>this.groups=data);
+  }
+  selectTag(tag:ITag){
+    tag.isSelected=!tag.isSelected;
+    this.selectedTags=this.tags.filter(t=>t.isSelected);
   }
   search(){
-    console.log(this.form.value.groupName);
-    this.fetchData(this.form.value.groupName);
+    console.log(this.form.value.name);
+    this.fetchData(this.form.value.name);
   }
 }

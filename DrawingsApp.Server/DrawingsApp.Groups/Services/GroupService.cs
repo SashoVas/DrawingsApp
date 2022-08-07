@@ -1,5 +1,6 @@
 ﻿using DrawingsApp.Groups.Data;
 using DrawingsApp.Groups.Data.Models;
+using DrawingsApp.Groups.Models.InputModels.Group;
 using DrawingsApp.Groups.Models.OutputModels.Group;
 using DrawingsApp.Groups.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -38,16 +39,46 @@ namespace DrawingsApp.Groups.Services
             return true;
         }
 
-        public async Task<IEnumerable<GroupListingOutputModel>> GetGropus(string name) 
-            => await context.Groups
-                .Where(g => g.Title.ToLower().StartsWith(name.ToLower()))
-                .Take(10)
-                .Select(g => new GroupListingOutputModel
+        public async Task<IEnumerable<GroupListingOutputModel>> Search(string name, List<int>? tags, string? userId, GroupType? groupType, SortType orderType)
+        {
+            var query = context.Groups
+                           .Where(g => g.Title.ToLower().StartsWith(name.ToLower()));
+            if (!(userId is null))
+            {
+                query = query.Where(g => g.UserGrops.Any(ug => ug.UserId == userId));
+            }
+            if (!(groupType is null))
+            {
+                query = query.Where(g => g.GroupType == groupType);
+            }
+            if (!(tags is null))
+            {
+                foreach (var tag in tags)
                 {
-                    Id = g.Id,
-                    ImgUrl=g.ImgUrl,
-                    Title = g.Title
-                }).ToListAsync();
+                    query = query.Where(g => g.GroupTags.Any(g=>g.TagId==tag));
+                }
+            }
+            
+            if (orderType!=SortType.None)
+            {
+                if (orderType==SortType.Ascending)
+                {
+                    query = query.OrderBy(ug => ug.UserGrops.Count());
+                }
+                else
+                {
+                    query = query.OrderByDescending(ug => ug.UserGrops.Count());
+                }
+            }
+            return await query
+                    .Take(10)
+                    .Select(g => new GroupListingOutputModel
+                    {
+                        Id = g.Id,
+                        ImgUrl = g.ImgUrl,
+                        Title = g.Title
+                    }).ToListAsync();
+        }
 
         public async Task<IEnumerable<GroupListingOutputModel>> GetGropusByUser(string userId) 
             => await context.Groups
@@ -69,7 +100,7 @@ namespace DrawingsApp.Groups.Services
                     ImgUrl=g.ImgUrl,
                     Users=g.UserGrops.Count(),
                     groupType=g.GroupType,
-                    Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList(),
+                    Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList()
                 }).FirstOrDefaultAsync();
 
         public Task<string> GetGroupName(int groupId) 

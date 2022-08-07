@@ -23,11 +23,12 @@ namespace DrawingsApp.Groups.Controllers
             {
                 return NotFound();
             }
+            group.Role =await userService.GetRole(GetUserId(), id);
             return Ok(group);
         }
         [HttpGet]
-        public async Task<ActionResult> GetByName(string name) 
-            => Ok(await groupService.GetGropus(name));
+        public async Task<ActionResult> Search([FromQuery]SearchGroupInputModel input)
+            =>Ok(await groupService.Search(input.Name,input.Tags,input.UserId,input.GroupType,input.Order));
         [HttpGet("User")]
         public async Task<ActionResult> GetGroupsByUser() 
             => Ok(await groupService.GetGropusByUser(GetUserId()));

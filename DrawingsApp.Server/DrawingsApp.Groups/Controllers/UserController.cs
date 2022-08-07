@@ -46,5 +46,14 @@ namespace DrawingsApp.Groups.Controllers
             await userService.PromoteUser(input.UserId, input.GroupId);
             return Ok();
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> LeaveGroup(int id)
+        {
+            if (!await this.userService.LeaveGroup(GetUserId(), id))
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
     }
 }

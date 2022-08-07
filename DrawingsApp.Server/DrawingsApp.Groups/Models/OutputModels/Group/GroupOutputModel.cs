@@ -11,6 +11,6 @@ namespace DrawingsApp.Groups.Models.OutputModels.Group
         public int Users { get; set; }
         public GroupType groupType { get; set; }
         public List<string> Tags { get; set; }
-
+        public Role Role { get; set; }
     }
 }

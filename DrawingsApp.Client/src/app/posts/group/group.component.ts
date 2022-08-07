@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IGroup } from 'src/app/core/interfaces/IGroup';
 import { IPost } from 'src/app/core/interfaces/IPost';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-group',
@@ -10,7 +11,7 @@ import { IPost } from 'src/app/core/interfaces/IPost';
 })
 export class GroupComponent implements OnInit {
 
-  constructor(private activatedRoute:ActivatedRoute) { }
+  constructor(private activatedRoute:ActivatedRoute,private userService:UserService) { }
   group!:IGroup;
   posts:Array<IPost>=[];
   ngOnInit(): void {
@@ -18,5 +19,11 @@ export class GroupComponent implements OnInit {
     this.group=this.activatedRoute.snapshot.data['data'][0];
     this.posts=this.activatedRoute.snapshot.data['data'][1];
   }
-
+  join(){
+    this.userService.joinGroup(this.group.id).subscribe(()=>this.group.role=this.group.groupType<2?2:1);
+  }
+  leave(){
+    this.userService.leaveGroup(this.group.id).subscribe(()=>this.group.role=0);
+    
+  }
 }

@@ -2,7 +2,50 @@
 <div class="row container-fluid">
     <div class="col-lg-3 "></div>
     <div class="col-lg-6 main default_bg default_border p-0">
-        <form [formGroup]="form"><input formControlName="groupName" type="text" class="form-control" placeholder="Search" ></form>
+        <form [formGroup]="form">
+            <div >
+                <h5 class="mb-0 mt-1">Group name</h5>
+                <input formControlName="name" type="text" class="form-control" placeholder="Search" >
+                <div >
+                    <h5 class="mb-0 mt-1">Group type</h5>
+                    <hr class="mt-0">
+                    <label >All </label>
+                    <input class="mx-1" type="radio" name="type" checked value="All" (click)="groupType=null">
+                    <br>
+                    <label >Public </label>
+                    <input class="mx-1" type="radio" name="type" value="Public"(click)="groupType=0">
+                    <br>
+                    <label >Restricted </label>
+                    <input class="mx-1" type="radio" name="type" value="Restricted"(click)="groupType=1">
+                    <br>
+                    <label >Private </label>
+                    <input class="mx-1" type="radio" name="type" value="Private"(click)="groupType=2">
+                </div>
+                <div>
+                    <h5 class="mb-0 mt-1">Order by</h5>
+                    <hr class="mt-0"> 
+                    <label >None </label>
+                    <input class="mx-1" type="radio" name="order" checked value="All" (click)="order=0">
+                    <br>
+                    <label >Descending </label>
+                    <input class="mx-1" type="radio"name="order" value="Public"(click)="order=1">
+                    <br>
+                    <label >Ascending </label>
+                    <input class="mx-1" type="radio"name="order" value="Restricted"(click)="order=2">
+
+                </div>
+                <div class="d-flex">
+                    <button *ngFor="let tag of selectedTags;let i =index;"  class="btn btn-outline-danger text-light mx-2 tag" data-bs-toggle="button" (click)="selectTag(tag)"  >{{tag.tagName}}</button>
+                    <button class="btn btn-outline-secondary mx-2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        +
+                    </button>
+                    <ul class="dropdown-menu default_bg default_border" aria-labelledby="dropdownMenuButton1">
+                        <li *ngFor="let tag of tags; let i =index"><a (click)="selectTag(tag)" class="dropdown-item text-light pointer">{{tag.tagName}}</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </form>
         
         <button class="btn btn-secondary" (click)="search()">Search</button>
         <table class="table table-dark m-0">
