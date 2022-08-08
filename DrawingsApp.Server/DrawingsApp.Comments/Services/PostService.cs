@@ -1,5 +1,6 @@
 ﻿using DrawingsApp.Comments.Data;
 using DrawingsApp.Comments.Data.Models;
+using DrawingsApp.Comments.Models.OutputModels.Post;
 using DrawingsApp.Comments.Services.Contracts;
 
 namespace DrawingsApp.Comments.Services
@@ -43,7 +44,24 @@ namespace DrawingsApp.Comments.Services
             await repo.UpdatePost(post);
         }
 
-        public Task<Post> GetPost(int id) => repo.GetPost(id);
+        public async Task<PostOutputModel> GetPost(int id)
+        {
+            var post = await repo.GetPost(id);
+            return new PostOutputModel
+            {
+                ImgUrls = post.ImgUrls,
+                Description = post.Description,
+                SenderId = post.SenderId,
+                Comments = post.Comments,
+                GroupId = post.GroupId,
+                GroupName = post.GroupName,
+                Likes = post.Likes,
+                OuterId = post.OuterId,
+                PostedOn = post.PostedOn.ToString("yyyy,MM,dd"),
+                SenderName = post.SenderName,
+                Title = post.Title
+            };
+        }
 
         public Task<IEnumerable<Post>> GetPosts() => repo.GetPosts();
 

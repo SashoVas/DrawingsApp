@@ -16,3 +16,6 @@ body{
 .pointer{
     cursor: pointer;
 }
+.hover_underline:hover{
+    text-decoration: underline;
+}

@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   identityApi:"https://localhost:7011/",
   imageApi:"https://localhost:7019/",
-  groupApi:"https://localhost:5000/"
+  groupApi:"https://localhost:5000/",
+  commentApi:"https://localhost:7013/"
 };
 
 /*

@@ -6,14 +6,14 @@
                 <div class="d-inline-flex">
                     <div class="like p-1 px-2 text-center">
                         <p class="mb-0"><i class="fa fa-arrow-up" aria-hidden="true"></i></p>
-                        <p class="mb-0">123</p>
+                        <p class="mb-0">{{post.likes}}</p>
                         <p class="mb-0"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
                     </div>
                     <div class="d-inline-flex flex-column">
                         <div class="p-3 pb-0">
-                            <p class="name"><b class="user_name">GroupName</b> <span class="text-secondary"> posted by <span class="user_name">SenderUserName</span> on today</span></p>
+                            <p class="name"><b class="hover_underline">{{post.groupName}}</b> <span class="text-secondary"> posted by <span class="hover_underline">{{post.senderUserName}}</span> on {{post.postedOn}}</span></p>
                             <div>
-                                <p>Title</p>
+                                <p>{{post.title}}</p>
                                 <div class="d-flex justify-content-center w-100">
                                     <img src="../../../assets/resources/Untitled.png" class="img-fluid" alt="">
                                 </div>
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <app-comment-list [depth]="3"></app-comment-list>
+                <app-comment-list [comments]="post.comments"></app-comment-list>
             </div>
         </div>
     </div>

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { IComment } from 'src/app/core/interfaces/IComment';
 
 @Component({
   selector: 'app-comment-list',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./comment-list.component.css']
 })
 export class CommentListComponent implements OnInit {
-  @Input()depth:any;
+  @Input()comments!:Array<IComment>;
   constructor() { }
 
   ngOnInit(): void {

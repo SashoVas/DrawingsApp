@@ -1,4 +1,5 @@
 ﻿using DrawingsApp.Comments.Data.Models;
+using DrawingsApp.Comments.Models.OutputModels.Post;
 
 namespace DrawingsApp.Comments.Services.Contracts
 {
@@ -13,7 +14,7 @@ namespace DrawingsApp.Comments.Services.Contracts
             string senderId,
             string senderName,
             ICollection<string>ImgUrls);
-        Task<Post> GetPost(int id);
+        Task<PostOutputModel> GetPost(int id);
         Task<IEnumerable<Post>> GetPosts();
         Task DeletePost(int outerId);
         Task UpdatePost(int outerId,string title,string description);

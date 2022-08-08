@@ -1,24 +1,17 @@
 <div>
-    <div>
-        <img class="profile-image my-1" src="../../../assets/resources/Untitled.png" width="30" height="30">
-        <small><span class="user-name">Username</span><b> Role</b> 4 hr.ago</small>
-    </div>
-    <div class="d-flex">
-        <div class="vertilcal-line"></div>
-        <div class="ps-3 ms-3">
-            <div>
-                <div>
-                    <p >This is some comment {{depth}}</p>
-                    <div class="d-flex">
-                        <small class="mb-0 mx-1"><i class="fa fa-arrow-up" aria-hidden="true"></i></small>
-                        <small class="mb-0 mx-1">123</small>
-                        <small class="mb-0 mx-1"><i class="fa fa-arrow-down" aria-hidden="true"></i></small>
-                        <small class="mb-0 mx-2"> <i class="fa fa-comment"></i>Reply</small>
-                    </div>
-                </div>
-                <app-comment-list *ngIf="depth>0" [depth]="depth"></app-comment-list>
-            </div>
+    <img class="profile-image m-1" src="../../../assets/resources/Untitled.png" width="30" height="30">
+    <small><span class="hover_underline">{{comment.userName}}</span><b> Role</b> {{comment.commentedOn}}</small>
+</div>
+<div class="d-flex">
+    <div class="vertilcal-line"></div>
+    <div class="ps-3 ms-3">
+        <p >{{comment.contents}}</p>
+        <div class="d-flex">
+            <small class="mb-0 mx-1"><i class="fa fa-arrow-up" aria-hidden="true"></i></small>
+            <small class="mb-0 mx-1">123</small>
+            <small class="mb-0 mx-1"><i class="fa fa-arrow-down" aria-hidden="true"></i></small>
+            <small class="mb-0 mx-2 hover_underline"> <i class="fa fa-comment"></i>Reply</small>
         </div>
+        <app-comment-list *ngIf="comment.comments.length>0" [comments]="comment.comments" ></app-comment-list>
     </div>
-    
 </div>
