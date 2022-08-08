@@ -18,19 +18,29 @@ export class GroupListingComponent implements OnInit {
   selectedTags:Array<ITag>=[];
   order:number=0;
   tags:Array<ITag>=[];
+  userId:string|null=null;
   constructor(private groupService:GroupService,private activatedRoute:ActivatedRoute,private fb:FormBuilder,private tagService:TagsService ) {
     
    }
 
   ngOnInit(): void {
-    this.fetchData(this.activatedRoute.snapshot.params["name"]);
-    this.form=this.fb.group({
-      "name":[this.activatedRoute.snapshot.params["name"]],
+    
+    this.activatedRoute.queryParams.subscribe(params=>{
+      console.log(params)
+      let name=params["name"]==undefined?"":params["name"];
+      this.form=this.fb.group({
+        "name":name,
+      });
+      this.order=params["order"]==undefined?0:params["order"];
+      this.selectedTags=params["tags"]==undefined?[]:params["tags"];
+      this.userId=params["userId"]==undefined?null:params["userId"];
+      console.log(this.order,this.selectedTags);
+      this.fetchData(name);
     });
     this.tagService.getTags().subscribe(data=>this.tags=data);
   }
   fetchData(name:string){
-    this.groupService.getGroupsByName(name,null,this.order,this.selectedTags.map(t=>t.tagId)).subscribe(data=>this.groups=data);
+    this.groupService.getGroupsByName(name,this.userId,this.order,this.selectedTags.map(t=>t.tagId)).subscribe(data=>this.groups=data);
   }
   selectTag(tag:ITag){
     tag.isSelected=!tag.isSelected;

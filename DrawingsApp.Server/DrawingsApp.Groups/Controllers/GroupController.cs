@@ -28,7 +28,12 @@ namespace DrawingsApp.Groups.Controllers
         }
         [HttpGet]
         public async Task<ActionResult> Search([FromQuery]SearchGroupInputModel input)
-            =>Ok(await groupService.Search(input.Name,input.Tags,input.UserId,input.GroupType,input.Order));
+            =>Ok(await groupService.Search(
+                input.Name??"",
+                input.Tags,
+                input.UserId=="mine"?GetUserId():input.UserId,
+                input.GroupType,
+                input.Order));
         [HttpGet("User")]
         public async Task<ActionResult> GetGroupsByUser() 
             => Ok(await groupService.GetGropusByUser(GetUserId()));

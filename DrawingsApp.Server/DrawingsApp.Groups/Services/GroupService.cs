@@ -76,7 +76,8 @@ namespace DrawingsApp.Groups.Services
                     {
                         Id = g.Id,
                         ImgUrl = g.ImgUrl,
-                        Title = g.Title
+                        Title = g.Title,
+                        Users = g.UserGrops.Count()
                     }).ToListAsync();
         }
 
@@ -87,7 +88,8 @@ namespace DrawingsApp.Groups.Services
                 {
                     Id = g.Id,
                     ImgUrl=g.ImgUrl,
-                    Title = g.Title
+                    Title = g.Title,
+
                 }).ToListAsync();
 
         public Task<GroupOutputModel> GetGroup(int id) 

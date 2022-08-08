@@ -25,6 +25,6 @@ export class NavigationComponent implements OnInit {
     this.accountService.logOut();
   }
   search(){
-    this.router.navigate(["/group/search/"+this.searchGroupForm.value.groupName]);
+    this.router.navigate(["/group/search/"],{queryParams:{name:this.searchGroupForm.value.groupName}});
   }
 }

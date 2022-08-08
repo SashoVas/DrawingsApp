@@ -26,7 +26,7 @@ const routes: Routes = [{
   component:CreateGroupComponent
 },
 {
-  path:"group/search/:name",
+  path:"group/search",
   component:GroupListingComponent
 },
 {
