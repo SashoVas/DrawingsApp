@@ -1,4 +1,5 @@
-﻿using DrawingsApp.Comments.Services.Contracts;
+﻿using DrawingsApp.Comments.Data.Models;
+using DrawingsApp.Comments.Services.Contracts;
 using DrawingsApp.Messages.Post;
 using MassTransit;
 
@@ -20,6 +21,7 @@ namespace DrawingsApp.Comments.Messages
                 context.Message.Description,
                 context.Message.SenderId,
                 context.Message.SenderName,
-                context.Message.Images);
+                context.Message.Images,
+                (PostType)context.Message.PostType);
     }
 }

@@ -1,14 +1,14 @@
-﻿using DrawingsApp.Comments.Data;
-using DrawingsApp.Comments.Data.Models;
+﻿using DrawingsApp.Comments.Data.Models;
+using DrawingsApp.Comments.Data.Repositories;
 using DrawingsApp.Comments.Services.Contracts;
 
 namespace DrawingsApp.Comments.Services
 {
     public class CommentsService : ICommentsService
     {
-        private readonly MongoDbCommentsRepository repo;
+        private readonly IPostRepository repo;
 
-        public CommentsService(MongoDbCommentsRepository repo) 
+        public CommentsService(IPostRepository repo) 
             => this.repo = repo;
 
         private Comment GetComment(ICommentable parent, string id) 

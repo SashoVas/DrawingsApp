@@ -9,6 +9,7 @@
         public string SenderName { get; set; }
         public int GroupId { get; set; }
         public string GroupName { get; set; }
+        public int PostType { get; set; }
         public string Description { get; set; }
         public ICollection<string> Images { get; set; }
     }

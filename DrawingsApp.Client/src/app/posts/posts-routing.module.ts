@@ -8,6 +8,7 @@ import { LandingComponent } from './landing/landing.component';
 import { PostFullComponent } from './post-full/post-full.component';
 import { GroupResolver } from './resolvers/group.resolver';
 import { LandingResolver } from './resolvers/landing.resolver';
+import { PostFullResolver } from './resolvers/post-full.resolver';
 
 const routes: Routes = [{
   path:"",
@@ -19,7 +20,10 @@ const routes: Routes = [{
 },
 {
   path:"post/:id",
-  component:PostFullComponent
+  component:PostFullComponent,
+  resolve:{
+    data:PostFullResolver
+  }
 },
 {
   path:"group/create",

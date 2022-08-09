@@ -1,4 +1,5 @@
 using DrawingsApp.Comments.Data;
+using DrawingsApp.Comments.Data.Repositories;
 using DrawingsApp.Comments.Messages;
 using DrawingsApp.Comments.Services;
 using DrawingsApp.Comments.Services.Contracts;
@@ -13,9 +14,10 @@ builder.Services.AddControllers();
 builder.AddCors();
 builder.AddAuthenticationWithJWT();
 builder.AddMessages(typeof(PostCreatedConsumer),typeof(PostDeletedConsumer),typeof(PostUpdatedConsumer),typeof(PostLikedConsumer));
-builder.Services.AddSingleton<MongoDbCommentsRepository>();
+builder.Services.AddSingleton<MongoDbCommentsDb>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<IPostRepository, PostRepository>();
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<ICommentsService, CommentsService>();
 

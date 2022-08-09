@@ -105,11 +105,14 @@ namespace DrawingsApp.Groups.Services
                     Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList()
                 }).FirstOrDefaultAsync();
 
-        public Task<string> GetGroupName(int groupId) 
+        public Task<GroupDataForPostCreationOutputModel> GetGroupDataForNewPost(int groupId)
             => context.Groups
                 .Where(g => g.Id == groupId)
-                .Select(g => g.Title)
-                .FirstOrDefaultAsync();
+                .Select(g => new GroupDataForPostCreationOutputModel
+                {
+                    GroupName = g.Title,
+                    PostType = (int)g.GroupType == 0 ? 0 : 1
+                }).FirstOrDefaultAsync();
 
         public Task<GroupType> GetGroupType(int id) 
             => context.Groups

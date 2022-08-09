@@ -55,17 +55,19 @@ namespace DrawingsApp.Groups.Controllers
                 return Unauthorized();
             }
             var id = await postService.CreatePost(GetUserId(), input.Title, input.GroupId, input.ImgUrls);
+            var postCreateData = await groupService.GetGroupDataForNewPost(input.GroupId);
             await publisher.Publish(new PostCreatedMessage 
             {
                 GroupId=input.GroupId,
-                GroupName=await groupService.GetGroupName(input.GroupId),
+                GroupName=postCreateData.GroupName,
                 Images=input.ImgUrls,
                 SenderId=GetUserId(),
                 SenderName=User.Identity.Name,
                 Id=id,
                 PostedOn=DateTime.UtcNow,
                 Title=input.Title,
-                Description=input.Description
+                Description=input.Description,
+                PostType=postCreateData.PostType
             });
             return Created("",id);
         }

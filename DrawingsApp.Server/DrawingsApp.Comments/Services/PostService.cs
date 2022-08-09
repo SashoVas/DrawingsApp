@@ -1,5 +1,5 @@
-﻿using DrawingsApp.Comments.Data;
-using DrawingsApp.Comments.Data.Models;
+﻿using DrawingsApp.Comments.Data.Models;
+using DrawingsApp.Comments.Data.Repositories;
 using DrawingsApp.Comments.Models.OutputModels.Post;
 using DrawingsApp.Comments.Services.Contracts;
 
@@ -7,9 +7,9 @@ namespace DrawingsApp.Comments.Services
 {
     public class PostService : IPostService
     {
-        private readonly MongoDbCommentsRepository repo;
+        private readonly IPostRepository repo;
 
-        public PostService(MongoDbCommentsRepository repo) 
+        public PostService(IPostRepository repo) 
             => this.repo = repo;
 
         public async Task<bool> CreatePost(
@@ -20,7 +20,8 @@ namespace DrawingsApp.Comments.Services
             string description,
             string senderId,
             string senderName,
-            ICollection<string> ImgUrls)
+            ICollection<string> ImgUrls,
+            PostType postType)
         {
             await repo.CreatePost(new Post
             {
@@ -32,7 +33,8 @@ namespace DrawingsApp.Comments.Services
                 OuterId = outerId,
                 GroupName = groupName,
                 Title = title,
-                ImgUrls=ImgUrls
+                ImgUrls=ImgUrls,
+                PostType=postType
             }) ;
             return true;
         }
@@ -59,7 +61,8 @@ namespace DrawingsApp.Comments.Services
                 OuterId = post.OuterId,
                 PostedOn = post.PostedOn.ToString("yyyy,MM,dd"),
                 SenderName = post.SenderName,
-                Title = post.Title
+                Title = post.Title,
+                PostType=post.PostType
             };
         }
 

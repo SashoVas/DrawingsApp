@@ -13,7 +13,7 @@ namespace DrawingsApp.Groups.Services.Contracts
         Task<bool> DeleteGroup(int groupId);
         Task<IEnumerable<GroupListingOutputModel>> Search(string? name, List<int>? tags, string? userId, GroupType? groupType, SortType orderType);
         Task<IEnumerable<GroupListingOutputModel>> GetGropusByUser(string userId);
-        Task<string> GetGroupName(int groupId);
+        Task<GroupDataForPostCreationOutputModel> GetGroupDataForNewPost(int groupId);
         Task<IEnumerable<GroupListingOutputModel>> GetTopGroups();
     }
 }

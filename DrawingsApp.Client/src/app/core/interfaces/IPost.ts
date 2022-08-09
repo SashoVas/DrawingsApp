@@ -5,5 +5,6 @@ export interface IPost{
     title:string,
     senderUserName:string,
     groupName:string,
-    groupId:number
+    groupId:number,
+    likes:number
 }

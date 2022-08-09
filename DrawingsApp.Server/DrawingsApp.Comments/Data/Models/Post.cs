@@ -19,6 +19,7 @@ namespace DrawingsApp.Comments.Data.Models
         public int Likes { get; set; }
         public string GroupName { get; set; }
         public string SenderId { get; set; }
+        public PostType PostType { get; set; }
         public string Description { get; set; }
         public string SenderName { get; set; }
         public bool IsDeleated { get; set; } = false;

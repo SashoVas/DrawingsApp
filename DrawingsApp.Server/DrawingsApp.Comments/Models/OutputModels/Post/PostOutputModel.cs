@@ -13,6 +13,7 @@ namespace DrawingsApp.Comments.Models.OutputModels.Post
         public string SenderId { get; set; }
         public string Description { get; set; }
         public string SenderName { get; set; }
+        public PostType PostType { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<string> ImgUrls { get; set; }
     }

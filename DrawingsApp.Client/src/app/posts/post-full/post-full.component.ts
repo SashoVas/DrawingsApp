@@ -13,7 +13,8 @@ export class PostFullComponent implements OnInit {
   constructor(private activatedRoute:ActivatedRoute,private commentService:CommentService) { }
 
   ngOnInit(): void {
-    this.commentService.getPostFull(this.activatedRoute.snapshot.params["id"]).subscribe(data=>this.post=data);
+    //this.commentService.getPostFull(this.activatedRoute.snapshot.params["id"]).subscribe(data=>this.post=data);
+    this.post=this.activatedRoute.snapshot.data["data"];
   }
 
 }
