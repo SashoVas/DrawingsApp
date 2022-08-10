@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using DrawingsApp.Data.Common;
 
 namespace DrawingsApp.Comments.Data.Models
 {
@@ -7,6 +8,7 @@ namespace DrawingsApp.Comments.Data.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
+        [BsonIgnoreIfDefault]
         public string Id { get; set; }
         public string UserId { get; set; }
         public int GroupId { get; set; }

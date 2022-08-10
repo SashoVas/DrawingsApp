@@ -2,6 +2,7 @@
 using DrawingsApp.Groups.Data.Models;
 using DrawingsApp.Groups.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
+using DrawingsApp.Data.Common;
 
 namespace DrawingsApp.Groups.Services
 {

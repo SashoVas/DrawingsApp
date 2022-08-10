@@ -8,10 +8,13 @@ namespace DrawingsApp.Comments.Data.Repositories
         private readonly IMongoCollection<Post> collection;
         public PostRepository(MongoDbCommentsDb mongoDb,IConfiguration configuration)
         {
-            collection = mongoDb.GetCollection<Post>(configuration.GetSection("MongoDbSettings:Collection").Value);
+            collection = mongoDb.GetCollection<Post>(configuration.GetSection("MongoDbSettings:Collections:Comments").Value);
         }
-        public async Task<Post> GetPost(int postId)
-            => await (await collection.FindAsync(p => p.OuterId == postId)).FirstOrDefaultAsync();
+        public Task<Post> GetPost(int postId)
+        {
+            return collection.Find(p => p.OuterId == postId).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Post>> GetPosts()
             => await (await collection.FindAsync(_ => true)).ToListAsync();
         public async Task CreatePost(Post post)

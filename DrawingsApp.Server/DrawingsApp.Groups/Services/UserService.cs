@@ -3,6 +3,7 @@ using DrawingsApp.Groups.Data.Models;
 using DrawingsApp.Groups.Models.OutputModels.User;
 using DrawingsApp.Groups.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
+using DrawingsApp.Data.Common;
 
 namespace DrawingsApp.Groups.Services
 {
@@ -44,9 +45,10 @@ namespace DrawingsApp.Groups.Services
         }
         public Task<bool> UserExists(string userId) 
             => context.Users.AnyAsync(u => u.Id == userId);
-        public async Task JoinGroup(string userId, int groupId)
+        public async Task<Role> JoinGroup(string userId, int groupId)
         {
             UserGroup userGroup;
+            Role role;
             if (await context.Groups
                 .Where(g=>g.Id==groupId)
                 .Select(g=>g.GroupType)
@@ -58,6 +60,7 @@ namespace DrawingsApp.Groups.Services
                     GroupId = groupId,
                     Role=Role.User
                 };
+                role = Role.User;
             }
             else
             {
@@ -67,10 +70,12 @@ namespace DrawingsApp.Groups.Services
                     GroupId = groupId,
                     Role = Role.Pending
                 };
+                role = Role.Pending;
             }
            
             await context.UserGroups.AddAsync(userGroup);
             await context.SaveChangesAsync();
+            return role;
         }
 
         public Task<bool> IsAdmin(string userId, int groupId) 

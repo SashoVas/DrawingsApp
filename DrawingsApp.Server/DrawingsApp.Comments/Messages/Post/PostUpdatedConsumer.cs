@@ -2,7 +2,7 @@
 using DrawingsApp.Messages.Post;
 using MassTransit;
 
-namespace DrawingsApp.Comments.Messages
+namespace DrawingsApp.Comments.Messages.Post
 {
     public class PostUpdatedConsumer : IConsumer<PostUpdateMessage>
     {

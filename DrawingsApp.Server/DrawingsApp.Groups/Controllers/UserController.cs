@@ -1,6 +1,8 @@
 ﻿using DrawingsApp.Controllers;
 using DrawingsApp.Groups.Models.InputModels.User;
 using DrawingsApp.Groups.Services.Contracts;
+using DrawingsApp.Messages.User;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DrawingsApp.Groups.Controllers
@@ -8,9 +10,13 @@ namespace DrawingsApp.Groups.Controllers
     public class UserController : ApiController
     {
         private readonly IUserService userService;
+        private readonly IBus publisher;
+        public UserController(IUserService userService, IBus publisher)
+        {
+            this.userService = userService;
+            this.publisher = publisher;
+        }
 
-        public UserController(IUserService userService) 
-            => this.userService = userService;
         [HttpGet("{id}")]
         public async Task<ActionResult> GetUsers(int id) 
             => Ok(await userService.GetUsersByGroup(id));
@@ -23,7 +29,13 @@ namespace DrawingsApp.Groups.Controllers
             {
                 await userService.CreateUser(userId, User.Identity.Name);
             }
-            await userService.JoinGroup(userId, groupId);
+            var role=await userService.JoinGroup(userId, groupId);
+            await publisher.Publish(new PromoteUserRoleInGroupMessage
+            {
+                UserId=GetUserId(),
+                GroupId=groupId,
+                Role=role
+            });
             return Created("",null);
         }
         [HttpPut("AcceptUser")]

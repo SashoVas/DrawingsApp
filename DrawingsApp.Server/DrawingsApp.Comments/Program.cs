@@ -1,6 +1,7 @@
 using DrawingsApp.Comments.Data;
 using DrawingsApp.Comments.Data.Repositories;
-using DrawingsApp.Comments.Messages;
+using DrawingsApp.Comments.Messages.Post;
+using DrawingsApp.Comments.Messages.User;
 using DrawingsApp.Comments.Services;
 using DrawingsApp.Comments.Services.Contracts;
 using DrawingsApp.Infrastructure;
@@ -13,11 +14,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.AddCors();
 builder.AddAuthenticationWithJWT();
-builder.AddMessages(typeof(PostCreatedConsumer),typeof(PostDeletedConsumer),typeof(PostUpdatedConsumer),typeof(PostLikedConsumer));
+builder.AddMessages(
+    typeof(PostCreatedConsumer),
+    typeof(PostDeletedConsumer),
+    typeof(PostUpdatedConsumer),
+    typeof(PostLikedConsumer),
+    typeof(PromoteUserRoleInGroupConsumer));
 builder.Services.AddSingleton<MongoDbCommentsDb>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IPostRepository, PostRepository>();
+builder.Services.AddTransient<IUserRoleInGroupRepository, UserRoleInGroupRepository>();
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<ICommentsService, CommentsService>();
 

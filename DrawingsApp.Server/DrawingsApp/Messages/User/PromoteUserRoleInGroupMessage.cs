@@ -1,13 +1,11 @@
 ﻿using DrawingsApp.Data.Common;
 
-namespace DrawingsApp.Groups.Data.Models
+namespace DrawingsApp.Messages.User
 {
-    public class UserGroup
+    public class PromoteUserRoleInGroupMessage
     {
         public string UserId { get; set; }
-        public User User { get; set; }
         public int GroupId { get; set; }
-        public Group Group { get; set; }
         public Role Role { get; set; }
     }
 }

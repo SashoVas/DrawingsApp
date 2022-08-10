@@ -1,4 +1,4 @@
-﻿namespace DrawingsApp.Comments.Data.Models
+﻿namespace DrawingsApp.Data.Common
 {
     public enum Role
     {

@@ -1,4 +1,5 @@
 ﻿using DrawingsApp.Groups.Data.Models;
+using DrawingsApp.Data.Common;
 
 namespace DrawingsApp.Groups.Services.Contracts
 {
