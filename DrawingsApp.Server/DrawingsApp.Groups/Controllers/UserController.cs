@@ -19,8 +19,8 @@ namespace DrawingsApp.Groups.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetUsers(int id) 
-            => Ok(await userService.GetUsersByGroup(id));
+        public async Task<ActionResult> GetUsers(int id,[FromQuery]Role role) 
+            => Ok(await userService.GetUsersByGroup(id,role));
 
         [HttpPost("{groupId}")]
         public async Task<ActionResult> JoinGroup(int groupId)
@@ -56,7 +56,7 @@ namespace DrawingsApp.Groups.Controllers
             return Ok();
         }
         [HttpPut("PromoteUser")]
-        public async Task<ActionResult> ChangeRole(UpdateUserInputModel input)
+        public async Task<ActionResult> PromoteUser(UpdateUserInputModel input)
         {
             if (!await userService.IsAdmin(GetUserId(), input.GroupId))
             {

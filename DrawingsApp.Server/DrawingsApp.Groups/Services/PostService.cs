@@ -68,7 +68,8 @@ namespace DrawingsApp.Groups.Services
 
         public Task<List<PostOutputModel>> GetPostsByUser(string userId) 
             => context.Posts
-                .Where(p => p.Group.UserGrops.Any(gu => gu.UserId == userId))
+                .Where(p => p.Group.UserGrops
+                    .Any(gu => gu.UserId == userId && (int)gu.Role>1))
                 .OrderByDescending(p => p.PostedOn)
                 .Take(10)
                 //.TakeLast(10)

@@ -14,17 +14,14 @@ namespace DrawingsApp.Groups.Controllers
         private readonly IPostService postService;
         private readonly IUserService userService;
         private readonly IGroupService groupService;
-        private readonly IAsynchronousDbOperationsService asynchronousDbOperationsService;
         public PostController(
             IPostService postService,
             IUserService userService,
-            IAsynchronousDbOperationsService asynchronousDbOperationsService,
             IBus publisher,
             IGroupService groupService)
         {
             this.postService = postService;
             this.userService = userService;
-            this.asynchronousDbOperationsService = asynchronousDbOperationsService;
             this.publisher = publisher;
             this.groupService = groupService;
         }
@@ -32,8 +29,8 @@ namespace DrawingsApp.Groups.Controllers
         [HttpGet("Group/{id}")]
         public async Task<ActionResult<IEnumerable<PostOutputModel>>> GetPostsByGroup(int id)
         {
-            var (role, groupType) =await asynchronousDbOperationsService.GetRoleAndGroupTypeAsync(GetUserId(), id);
-            if (Math.Max(1,(int)role) <(int)groupType)
+            var groupTypeAndRole =await userService.GetRoleAndGroupTypeAsync(GetUserId(), id);
+            if ((int)groupTypeAndRole.GrouptType>0&& (int)groupTypeAndRole.Role<2)
             {
                 return Unauthorized();
             }

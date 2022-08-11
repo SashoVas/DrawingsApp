@@ -4,18 +4,16 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import {  forkJoin, map, Observable, of } from 'rxjs';
+import {Observable } from 'rxjs';
 import { GroupService } from '../services/group.service';
-import { PostService } from '../services/post.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupResolver implements Resolve<boolean> {
-  constructor(private groupService:GroupService,private postService:PostService){}
+  constructor(private groupService:GroupService){}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     let id=route.paramMap.get('id');
-    console.log(id)
-    return forkJoin([this.groupService.getGroup(id!),this.postService.getPostByGroup(id!)]);
+    return this.groupService.getGroup(id!);
   }
 }

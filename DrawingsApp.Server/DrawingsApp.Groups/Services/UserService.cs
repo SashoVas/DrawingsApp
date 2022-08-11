@@ -84,13 +84,14 @@ namespace DrawingsApp.Groups.Services
                 .Select(ug => ug.Role)
                 .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<UserOutputModel>> GetUsersByGroup(int groupId) 
+        public async Task<IEnumerable<UserOutputModel>> GetUsersByGroup(int groupId,Role role) 
             => await context.UserGroups
-                .Where(ug => ug.GroupId == groupId)
+                .Where(ug => ug.GroupId == groupId && (int)ug.Role==(int)role)
                 .Select(ug => new UserOutputModel
                 {
                     UserId = ug.UserId,
-                    Username = ug.User.Username
+                    Username = ug.User.Username,
+                    Role=ug.Role
                 }).ToListAsync();
 
         public async Task<bool> LeaveGroup(string userId, int groupId)
@@ -106,5 +107,15 @@ namespace DrawingsApp.Groups.Services
             await context.SaveChangesAsync();
             return true;
         }
+
+        public Task<UserRoleAndGroupTypeOutputModel> GetRoleAndGroupTypeAsync(string userId, int groupId) 
+            => context.Groups
+                .Where(g => g.Id == groupId)
+                .Select(g => new UserRoleAndGroupTypeOutputModel
+                {
+                    GrouptType = g.GroupType,
+                    Role = g.UserGrops.Where(ug=>ug.UserId==userId).Select(ug=>ug.Role).FirstOrDefault()
+                })
+                .FirstOrDefaultAsync();
     }
 }

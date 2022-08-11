@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IUser } from 'src/app/core/interfaces/IUser';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -14,5 +15,8 @@ export class UserService {
   }
   leaveGroup(groupId:number):Observable<any>{
     return this.http.delete(environment.groupApi+"User/"+groupId);
+  }
+  getUsers(groupId:number,role:number):Observable<any>{
+    return this.http.get<Array<IUser>>(environment.groupApi+"User/"+groupId+"?role="+role);
   }
 }

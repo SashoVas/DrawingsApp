@@ -13,7 +13,7 @@ export class PostService {
   getPostByUser():Observable<any>{
     return this.http.get<Array<IPost>>(environment.groupApi+"Post");
   }
-  getPostByGroup(id:string):Observable<any>{
+  getPostByGroup(id:number):Observable<any>{
     return this.http.get<Array<IPost>>(environment.groupApi+"Post/Group/"+id);
   }
   createPost(title:string,groupId:number,description:string,imgUrls:Array<string>):Observable<any>{

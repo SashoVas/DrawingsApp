@@ -9,6 +9,7 @@ import { PostFullComponent } from './post-full/post-full.component';
 import { GroupResolver } from './resolvers/group.resolver';
 import { LandingResolver } from './resolvers/landing.resolver';
 import { PostFullResolver } from './resolvers/post-full.resolver';
+import { UsersListComponent } from './users-list/users-list.component';
 
 const routes: Routes = [{
   path:"",
@@ -43,6 +44,10 @@ const routes: Routes = [{
   resolve:{
     data:GroupResolver
   }
+},
+{
+  path:"users/:id",
+  component:UsersListComponent
 }
 
 ];

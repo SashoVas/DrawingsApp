@@ -14,6 +14,7 @@ import { PostFullComponent } from './post-full/post-full.component';
 import { CommentComponent } from './comment/comment.component';
 import { CommentListComponent } from './comment-list/comment-list.component';
 import { GroupListingComponent } from './group-listing/group-listing.component';
+import { UsersListComponent } from './users-list/users-list.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { GroupListingComponent } from './group-listing/group-listing.component';
     PostFullComponent,
     CommentComponent,
     CommentListComponent,
-    GroupListingComponent
+    GroupListingComponent,
+    UsersListComponent
   ],
   imports: [
     CommonModule,
