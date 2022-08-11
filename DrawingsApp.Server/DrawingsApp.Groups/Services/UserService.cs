@@ -13,6 +13,16 @@ namespace DrawingsApp.Groups.Services
 
         public UserService(DrawingsAppGroupsDbContext context) 
             => this.context = context;
+        private async Task ChangeRole(string userId, int groupId,Role role)
+        {
+            var userGroup = await context.UserGroups
+                .Where(ug => ug.UserId == userId && ug.GroupId == groupId)
+                .FirstOrDefaultAsync();
+
+            userGroup.Role = role;
+            context.UserGroups.Update(userGroup);
+            await context.SaveChangesAsync();
+        }
         public async Task CreateUser(string userId,string userName)
         {
             var user = new User
@@ -23,26 +33,10 @@ namespace DrawingsApp.Groups.Services
             await context.AddAsync(user);
             await context.SaveChangesAsync();
         }
-        public async Task AcceptUser(string userId,int groupId)
-        {
-            var userGroup =await context.UserGroups
-                .Where(ug => ug.UserId == userId && ug.GroupId == groupId)
-                .FirstOrDefaultAsync();
-
-            userGroup.Role = Role.User;
-            context.UserGroups.Update(userGroup);
-            await context.SaveChangesAsync();
-        }
-        public async Task PromoteUser(string userId, int groupId)
-        {
-            var userGroup = await context.UserGroups
-                .Where(ug => ug.UserId == userId && ug.GroupId == groupId)
-                .FirstOrDefaultAsync();
-
-            userGroup.Role = Role.Admin;
-            context.UserGroups.Update(userGroup);
-            await context.SaveChangesAsync();
-        }
+        public async Task AcceptUser(string userId, int groupId) 
+            => await ChangeRole(userId, groupId, Role.User);
+        public async Task PromoteUser(string userId, int groupId) 
+            => await ChangeRole(userId, groupId, Role.Admin);
         public Task<bool> UserExists(string userId) 
             => context.Users.AnyAsync(u => u.Id == userId);
         public async Task<Role> JoinGroup(string userId, int groupId)

@@ -9,5 +9,6 @@ namespace DrawingsApp.Comments.Data.Repositories
         Task UpdateRole(UserRoleInGroup role);
         Task<IEnumerable<UserRoleInGroup>> GetUserRoles();
         Task RemoveAll();
+        Task RemoveOne(string userId, int groupId);
     }
 }

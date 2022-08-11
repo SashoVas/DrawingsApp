@@ -1,4 +1,5 @@
 ﻿using DrawingsApp.Controllers;
+using DrawingsApp.Data.Common;
 using DrawingsApp.Groups.Models.InputModels.User;
 using DrawingsApp.Groups.Services.Contracts;
 using DrawingsApp.Messages.User;
@@ -46,16 +47,28 @@ namespace DrawingsApp.Groups.Controllers
                 return Unauthorized();
             }
             await userService.AcceptUser(input.UserId, input.GroupId);
+            await publisher.Publish(new PromoteUserRoleInGroupMessage
+            {
+                UserId = GetUserId(),
+                GroupId = input.GroupId,
+                Role = Role.User
+            });
             return Ok();
         }
         [HttpPut("PromoteUser")]
-        public async Task<ActionResult> PromoteUser(UpdateUserInputModel input)
+        public async Task<ActionResult> ChangeRole(UpdateUserInputModel input)
         {
             if (!await userService.IsAdmin(GetUserId(), input.GroupId))
             {
                 return Unauthorized();
             }
             await userService.PromoteUser(input.UserId, input.GroupId);
+            await publisher.Publish(new PromoteUserRoleInGroupMessage
+            {
+                UserId = GetUserId(),
+                GroupId = input.GroupId,
+                Role = Role.Admin
+            });
             return Ok();
         }
         [HttpDelete("{id}")]
@@ -65,6 +78,11 @@ namespace DrawingsApp.Groups.Controllers
             {
                 return NotFound();
             }
+            await publisher.Publish(new RemoveRoleFromUserMessage
+            {
+                GroupId=id,
+                UserId=GetUserId()
+            });
             return Ok();
         }
     }
