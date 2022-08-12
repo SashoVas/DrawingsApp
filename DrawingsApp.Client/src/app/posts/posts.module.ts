@@ -8,7 +8,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PostFullComponent } from './post-full/post-full.component';
 import { CommentComponent } from './comment/comment.component';
 import { CommentListComponent } from './comment-list/comment-list.component';
-import { UsersListComponent } from './users-list/users-list.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +17,6 @@ import { UsersListComponent } from './users-list/users-list.component';
     PostFullComponent,
     CommentComponent,
     CommentListComponent,
-    UsersListComponent
   ],
   imports: [
     CommonModule,

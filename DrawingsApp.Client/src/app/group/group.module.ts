@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { GroupRoutingModule } from './group-routing.module';
 import { LandingComponent } from './landing/landing.component';
 import { CreateTagComponent } from './create-tag/create-tag.component';
+import { UsersListComponent } from './users-list/users-list.component';
 
 
 
@@ -19,7 +20,8 @@ import { CreateTagComponent } from './create-tag/create-tag.component';
     GroupListingComponent,
     PopularGroupsComponent,
     LandingComponent,
-    CreateTagComponent
+    CreateTagComponent,
+    UsersListComponent
   ],
   imports: [
     CommonModule,

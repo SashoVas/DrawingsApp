@@ -16,9 +16,12 @@
                 <tr class="pointer" *ngFor="let user of users;let i=index">
                     <th scope="row">{{i}}</th>
                     <td><img class="group-img" src="../../../assets/resources/Untitled.png" width="30" height="30"  alt=""></td>
-                    <td>{{user.userName}}</td>
+                    <td>{{user.username}}</td>
                     <td>{{user.role==1?"Pending":user.role==2?"User":"Admin"}}</td>
-                    <td><button class="btn btn-light btn-sm join">Accept</button></td>
+                    <td>
+                        <button *ngIf="user.role==1" class="btn btn-light btn-sm join">Accept</button>
+                        <button  class="btn btn-light btn-sm join mx-1">View Profile</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

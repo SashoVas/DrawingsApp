@@ -19,8 +19,15 @@ namespace DrawingsApp.Groups.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetUsers(int id,[FromQuery]Role role) 
-            => Ok(await userService.GetUsersByGroup(id,role));
+        public async Task<ActionResult> GetUsers(int id, [FromQuery] Role role)
+        {
+            var groupTypeAndRole = await userService.GetRoleAndGroupTypeAsync(GetUserId(), id);
+            if ((int)groupTypeAndRole.GrouptType > 0 && (int)groupTypeAndRole.Role < 2)
+            {
+                return Unauthorized();
+            }
+            return Ok(await userService.GetUsersByGroup(id, role));
+        }
 
         [HttpPost("{groupId}")]
         public async Task<ActionResult> JoinGroup(int groupId)

@@ -10,7 +10,7 @@
                     <ng-template #leaveButton>
                         <button class="btn btn-secondary align-self-center no-wrap join" (click)="leave()">Leave</button>
                         <button *ngIf="group.role==3" class="btn btn-secondary align-self-center no-wrap join">Edit</button>
-                        <button *ngIf="group.role==3" routerLink="/users/{{group.id}}" class="btn btn-secondary align-self-center no-wrap join">Requests</button>                        
+                        <button *ngIf="group.role==3" routerLink="/group/users" [queryParams]="{id:group.id,role: 1}"  class="btn btn-secondary align-self-center no-wrap join">Requests</button>                        
                     </ng-template>
                 </div>
                 <div class="d-flex">
@@ -49,7 +49,9 @@
                 <p class="mx-3">Users:{{group.users}}</p>
                 <p class="mx-3">Adimns:21</p>
             </div>
-            
+            <div class="px-2 mt-2">
+                <button class="btn btn-secondary w-100 align-self-center mx-1" routerLink="/group/users" [queryParams]="{id:group.id,role: 2}">View All</button>
+            </div>
         </div>
         <br>
         <div class="default_bg default_border main mt-3 p-1 d-inline-flex flex-column" >
@@ -63,7 +65,7 @@
                 </div>
             </div>
             <div class="px-2 mt-2">
-                <button class="btn btn-secondary w-100 align-self-center mx-1">View All</button>
+                <button class="btn btn-secondary w-100 align-self-center mx-1" routerLink="/group/users" [queryParams]="{id:group.id,role: 3}">View All</button>
             </div>
         </div>
         <div class="default_bg default_border main mt-3 p-3 d-inline-flex sticky">

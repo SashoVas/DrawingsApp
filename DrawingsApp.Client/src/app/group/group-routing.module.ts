@@ -4,6 +4,8 @@ import { CreateGroupComponent } from '../group/create-group/create-group.compone
 import { GroupListingComponent } from '../group/group-listing/group-listing.component';
 import { GroupComponent } from './group/group.component';
 import { GroupResolver } from './resolvers/group.resolver';
+import { UserListResolver } from './resolvers/user-list.resolver';
+import { UsersListComponent } from './users-list/users-list.component';
 
 const routes: Routes = [
   {
@@ -13,6 +15,13 @@ const routes: Routes = [
   {
     path:"search",
     component:GroupListingComponent
+  },
+  {
+    path:"users",
+    component:UsersListComponent,
+    resolve:{
+      data:UserListResolver
+    }
   },
   {
     path:":id",
