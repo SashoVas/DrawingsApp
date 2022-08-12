@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
-import { PostsModule } from './posts/posts.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +15,6 @@ import { PostsModule } from './posts/posts.module';
     HttpClientModule,
     AppRoutingModule,
     CoreModule,
-    PostsModule,
     
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],

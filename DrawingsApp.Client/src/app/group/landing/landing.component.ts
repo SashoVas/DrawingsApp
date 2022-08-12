@@ -14,7 +14,6 @@ export class LandingComponent implements OnInit {
 
   ngOnInit(): void {
     this.posts=this.activatedRoute.snapshot.data['postsData'];
-    console.log(this.posts);
   }
 
 }

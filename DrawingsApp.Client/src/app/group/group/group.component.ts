@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IGroup } from 'src/app/core/interfaces/IGroup';
 import { IPost } from 'src/app/core/interfaces/IPost';
-import { PostService } from '../services/post.service';
-import { UserService } from '../services/user.service';
+import { PostService } from 'src/app/posts/services/post.service';
+import { UserService } from 'src/app/posts/services/user.service';
 
 @Component({
   selector: 'app-group',

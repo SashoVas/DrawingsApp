@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IGroup } from 'src/app/core/interfaces/IGroup';
-import { GroupService } from '../services/group.service';
+import { GroupService } from 'src/app/group/services/group.service';
 import { PostService } from '../services/post.service';
 import { UserImagesComponent } from '../user-images/user-images.component';
 
@@ -24,6 +24,7 @@ export class CreatePostComponent implements OnInit {
    }
    
   ngOnInit(): void {
+    console.log("here");
     this.groupService.getGroupsByUser().subscribe(groups=>{
       this.groups=groups
       this.group=groups[0]

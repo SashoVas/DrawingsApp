@@ -5,7 +5,7 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { PostService } from '../services/post.service';
+import { PostService } from 'src/app/posts/services/post.service';
 
 @Injectable({
   providedIn: 'root'
