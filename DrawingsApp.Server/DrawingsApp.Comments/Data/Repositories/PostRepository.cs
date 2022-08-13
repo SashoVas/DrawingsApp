@@ -24,5 +24,7 @@ namespace DrawingsApp.Comments.Data.Repositories
             var filter = Builders<Post>.Filter.Eq("Id", post.Id);
             await collection.ReplaceOneAsync(filter, post);
         }
+        public async Task DeletePosts()
+            => await collection.DeleteManyAsync(_ => true);
     }
 }

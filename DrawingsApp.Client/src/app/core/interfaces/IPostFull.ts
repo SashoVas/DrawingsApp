@@ -7,7 +7,7 @@ export interface IPostFull{
     postedOn:string,
     title:string,
     likes:number,
-    senderUserName:string,
+    senderName:string,
     groupName:string,
     groupId:number,
     comments:Array<IComment>

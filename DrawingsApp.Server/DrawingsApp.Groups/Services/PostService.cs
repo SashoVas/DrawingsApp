@@ -62,8 +62,8 @@ namespace DrawingsApp.Groups.Services
                     ImgUrls = p.Images.Select(i=>i.Url).ToList(),
                     SenderUserName = p.Sender.Username,
                     Title = p.Title,
-                    Likes=p.Likes.Count(),
-                    GroupId=p.GroupId
+                    Likes = p.Likes.Count(l => l.IsLike) - p.Likes.Count(l => !l.IsLike),
+                    GroupId = p.GroupId
                 }).ToListAsync();
 
         public Task<List<PostOutputModel>> GetPostsByUser(string userId) 
@@ -81,31 +81,42 @@ namespace DrawingsApp.Groups.Services
                     ImgUrls = p.Images.Select(i => i.Url).ToList(),
                     SenderUserName = p.Sender.Username,
                     Title = p.Title,
-                    Likes=p.Likes.Count(),
+                    Likes=p.Likes.Count(l=>l.IsLike)-p.Likes.Count(l=>!l.IsLike),
                     GroupId=p.GroupId
                 }).ToListAsync();
 
-        public async Task<bool> LikePost(string userId,int postId)
+        public async Task<int> LikePost(string userId,int postId, bool isLike)
         {
             var like =await context.Likes
                 .Where(l => l.PostId == postId && l.UserId == userId)
                 .FirstOrDefaultAsync();
-            bool isNewLike = false;
+            int changeAmounth = 0;
             if (like is null)
             {
-                isNewLike = true;
+                changeAmounth = isLike?1:-1;
                 await context.Likes.AddAsync(new PostUserLikes 
                 { 
                     PostId=postId,
-                    UserId=userId
+                    UserId=userId,
+                    IsLike=isLike
                 });
             }
             else
             {
-                context.Likes.Remove(like);
+                if (like.IsLike == isLike)
+                {
+                    changeAmounth = isLike ?-1:1;
+                    context.Likes.Remove(like);
+                }
+                else
+                {
+                    changeAmounth = isLike ? 2 : -2;
+                    like.IsLike = isLike;
+                    context.Update(like);
+                }
             }
             await context.SaveChangesAsync();
-            return isNewLike;
+            return changeAmounth;
         }
 
         public async Task<bool> UpdatePost(string senderId, int postId, string title)

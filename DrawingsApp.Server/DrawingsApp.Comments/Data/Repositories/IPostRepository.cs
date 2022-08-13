@@ -8,5 +8,6 @@ namespace DrawingsApp.Comments.Data.Repositories
         Task<IEnumerable<Post>> GetPosts();
         Task CreatePost(Post post);
         Task UpdatePost(Post post);
+        Task DeletePosts();
     }
 }

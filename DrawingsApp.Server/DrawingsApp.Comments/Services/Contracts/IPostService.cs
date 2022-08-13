@@ -19,6 +19,7 @@ namespace DrawingsApp.Comments.Services.Contracts
         Task<IEnumerable<Post>> GetPosts();
         Task DeletePost(int outerId);
         Task UpdatePost(int outerId,string title,string description);
-        Task LikePost(int outerId,bool isNewLike);
+        Task LikePost(int outerId, int changeAmounth);
+        Task DeletePosts();
     }
 }

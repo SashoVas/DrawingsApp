@@ -6,6 +6,6 @@
         public string UserName { get; set; }
         public int PostId { get; set; }
         public int GroupId { get; set; }
-        public bool IsNewLike { get; set; }
+        public int ChangeAmounth { get; set; }
     }
 }

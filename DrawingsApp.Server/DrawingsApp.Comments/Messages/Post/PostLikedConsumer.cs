@@ -12,6 +12,6 @@ namespace DrawingsApp.Comments.Messages.Post
             => this.postService = postService;
 
         public async Task Consume(ConsumeContext<PostLikeMessage> context) 
-            => await postService.LikePost(context.Message.PostId, context.Message.IsNewLike);
+            => await postService.LikePost(context.Message.PostId, context.Message.ChangeAmounth);
     }
 }

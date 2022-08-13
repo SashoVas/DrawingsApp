@@ -33,5 +33,11 @@ namespace DrawingsApp.Comments.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> GetPosts() 
             => Ok(await postService.GetPosts());
+        [HttpDelete]
+        public async Task<ActionResult>DeletePosts()
+        {
+            await postService.DeletePosts();
+            return Ok();
+        }
     }
 }

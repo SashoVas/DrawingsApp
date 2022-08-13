@@ -4,5 +4,6 @@
     {
         public int GroupId { get; set; }
         public int PostId { get; set; }
+        public bool IsLike { get; set; }
     }
 }

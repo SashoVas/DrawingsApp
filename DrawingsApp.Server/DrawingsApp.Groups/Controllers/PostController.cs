@@ -103,7 +103,7 @@ namespace DrawingsApp.Groups.Controllers
             {
                 return Unauthorized();
             }
-            var isNewLike = await postService.LikePost(GetUserId(), input.PostId);
+            var changeAmounth = await postService.LikePost(GetUserId(), input.PostId,input.IsLike);
 
             await publisher.Publish(new PostLikeMessage 
             { 
@@ -111,7 +111,7 @@ namespace DrawingsApp.Groups.Controllers
                 PostId=input.PostId,
                 UserId=GetUserId(),
                 UserName=User.Identity.Name,
-                IsNewLike=isNewLike
+                ChangeAmounth= changeAmounth
             });
             return Created("",null);
         }

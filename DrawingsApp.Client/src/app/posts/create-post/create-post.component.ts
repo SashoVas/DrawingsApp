@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IGroup } from 'src/app/core/interfaces/IGroup';
 import { GroupService } from 'src/app/group/services/group.service';
 import { PostService } from '../services/post.service';
@@ -16,7 +16,8 @@ export class CreatePostComponent implements OnInit {
   createPostForm:FormGroup;
   groups:Array<IGroup>=[];
   group!:IGroup;
-  constructor(private fb:FormBuilder,private postService:PostService,private groupService:GroupService,private router:Router) {
+  groupId!:number;
+  constructor(private fb:FormBuilder,private postService:PostService,private groupService:GroupService,private router:Router,private activatedRoute:ActivatedRoute) {
     this.createPostForm=fb.group({
       "title":['',Validators.required],
       "description":[''],
@@ -24,11 +25,17 @@ export class CreatePostComponent implements OnInit {
    }
    
   ngOnInit(): void {
-    console.log("here");
-    this.groupService.getGroupsByUser().subscribe(groups=>{
+    this.activatedRoute.queryParams.subscribe(params=>
+      this.groupService.getGroupsByUser().subscribe(groups=>{
       this.groups=groups
-      this.group=groups[0]
-    });
+      if(params["id"]){
+        this.group=this.groups.find(gr=>gr.id==params["id"])!;
+      }
+      else{
+        this.group=this.groups[0];
+      }
+    }));
+    
   }
   get title(){
     return this.createPostForm.get("title");

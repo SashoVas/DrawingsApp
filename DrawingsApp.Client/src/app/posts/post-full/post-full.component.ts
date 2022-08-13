@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IPostFull } from 'src/app/core/interfaces/IPostFull';
-import { CommentService } from '../services/comment.service';
+import { PostService } from '../services/post.service';
 
 @Component({
   selector: 'app-post-full',
@@ -10,11 +10,15 @@ import { CommentService } from '../services/comment.service';
 })
 export class PostFullComponent implements OnInit {
   post!:IPostFull;
-  constructor(private activatedRoute:ActivatedRoute,private commentService:CommentService) { }
+  constructor(private activatedRoute:ActivatedRoute,private postService:PostService) { }
 
   ngOnInit(): void {
-    //this.commentService.getPostFull(this.activatedRoute.snapshot.params["id"]).subscribe(data=>this.post=data);
     this.post=this.activatedRoute.snapshot.data["data"];
   }
-
+  likePost(){
+    this.postService.likePost(this.post.groupId,this.post.outerId,true).subscribe();
+  }
+  disLikePost(){
+    this.postService.likePost(this.post.groupId,this.post.outerId,false).subscribe();
+  }
 }

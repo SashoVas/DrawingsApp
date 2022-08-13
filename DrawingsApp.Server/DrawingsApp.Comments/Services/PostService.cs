@@ -46,6 +46,9 @@ namespace DrawingsApp.Comments.Services
             await repo.UpdatePost(post);
         }
 
+        public async Task DeletePosts() 
+            => await repo.DeletePosts();
+
         public async Task<PostOutputModel> GetPost(int id)
         {
             var post = await repo.GetPost(id);
@@ -68,17 +71,10 @@ namespace DrawingsApp.Comments.Services
 
         public Task<IEnumerable<Post>> GetPosts() => repo.GetPosts();
 
-        public async Task LikePost(int outerId, bool isNewLike)
+        public async Task LikePost(int outerId,int changeAmounth)
         {
             var post =await repo.GetPost(outerId);
-            if (isNewLike)
-            {
-                post.Likes++;
-            }
-            else
-            {
-                post.Likes--;
-            }
+            post.Likes += changeAmounth;
             await repo.UpdatePost(post);
         }
 

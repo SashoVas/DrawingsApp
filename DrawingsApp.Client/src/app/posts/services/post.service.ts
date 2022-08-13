@@ -19,4 +19,7 @@ export class PostService {
   createPost(title:string,groupId:number,description:string,imgUrls:Array<string>):Observable<any>{
     return this.http.post(environment.groupApi+"Post",{title,groupId,description,imgUrls});
   }
+  likePost(groupId:number,postId:number,isLike:boolean){
+    return this.http.post(environment.groupApi+"Post/Like",{groupId,postId,isLike});
+  }
 }
