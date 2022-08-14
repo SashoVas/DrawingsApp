@@ -11,10 +11,8 @@ namespace DrawingsApp.Images.Services
         private const int ImgWidth = 700;
         private const int ImgHeight = 700;
         private readonly MongoDbImagesRepository repo;
-        public ImageService( MongoDbImagesRepository repo)
-        {
-            this.repo = repo;
-        }
+        public ImageService(MongoDbImagesRepository repo) 
+            => this.repo = repo;
 
         public async Task<string> CreateImage(string userId,IFormFile inputImage)
         {
@@ -43,11 +41,8 @@ namespace DrawingsApp.Images.Services
             }
             await imageResult.SaveAsJpegAsync(storagePath+ imageId + ".jpg");
         }
-        public async Task<IEnumerable<object>> GetUserImages(string userId)
-            => (await repo.GetByUser(userId)).Select(i => i.ImageFolder + "/" + i.Id).ToList();
-            //await context.Images
-               // .Where(i => i.UserId == userId)
-               // .Select(i => i.ImageFolder + "/" + i.Id)
-               // .ToListAsync();
+        public async Task<IEnumerable<object>> GetUserImages(string userId, int page)
+            => (await repo.GetByUser(userId, page))
+            .Select(i => i.ImageFolder + "/" + i.Id);
     }
 }

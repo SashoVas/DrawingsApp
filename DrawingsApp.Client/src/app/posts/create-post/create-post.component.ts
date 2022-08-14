@@ -4,7 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IGroup } from 'src/app/core/interfaces/IGroup';
 import { GroupService } from 'src/app/group/services/group.service';
 import { PostService } from '../services/post.service';
-import { UserImagesComponent } from '../user-images/user-images.component';
+import { UserImagesComponent } from '../../images/user-images/user-images.component';
 
 @Component({
   selector: 'app-create-post',

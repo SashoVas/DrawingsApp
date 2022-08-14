@@ -15,8 +15,8 @@ namespace DrawingsApp.Images.Controllers
             => this.imageService = imageService;
 
         [HttpGet("{id?}")]
-        public async Task<ActionResult<IEnumerable<string>>> Index(string? id) 
-            => Ok(await imageService.GetUserImages(id??User.FindFirstValue(ClaimTypes.NameIdentifier)));
+        public async Task<ActionResult<IEnumerable<object>>> GetUserImages(string? id,[FromQuery]int page=0) 
+            => Ok(await imageService.GetUserImages(id??User.FindFirstValue(ClaimTypes.NameIdentifier),page));
 
         [HttpPost]
         public async Task<ActionResult<string>> CreateImage(IFormFile image) 

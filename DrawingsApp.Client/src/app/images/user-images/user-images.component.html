@@ -1,8 +1,12 @@
-<div class="countainer main mt-3 d-flex flex-wrap justify-content-center">
-    <div *ngFor="let img of data; index as i" class="m-2">
-        <img src="../../../assets/resources/Untitled.png" data-bs-toggle="modal" class="{{img.isSelected?'selected':''}}" data-bs-target="#Modal" width="200" height="200"  alt="" (click)="selectImage(i)">
+<div class="countainer main mt-3 text-center ">
+    <div class="d-flex flex-wrap justify-content-center">
+        <div *ngFor="let img of data; index as i" class="m-2">
+            <img src="{{imagesUrl}}Images/{{img.imgUrl}}.jpg" data-bs-toggle="modal" class="{{img.isSelected?'selected':''}}" data-bs-target="#Modal" width="200" height="200"  alt="" (click)="selectImage(i)">
+        </div>
     </div>
+    <button class="btn btn-secondary">Load More</button>
 </div>
+    
 <div class="modal  fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
     <div class="modal-content default_bg">
@@ -12,7 +16,7 @@
     </div>
     <div class="modal-body">
         <div class="d-flex justify-content-center w-100">
-            <img [src]="selectedImage?.imgUrl" alt="">
+            <img [src]="imagesUrl+'Images/'+ selectedImage?.imgUrl+'.jpg'" alt="">
         </div>
     </div>
     <div class="modal-footer">

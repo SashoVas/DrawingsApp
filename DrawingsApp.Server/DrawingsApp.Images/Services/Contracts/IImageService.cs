@@ -2,7 +2,7 @@
 {
     public interface IImageService
     {
-        Task<IEnumerable<object>> GetUserImages(string userId);
+        Task<IEnumerable<object>> GetUserImages(string userId,int page);
         Task<string> CreateImage(string userId, IFormFile inputImage);
     }
 }

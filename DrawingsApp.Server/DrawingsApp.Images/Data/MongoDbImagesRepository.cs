@@ -14,8 +14,12 @@ namespace DrawingsApp.Images.Data
         }
         public Task Insert(ImageFile image) 
             => collection.InsertOneAsync(image);
-        public async Task<IEnumerable<ImageFile>> GetByUser(string userId) 
-            =>await (await collection.FindAsync(i => i.UserId == userId)).ToListAsync();
+        public async Task<IEnumerable<ImageFile>> GetByUser(string userId,int page) 
+            =>await collection
+            .Find(i => i.UserId == userId)
+            .Skip(20*page)
+            .Limit(20)
+            .ToListAsync();
         public Task<long> Count() 
             => collection.CountAsync(_=>true);
     }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IPost } from 'src/app/core/interfaces/IPost';
+import { environment } from 'src/environments/environment';
 import { PostService } from '../services/post.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { PostService } from '../services/post.service';
 export class PostComponent implements OnInit {
   @Input()post!:IPost;
   constructor(private postService:PostService) { }
-
+  imagesUrl:string=environment.imageApi;
   ngOnInit(): void {
   }
   likePost(){

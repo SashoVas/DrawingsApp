@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IPostFull } from 'src/app/core/interfaces/IPostFull';
+import { environment } from 'src/environments/environment';
 import { PostService } from '../services/post.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { PostService } from '../services/post.service';
 })
 export class PostFullComponent implements OnInit {
   post!:IPostFull;
+  imagesUrl:string=environment.imageApi;
   constructor(private activatedRoute:ActivatedRoute,private postService:PostService) { }
 
   ngOnInit(): void {
