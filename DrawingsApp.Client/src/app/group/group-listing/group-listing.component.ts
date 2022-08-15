@@ -5,7 +5,7 @@ import { IGroup } from 'src/app/core/interfaces/IGroup';
 import { ITag } from 'src/app/core/interfaces/ITag';
 import { GroupService } from '../services/group.service';
 import { TagsService } from '../services/tags.service';
-
+import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-group-listing',
   templateUrl: './group-listing.component.html',
@@ -19,7 +19,7 @@ export class GroupListingComponent implements OnInit {
   order:number=0;
   tags:Array<ITag>=[];
   userId:string|null=null;
-  constructor(private groupService:GroupService,private activatedRoute:ActivatedRoute,private fb:FormBuilder,private tagService:TagsService ) {
+  constructor(private groupService:GroupService,private activatedRoute:ActivatedRoute,private fb:FormBuilder,private tagService:TagsService) {
     
    }
 

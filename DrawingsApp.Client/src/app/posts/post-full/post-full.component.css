@@ -22,6 +22,21 @@
 .btn-comment{
     border-radius: 50px;
 }
+.image{
+    position: relative;
+    text-align: center;
+}
+.bottom-left{
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+    color: gray;
+    display: none;
+    font-size: 32px;
+}
+.image:hover .bottom-left{
+    display:block;
+}
 textarea{
     border-radius: 5px;
     border: 2px solid rgb(52,53,54);

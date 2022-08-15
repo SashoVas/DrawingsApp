@@ -16,3 +16,18 @@
 .aditional:hover{
     background-color: rgb(70,70,70);
 }
+.bottom-left{
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+    color: gray;
+    display: none;
+    font-size: 32px;
+}
+.image{
+    position: relative;
+    text-align: center;
+}
+.image:hover .bottom-left{
+    display:block;
+}

@@ -6,5 +6,6 @@ export interface IGroup{
     groupType:number,
     tags:Array<string>,
     users:number,
-    role:number
+    role:number,
+    isJoined:boolean
 }

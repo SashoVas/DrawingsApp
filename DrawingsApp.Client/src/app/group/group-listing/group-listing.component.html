@@ -65,7 +65,10 @@
                     <td><img class="group-img" src="../../../assets/resources/Untitled.png" width="30" height="30"  alt=""></td>
                     <td >{{group.title}}</td>
                     <td>{{group.users}}</td>
-                    <td><button class="btn btn-light btn-sm join">Join</button></td>
+                    <td>
+                        <button class="btn btn-light btn-sm join" *ngIf="group.isJoined">Member</button>
+                        <button class="btn btn-light btn-sm join" *ngIf="!group.isJoined" clic>Not in group</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

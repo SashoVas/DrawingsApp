@@ -18,12 +18,11 @@ namespace DrawingsApp.Groups.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            var group = await groupService.GetGroup(id);
+            var group = await groupService.GetGroup(id,GetUserId());
             if (group is null)
             {
                 return NotFound();
             }
-            group.Role =await userService.GetRole(GetUserId(), id);
             return Ok(group);
         }
         [HttpGet]
@@ -33,13 +32,14 @@ namespace DrawingsApp.Groups.Controllers
                 input.Tags,
                 input.UserId=="mine"?GetUserId():input.UserId,
                 input.GroupType,
-                input.Order));
+                input.Order,
+                GetUserId()));
         [HttpGet("User")]
         public async Task<ActionResult> GetGroupsByUser() 
-            => Ok(await groupService.GetGropusByUser(GetUserId()));
+            => Ok(await groupService.GetGropusByUser(GetUserId(),GetUserId()));
         [HttpGet("Top")]
         public async Task<ActionResult> GetTopGroups()
-            => Ok(await groupService.GetTopGroups());
+            => Ok(await groupService.GetTopGroups(GetUserId()));
 
         [HttpPost]
         public async Task<ActionResult> Create(CreateGroupInputModel input)

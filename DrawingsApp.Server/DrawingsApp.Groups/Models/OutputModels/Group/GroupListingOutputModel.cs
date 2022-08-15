@@ -6,5 +6,6 @@
         public string Title { get; set; }
         public string ImgUrl { get; set; }
         public int Users { get; set; }
+        public bool IsJoined { get; set; }
     }
 }

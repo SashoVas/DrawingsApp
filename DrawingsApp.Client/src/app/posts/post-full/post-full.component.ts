@@ -12,6 +12,7 @@ import { PostService } from '../services/post.service';
 export class PostFullComponent implements OnInit {
   post!:IPostFull;
   imagesUrl:string=environment.imageApi;
+  current_img:number=0;
   constructor(private activatedRoute:ActivatedRoute,private postService:PostService) { }
 
   ngOnInit(): void {
@@ -22,5 +23,17 @@ export class PostFullComponent implements OnInit {
   }
   disLikePost(){
     this.postService.likePost(this.post.groupId,this.post.outerId,false).subscribe();
+  }
+  changeImgRight(){
+    this.current_img++;
+    if(this.current_img>=this.post.imgUrls.length){
+      this.current_img=0;
+    }
+  }
+  changeImgLeft(){
+    this.current_img--;
+    if(this.current_img<=-1){
+      this.current_img=this.post.imgUrls.length-1;
+    }
   }
 }
