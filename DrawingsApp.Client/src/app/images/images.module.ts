@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CreateComponent } from './create/create.component';
 import { ImagesRoutingModule } from './images-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserImagesComponent } from './user-images/user-images.component';
 
 
@@ -16,7 +16,7 @@ import { UserImagesComponent } from './user-images/user-images.component';
     CommonModule,
     ImagesRoutingModule,
     FormsModule,
-    
+    ReactiveFormsModule
   ],
   exports:[UserImagesComponent]
 })

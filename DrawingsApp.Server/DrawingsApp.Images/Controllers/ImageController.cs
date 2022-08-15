@@ -1,4 +1,5 @@
 ﻿using DrawingsApp.Controllers;
+using DrawingsApp.Images.Models.Input;
 using DrawingsApp.Images.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace DrawingsApp.Images.Controllers
             => Ok(await imageService.GetUserImages(id??User.FindFirstValue(ClaimTypes.NameIdentifier),page));
 
         [HttpPost]
-        public async Task<ActionResult<string>> CreateImage(IFormFile image) 
-            => Created("",await imageService.CreateImage(User.FindFirstValue(ClaimTypes.NameIdentifier), image));
+        public async Task<ActionResult<string>> CreateImage([FromForm]CreateImageInputModel input) 
+            => Created("",await imageService.CreateImage(User.FindFirstValue(ClaimTypes.NameIdentifier), input.Image,input.Name));
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DrawingsApp.Images.Data;
 using DrawingsApp.Images.Data.Models;
+using DrawingsApp.Images.Models.Output;
 using DrawingsApp.Images.Services.Contracts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
@@ -14,14 +15,15 @@ namespace DrawingsApp.Images.Services
         public ImageService(MongoDbImagesRepository repo) 
             => this.repo = repo;
 
-        public async Task<string> CreateImage(string userId,IFormFile inputImage)
+        public async Task<string> CreateImage(string userId,IFormFile inputImage,string name)
         {
             var totalImages = await repo.Count();
             var folder =(totalImages % 1000).ToString();
             var image = new ImageFile
             {
                 UserId = userId,
-                ImageFolder = folder
+                ImageFolder = folder,
+                Name=name
             };
             await repo.Insert(image);
             await SaveOnFileSystem(inputImage,folder,image.Id);
@@ -41,8 +43,12 @@ namespace DrawingsApp.Images.Services
             }
             await imageResult.SaveAsJpegAsync(storagePath+ imageId + ".jpg");
         }
-        public async Task<IEnumerable<object>> GetUserImages(string userId, int page)
+        public async Task<IEnumerable<ImageOutputModel>> GetUserImages(string userId, int page)
             => (await repo.GetByUser(userId, page))
-            .Select(i => i.ImageFolder + "/" + i.Id);
+            .Select(i => new ImageOutputModel
+            {
+                ImgUrl = i.ImageFolder + "/" + i.Id,
+                Name=i.Name
+            });
     }
 }

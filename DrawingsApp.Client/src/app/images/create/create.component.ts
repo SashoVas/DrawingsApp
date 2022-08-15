@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ImageService } from '../services/image.service';
 
 @Component({
@@ -7,10 +8,14 @@ import { ImageService } from '../services/image.service';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit,AfterViewInit {
- constructor(private imageService:ImageService){
+ constructor(private imageService:ImageService,private fb:FormBuilder){
   }
   ngOnInit(): void {
+    this.nameForm=this.fb.group({
+      name:[""]
+    });
   }
+  nameForm!:FormGroup;
   @ViewChild('drawingBoard')
   private canvas!: ElementRef<HTMLCanvasElement>;
   private isDrawing:boolean=false;
@@ -120,6 +125,6 @@ export class CreateComponent implements OnInit,AfterViewInit {
     this.isDrawing=false;
   }
   createDrawing(){
-    this.canvas.nativeElement.toBlob(blob=>this.imageService.sendImage(blob!).subscribe());
+    this.canvas.nativeElement.toBlob(blob=>this.imageService.sendImage(blob!,this.nameForm.value.name).subscribe());
   }
 }
