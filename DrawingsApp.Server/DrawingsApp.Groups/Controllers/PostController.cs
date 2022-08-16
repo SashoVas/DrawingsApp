@@ -66,7 +66,7 @@ namespace DrawingsApp.Groups.Controllers
                 Description=input.Description,
                 PostType=postCreateData.PostType
             });
-            return Created("",id);
+            return Created("https://localhost:7013/Comments/"+id, id);
         }
         [HttpPut]
         public async Task<ActionResult> UpdatePost(UpdatePostInputModel input)
@@ -96,7 +96,7 @@ namespace DrawingsApp.Groups.Controllers
             });
             return Ok();
         }
-        [HttpPost("Like")]
+        [HttpPut("Like")]
         public async Task<ActionResult>LikePost(LikePostInputModel input)
         {
             if ((int)(await userService.GetRole(GetUserId(), input.GroupId)) < 2)
@@ -113,7 +113,7 @@ namespace DrawingsApp.Groups.Controllers
                 UserName=User.Identity.Name,
                 ChangeAmounth= changeAmounth
             });
-            return Created("",null);
+            return Ok();
         }
     }
 }

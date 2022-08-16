@@ -52,7 +52,7 @@ namespace DrawingsApp.Groups.Controllers
             var groupId = await groupService.CreateGroup(input.Title, input.MoreInfo,input.ImgUrl, input.GroupType, input.Tags);
             await userService.JoinGroup(userId, groupId);
             await userService.PromoteUser(userId, groupId);
-            return Created(nameof(Get), groupId);
+            return CreatedAtAction(nameof(Get), groupId);
         }
         [HttpPut]
         public async Task<ActionResult> Update(UpdateGroupInputModel input)

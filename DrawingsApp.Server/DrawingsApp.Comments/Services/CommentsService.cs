@@ -1,22 +1,41 @@
 ﻿using DrawingsApp.Comments.Data.Models;
 using DrawingsApp.Comments.Data.Repositories;
 using DrawingsApp.Comments.Services.Contracts;
+using DrawingsApp.Data.Common;
 
 namespace DrawingsApp.Comments.Services
 {
     public class CommentsService : ICommentsService
     {
         private readonly IPostRepository repo;
-
-        public CommentsService(IPostRepository repo) 
-            => this.repo = repo;
-
+        private readonly IUserRoleInGroupRepository roles;
+        public CommentsService(IPostRepository repo, IUserRoleInGroupRepository roles)
+        {
+            this.repo = repo;
+            this.roles = roles;
+        }
+        private async Task<bool> ValidateValuesWhenCreatingComment(Post post,string userId)
+        {
+            if (post is null)
+            {
+                return false;
+            }
+            if ((int)await roles.GetRole(userId, post.GroupId) < (int)Role.User)
+            {
+                throw new UnauthorizedAccessException();
+            }
+            return true;
+        }
         private Comment GetComment(ICommentable parent, string id) 
             => parent.Comments
                 .FirstOrDefault(p => p.Id == id);
         public async Task<bool> CreateCommentOnComment(string userId, string userName, int postId, string contents, List<string> commentsPath)
         {
             var post = await repo.GetPost(postId);
+            if (!await ValidateValuesWhenCreatingComment(post, userId))
+            {
+                return false;
+            }
             var comment = new Comment
             {
                 Id = Guid.NewGuid().ToString(),
@@ -42,7 +61,7 @@ namespace DrawingsApp.Comments.Services
         public async Task<bool> CreateCommentOnPost(string userId, string userName, int postId, string contents)
         {
             var post =await repo.GetPost(postId);
-            if (post is null)
+            if (!await ValidateValuesWhenCreatingComment(post, userId))
             {
                 return false;
             }

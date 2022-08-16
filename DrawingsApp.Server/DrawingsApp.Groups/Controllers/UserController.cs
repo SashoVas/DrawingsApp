@@ -44,7 +44,11 @@ namespace DrawingsApp.Groups.Controllers
                 GroupId=groupId,
                 Role=role
             });
-            return Created("",null);
+            return CreatedAtRoute(new{ 
+                action="Get",
+                controller="Group",
+                id=groupId,
+            }, null);
         }
         [HttpPut("AcceptUser")]
         public async Task<ActionResult> AcceptUser(UpdateUserInputModel input)
