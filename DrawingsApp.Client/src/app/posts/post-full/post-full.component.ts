@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IPostFull } from 'src/app/core/interfaces/IPostFull';
 import { environment } from 'src/environments/environment';
@@ -13,10 +14,14 @@ export class PostFullComponent implements OnInit {
   post!:IPostFull;
   imagesUrl:string=environment.imageApi;
   current_img:number=0;
-  constructor(private activatedRoute:ActivatedRoute,private postService:PostService) { }
+  commentForm!:FormGroup;
+  constructor(private activatedRoute:ActivatedRoute,private postService:PostService,private fb:FormBuilder) { }
 
   ngOnInit(): void {
     this.post=this.activatedRoute.snapshot.data["data"];
+    this.commentForm=this.fb.group({
+      "content":[""]
+    });
   }
   likePost(){
     this.postService.likePost(this.post.groupId,this.post.outerId,true).subscribe();

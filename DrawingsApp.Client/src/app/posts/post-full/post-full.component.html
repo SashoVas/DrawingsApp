@@ -34,7 +34,9 @@
                         </div>
                         <div>
                             <div class="d-flex flex-column">
-                                <textarea class="default_bg write-comment align-self-center text-light" placeholder="comment" rows="5"></textarea>
+                                <form [formGroup]="commentForm">
+                                    <textarea formControlName="conntent" class="default_bg write-comment align-self-center text-light" placeholder="comment" rows="5"></textarea>
+                                </form>
                                 <div class="align-self-end me-3 p-1 pe-3">
                                     <button class="btn btn-light btn-sm btn-comment">Comment</button>
                                 </div>

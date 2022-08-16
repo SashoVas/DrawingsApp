@@ -66,7 +66,7 @@ namespace DrawingsApp.Groups.Controllers
                 Description=input.Description,
                 PostType=postCreateData.PostType
             });
-            return Created("https://localhost:7013/Comments/"+id, id);
+            return Created("https://localhost:7013/Post/"+id, id);
         }
         [HttpPut]
         public async Task<ActionResult> UpdatePost(UpdatePostInputModel input)

@@ -52,6 +52,10 @@ namespace DrawingsApp.Comments.Services
         public async Task<PostOutputModel> GetPost(int id)
         {
             var post = await repo.GetPost(id);
+            if (post is null)
+            {
+                return null;
+            }
             return new PostOutputModel
             {
                 ImgUrls = post.ImgUrls,

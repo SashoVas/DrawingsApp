@@ -10,10 +10,12 @@ import { UserService } from 'src/app/group/services/user.service';
 })
 export class UsersListComponent implements OnInit {
   users!:Array<IUser>;
-  constructor(private activatedRoute:ActivatedRoute) { }
+  role!:number;
+  constructor(private activatedRoute:ActivatedRoute,private userService:UserService) { }
 
   ngOnInit(): void {
     this.users=this.activatedRoute.snapshot.data['data'];
+    this.userService.getRole(this.activatedRoute.snapshot.queryParams["id"]).subscribe(data=>this.role=data);
   }
 
 }

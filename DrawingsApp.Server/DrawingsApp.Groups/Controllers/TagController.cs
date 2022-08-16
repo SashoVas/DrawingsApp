@@ -21,8 +21,12 @@ namespace DrawingsApp.Groups.Controllers
         public async Task<ActionResult> GetTags(string? name) 
             => Ok(await tagService.GetTags(name));
         [HttpPost]
-        public async Task<ActionResult> Create(CreateTagInputModel input) 
-            => CreatedAtAction(nameof(GetTagInfo), await tagService.Create(input.TagName, input.TagInfo));
+        public async Task<ActionResult> Create(CreateTagInputModel input)
+        {
+            var tagId = await tagService.Create(input.TagName, input.TagInfo);
+            return CreatedAtAction(nameof(GetTagInfo), new {id=tagId },tagId );
+        }
+
         [HttpPut]
         public async Task<ActionResult>SetTag(SetTagInputModel input)
         {

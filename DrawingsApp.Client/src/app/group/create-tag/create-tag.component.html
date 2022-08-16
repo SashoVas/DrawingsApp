@@ -1,6 +1,6 @@
 <div class="modal-dialog default_bg">
     <div class="modal-content default_bg">
-      <form [formGroup]="createTagForm"  (ngSubmit)="createTag()" >
+      <form [formGroup]="createTagForm" >
         <div class="modal-header default_bg">
           <h5 class="modal-title" id="exampleModalLabel">Create Tag</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -11,11 +11,18 @@
           <input type="text" formControlName="name">
           <div class="alert alert-danger p-2 mt-2" *ngIf="name?.touched && name?.errors?.['required']" >
             Required
-        </div>
+          </div>
+          <br>
+          <label >Tag Info</label>
+          <br>
+          <input type="text" formControlName="tagInfo">
+          <div class="alert alert-danger p-2 mt-2" *ngIf="tagInfo?.touched && tagInfo?.errors?.['required']" >
+            Required
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" >Create</button>
+          <button type="submit"[disabled]="!createTagForm.valid" (click)="createTag()" class="btn btn-primary" >Create</button>
         </div>
       </form>
       

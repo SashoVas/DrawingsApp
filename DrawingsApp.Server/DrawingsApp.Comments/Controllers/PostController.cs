@@ -20,6 +20,10 @@ namespace DrawingsApp.Comments.Controllers
         public async Task<ActionResult<object>> GetPost(int id)
         {
             var post = await postService.GetPost(id);
+            if (post is null)
+            {
+                return NotFound();
+            }
             if (post.PostType==PostType.Private )
             {
                 if ((int)(await userRoleInGroupRepo.GetRole(GetUserId(),post.GroupId))<1)

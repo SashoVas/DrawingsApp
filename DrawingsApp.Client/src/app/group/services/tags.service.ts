@@ -13,4 +13,7 @@ export class TagsService {
   getTags():Observable<any>{
     return this.http.get<Array<ITag>>(environment.groupApi+"tag/")
   }
+  createTag(tagName:string,tagInfo:string):Observable<any>{
+   return this.http.post(environment.groupApi+"tag/",{tagName,tagInfo}); 
+  }
 }

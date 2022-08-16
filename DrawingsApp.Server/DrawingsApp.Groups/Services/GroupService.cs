@@ -82,16 +82,17 @@ namespace DrawingsApp.Groups.Services
                     }).ToListAsync();
         }
 
-        public async Task<IEnumerable<GroupListingOutputModel>> GetGropusByUser(string userId, string callerId) 
+        public async Task<IEnumerable<GroupListingOutputModel>> GetGropusByUser(string userId) 
             => await context.Groups
                 .Where(g => g.UserGrops.Any(ug => ug.UserId == userId))
+                .Take(10)
                 .Select(g => new GroupListingOutputModel
                 {
                     Id = g.Id,
                     ImgUrl=g.ImgUrl,
                     Title = g.Title,
                     Users=g.UserGrops.Count(),
-                    IsJoined=userId==callerId?true:g.UserGrops.Any(ug=>ug.UserId==userId && ug.GroupId==g.Id)
+                    IsJoined=true
                 }).ToListAsync();
 
         public Task<GroupOutputModel> GetGroup(int id,string userId) 

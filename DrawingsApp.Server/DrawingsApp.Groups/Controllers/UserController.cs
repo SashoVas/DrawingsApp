@@ -17,7 +17,9 @@ namespace DrawingsApp.Groups.Controllers
             this.userService = userService;
             this.publisher = publisher;
         }
-
+        [HttpGet("Role/{id}")]
+        public async Task<ActionResult> GetRoleInGroup(int id) 
+            => Ok(await this.userService.GetRole(GetUserId(), id));
         [HttpGet("{id}")]
         public async Task<ActionResult> GetUsers(int id, [FromQuery] Role role)
         {

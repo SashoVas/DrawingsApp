@@ -20,7 +20,7 @@
                     <div class="alert alert-danger p-2 mt-2" *ngIf="password?.touched && password?.errors?.['required']" >
                         Required
                     </div>
-                    <button class="btn btn-secondary mt-2">Submit</button>
+                    <button [disabled]="!loginForm.valid" class="btn btn-secondary mt-2">Submit</button>
                 </form>
             </div>
         </div>

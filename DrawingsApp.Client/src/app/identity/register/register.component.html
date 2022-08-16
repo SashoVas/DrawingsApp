@@ -30,7 +30,7 @@
                     <div class="alert alert-danger p-2"*ngIf="confirmPassword?.touched && password?.touched && confirmPassword?.value!=password?.value" >
                         Passwords Dont Match
                     </div>
-                    <button class="btn btn-secondary mt-2">Submit</button>
+                    <button [disabled]="!registerForm.valid" class="btn btn-secondary mt-2">Submit</button>
                 </form>
             </div>
         </div>

@@ -19,4 +19,7 @@ export class UserService {
   getUsers(groupId:number,role:number):Observable<any>{
     return this.http.get<Array<IUser>>(environment.groupApi+"User/"+groupId+"?role="+role);
   }
+  getRole(groupId:number):Observable<any>{
+    return this.http.get<number>(environment.groupApi+"User/Role/"+groupId);
+  }
 }

@@ -19,7 +19,7 @@
                     <td>{{user.username}}</td>
                     <td>{{user.role==1?"Pending":user.role==2?"User":"Admin"}}</td>
                     <td>
-                        <button *ngIf="user.role==1" class="btn btn-light btn-sm join">Accept</button>
+                        <button *ngIf="user.role==1 && role==3" class="btn btn-light btn-sm join">Accept</button>
                         <button  class="btn btn-light btn-sm join mx-1">View Profile</button>
                     </td>
                 </tr>
