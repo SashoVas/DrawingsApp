@@ -14,14 +14,22 @@ export class GroupService {
   getGroup(id:string):Observable<any>{
     return this.http.get<IGroup>(environment.groupApi+"Group/"+id)
   }
-  getGroupsByUser():Observable<any>{
-    return this.http.get<Array<IGroup>>(environment.groupApi+"Group/User")
+  getGroupsByUser(isLess:boolean=false):Observable<any>{
+    let url=environment.groupApi+"Group/User";
+    if(isLess){
+      url=url+"?isLess=true"
+    }
+    return this.http.get<Array<IGroup>>(url)
   }
   createGroup(title:string,moreInfo:string,imgUrl:string,groupType:number,tags:Array<number>):Observable<any>{
     return this.http.post(environment.groupApi+"Group",{title,moreInfo,imgUrl,groupType,tags});
   }
-  getTopGroups():Observable<any>{
-    return this.http.get<Array<IGroup>>(environment.groupApi+"Group/Top");
+  getTopGroups(isLess:boolean=false):Observable<any>{
+    let url=environment.groupApi+"Group/Top";
+    if(isLess){
+      url=url+"?isLess=true"
+    }
+    return this.http.get<Array<IGroup>>(url);
   }
   getGroupsByName(name:string,userId:string|null,order:number,tags:Array<number>):Observable<any>{
     let tagsString="";

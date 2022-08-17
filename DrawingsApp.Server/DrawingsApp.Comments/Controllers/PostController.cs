@@ -24,9 +24,10 @@ namespace DrawingsApp.Comments.Controllers
             {
                 return NotFound();
             }
+            post.Role = await userRoleInGroupRepo.GetRole(GetUserId(), post.GroupId);
             if (post.PostType==PostType.Private )
             {
-                if ((int)(await userRoleInGroupRepo.GetRole(GetUserId(),post.GroupId))<1)
+                if ((int)post.Role<1)
                 {
                     return Unauthorized();
                 }

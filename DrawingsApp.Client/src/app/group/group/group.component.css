@@ -9,7 +9,9 @@ p{
 p:hover{
     color:white;
 }
-
+.multiline{
+    white-space: pre-wrap;
+}
 button{
     border-radius: 20px;
 }

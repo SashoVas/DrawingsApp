@@ -10,5 +10,6 @@ export interface IPostFull{
     senderName:string,
     groupName:string,
     groupId:number,
+    role:number,
     comments:Array<IComment>
 }

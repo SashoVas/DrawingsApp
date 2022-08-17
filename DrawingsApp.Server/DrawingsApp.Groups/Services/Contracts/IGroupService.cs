@@ -12,8 +12,8 @@ namespace DrawingsApp.Groups.Services.Contracts
         Task<bool> UpdateGroup(int groupId,string title,string moreInfo,string imgUrl,GroupType groupType ,List<int>tags);
         Task<bool> DeleteGroup(int groupId);
         Task<IEnumerable<GroupListingOutputModel>> Search(string? name, List<int>? tags, string? userId, GroupType? groupType, SortType orderType,string callerId);
-        Task<IEnumerable<GroupListingOutputModel>> GetGropusByUser(string userId);
+        Task<IEnumerable<GroupListingOutputModel>> GetGropusByUser(string userId,bool isLess);
         Task<GroupDataForPostCreationOutputModel> GetGroupDataForNewPost(int groupId);
-        Task<IEnumerable<GroupListingOutputModel>> GetTopGroups(string userId);
+        Task<IEnumerable<GroupListingOutputModel>> GetTopGroups(string userId, bool isLess);
     }
 }

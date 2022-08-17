@@ -1,4 +1,5 @@
-﻿using DrawingsApp.Groups.Data;
+﻿using DrawingsApp.Data.Common;
+using DrawingsApp.Groups.Data;
 using DrawingsApp.Groups.Data.Models;
 using DrawingsApp.Groups.Models.InputModels.Group;
 using DrawingsApp.Groups.Models.OutputModels.Group;
@@ -71,7 +72,7 @@ namespace DrawingsApp.Groups.Services
                 }
             }
             return await query
-                    .Take(10)
+                    .Take(20)
                     .Select(g => new GroupListingOutputModel
                     {
                         Id = g.Id,
@@ -82,18 +83,22 @@ namespace DrawingsApp.Groups.Services
                     }).ToListAsync();
         }
 
-        public async Task<IEnumerable<GroupListingOutputModel>> GetGropusByUser(string userId) 
-            => await context.Groups
-                .Where(g => g.UserGrops.Any(ug => ug.UserId == userId))
-                .Take(10)
-                .Select(g => new GroupListingOutputModel
-                {
-                    Id = g.Id,
-                    ImgUrl=g.ImgUrl,
-                    Title = g.Title,
-                    Users=g.UserGrops.Count(),
-                    IsJoined=true
-                }).ToListAsync();
+        public async Task<IEnumerable<GroupListingOutputModel>> GetGropusByUser(string userId, bool isLess)
+        {
+            var query = context.Groups
+                        .Where(g => g.UserGrops.Any(ug => ug.UserId == userId));
+            if (isLess)
+            {
+                query = query.Take(10);
+            }
+            return await query
+                    .Select(g => new GroupListingOutputModel
+                    {
+                        Id = g.Id,
+                        ImgUrl = g.ImgUrl,
+                        Title = g.Title,
+                    }).ToListAsync();
+        }
 
         public Task<GroupOutputModel> GetGroup(int id,string userId) 
             => context.Groups.Where(g => g.Id == id)
@@ -103,8 +108,9 @@ namespace DrawingsApp.Groups.Services
                     MoreInfo = g.MoreInfo,
                     Title = g.Title,
                     ImgUrl=g.ImgUrl,
-                    Users=g.UserGrops.Count(),
-                    groupType=g.GroupType,
+                    Users=g.UserGrops.Count(ug=>(int)ug.Role>=(int)Role.User),
+                    GroupType=g.GroupType,
+                    Admins= g.UserGrops.Count(ug => ug.Role == Role.Admin),
                     Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList(),
                     Role=g.UserGrops
                         .Where(ug=>ug.UserId==userId && ug.GroupId==g.Id)
@@ -127,17 +133,29 @@ namespace DrawingsApp.Groups.Services
                 .Select(g => g.GroupType)
                 .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<GroupListingOutputModel>> GetTopGroups(string userId) 
-            => await context.Groups
-                .OrderBy(g => g.UserGrops.Count())
-                .Take(10)
-                .Select(g => new GroupListingOutputModel
-                {
-                    Id = g.Id,
-                    ImgUrl = g.ImgUrl,
-                    Title = g.Title,
-                    IsJoined=g.UserGrops.Any(ug=>ug.UserId==userId && ug.GroupId==g.Id)
-                }).ToListAsync();
+        public async Task<IEnumerable<GroupListingOutputModel>> GetTopGroups(string userId, bool isLess)
+        {
+            var query = context.Groups
+                        .OrderByDescending(g => g.UserGrops.Count());
+            if (isLess)
+            {
+                return await query.Take(10).Select(g => new GroupListingOutputModel
+                    {
+                        Id = g.Id,
+                        ImgUrl = g.ImgUrl,
+                        Title = g.Title,
+                        IsJoined = g.UserGrops.Any(ug => ug.UserId == userId && ug.GroupId == g.Id)
+                    }).ToListAsync();
+            }
+            return await query
+                        .Select(g => new GroupListingOutputModel
+                        {
+                            Id = g.Id,
+                            ImgUrl = g.ImgUrl,
+                            Title = g.Title,
+                            IsJoined = g.UserGrops.Any(ug => ug.UserId == userId && ug.GroupId == g.Id)
+                        }).ToListAsync();
+        }
 
         public async Task<bool> UpdateGroup(int groupId, string title, string moreInfo,string imgUrl, GroupType groupType, List<int> tags)
         {

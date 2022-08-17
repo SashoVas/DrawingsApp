@@ -27,7 +27,8 @@ export class CreatePostComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params=>
       this.groupService.getGroupsByUser().subscribe(groups=>{
-      this.groups=groups
+      this.groups=groups;
+      console.log(groups);
       if(params["id"]){
         this.group=this.groups.find(gr=>gr.id==params["id"])!;
       }

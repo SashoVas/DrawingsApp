@@ -10,7 +10,8 @@ namespace DrawingsApp.Groups.Models.OutputModels.Group
         public string MoreInfo { get; set; }
         public string ImgUrl { get; set; }
         public int Users { get; set; }
-        public GroupType groupType { get; set; }
+        public int Admins { get; set; }
+        public GroupType GroupType { get; set; }
         public List<string> Tags { get; set; }
         public Role Role { get; set; }
     }

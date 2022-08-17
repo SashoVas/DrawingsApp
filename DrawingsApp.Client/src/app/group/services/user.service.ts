@@ -16,10 +16,17 @@ export class UserService {
   leaveGroup(groupId:number):Observable<any>{
     return this.http.delete(environment.groupApi+"User/"+groupId);
   }
-  getUsers(groupId:number,role:number):Observable<any>{
-    return this.http.get<Array<IUser>>(environment.groupApi+"User/"+groupId+"?role="+role);
+  getUsers(groupId:number,role:number,lessUsers:boolean=false):Observable<any>{
+    let url=environment.groupApi+"User/"+groupId+"?role="+role;
+    if(lessUsers){
+      url+="&lessUsers=true"
+    }
+    return this.http.get<Array<IUser>>(url);
   }
   getRole(groupId:number):Observable<any>{
     return this.http.get<number>(environment.groupApi+"User/Role/"+groupId);
+  }
+  acceptUser(groupId:number,userId:string){
+    return this.http.put(environment.groupApi+"User/AcceptUser",{groupId,userId})
   }
 }

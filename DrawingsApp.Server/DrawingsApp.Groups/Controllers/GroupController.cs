@@ -1,6 +1,9 @@
 ﻿using DrawingsApp.Controllers;
+using DrawingsApp.Data.Common;
 using DrawingsApp.Groups.Models.InputModels.Group;
 using DrawingsApp.Groups.Services.Contracts;
+using DrawingsApp.Messages.User;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DrawingsApp.Groups.Controllers
@@ -9,10 +12,12 @@ namespace DrawingsApp.Groups.Controllers
     {
         private readonly IGroupService groupService;
         private readonly IUserService userService;
-        public GroupController(IGroupService groupService, IUserService userService)
+        private readonly IBus publisher;
+        public GroupController(IGroupService groupService, IUserService userService, IBus publisher)
         {
             this.groupService = groupService;
             this.userService = userService;
+            this.publisher = publisher;
         }
 
         [HttpGet("{id}")]
@@ -35,11 +40,11 @@ namespace DrawingsApp.Groups.Controllers
                 input.Order,
                 GetUserId()));
         [HttpGet("User")]
-        public async Task<ActionResult> GetGroupsByUser() 
-            => Ok(await groupService.GetGropusByUser(GetUserId()));
+        public async Task<ActionResult> GetGroupsByUser(bool isLess=false) 
+            => Ok(await groupService.GetGropusByUser(GetUserId(),isLess));
         [HttpGet("Top")]
-        public async Task<ActionResult> GetTopGroups()
-            => Ok(await groupService.GetTopGroups(GetUserId()));
+        public async Task<ActionResult> GetTopGroups(bool isLess = false)
+            => Ok(await groupService.GetTopGroups(GetUserId(),isLess));
 
         [HttpPost]
         public async Task<ActionResult> Create(CreateGroupInputModel input)
@@ -52,6 +57,12 @@ namespace DrawingsApp.Groups.Controllers
             var groupId = await groupService.CreateGroup(input.Title, input.MoreInfo,input.ImgUrl, input.GroupType, input.Tags);
             await userService.JoinGroup(userId, groupId);
             await userService.PromoteUser(userId, groupId);
+            await publisher.Publish(new PromoteUserRoleInGroupMessage
+            {
+                UserId = GetUserId(),
+                GroupId = groupId,
+                Role = Role.Admin
+            });
             return CreatedAtAction(nameof(Get), new { id = groupId },groupId);
         }
         [HttpPut]

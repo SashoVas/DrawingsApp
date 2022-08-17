@@ -34,6 +34,7 @@ export class PostFullComponent implements OnInit {
     if(this.current_img>=this.post.imgUrls.length){
       this.current_img=0;
     }
+    console.log(this.post)
   }
   changeImgLeft(){
     this.current_img--;

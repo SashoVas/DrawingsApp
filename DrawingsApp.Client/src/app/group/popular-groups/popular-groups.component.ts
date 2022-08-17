@@ -13,8 +13,8 @@ export class PopularGroupsComponent implements OnInit {
   topGroups:Array<IGroup>=[];
   yourGroups:Array<IGroup>=[]
   ngOnInit(): void {
-    this.groupService.getTopGroups().subscribe(data=>this.topGroups=data);
-    this.groupService.getGroupsByUser().subscribe(data=>this.yourGroups=data)
+    this.groupService.getTopGroups(true).subscribe(data=>this.topGroups=data);
+    this.groupService.getGroupsByUser(true).subscribe(data=>this.yourGroups=data)
   }
 
 }

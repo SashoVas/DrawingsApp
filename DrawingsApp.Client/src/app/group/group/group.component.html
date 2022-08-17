@@ -42,15 +42,15 @@
                 <h5 class="mb-0">Group Info</h5>
             </div>
             <hr class="mb-0 mt-0">
-            <p>
+            <p class="multiline">
                 {{group.moreInfo}}
             </p>
             <div class="d-flex">
                 <p class="mx-3">Users:{{group.users}}</p>
-                <p class="mx-3">Adimns:21</p>
+                <p class="mx-3">Adimns:{{group.admins}}</p>
             </div>
             <div class="px-2 mt-2">
-                <button class="btn btn-secondary w-100 align-self-center mx-1" routerLink="/group/users" [queryParams]="{id:group.id,role: 2}">View All</button>
+                <button class="btn btn-secondary w-100 align-self-center mx-1" routerLink="/group/users" [queryParams]="{id:group.id,role: 2}">View All Users</button>
             </div>
         </div>
         <br>
@@ -59,9 +59,9 @@
                 <h5 class="mb-0">Admins</h5>
             </div>
             <hr class="mb-0 mt-0">
-            <div>
-                <div *ngFor="let group of [1,2,3,4,5]" class="d-flex p-1">
-                    <p class="align-self-center mb-0 mx-1 group-name">User nameaaa</p>
+            <div class="text-center">
+                <div *ngFor="let admin of admins" class="d-flex p-1">
+                    <p class="align-self-center mb-0 mx-1 group-name">{{admin.username}}</p>
                 </div>
             </div>
             <div class="px-2 mt-2">

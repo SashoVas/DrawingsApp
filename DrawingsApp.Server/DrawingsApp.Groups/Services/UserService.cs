@@ -84,15 +84,22 @@ namespace DrawingsApp.Groups.Services
                 .Select(ug => ug.Role)
                 .FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<UserOutputModel>> GetUsersByGroup(int groupId,Role role) 
-            => await context.UserGroups
-                .Where(ug => ug.GroupId == groupId && (int)ug.Role==(int)role)
-                .Select(ug => new UserOutputModel
-                {
-                    UserId = ug.UserId,
-                    Username = ug.User.Username,
-                    Role=ug.Role
-                }).ToListAsync();
+        public async Task<IEnumerable<UserOutputModel>> GetUsersByGroup(int groupId, Role role,bool lessUsers)
+        {
+            var query = context.UserGroups
+                           .Where(ug => ug.GroupId == groupId && (int)ug.Role == (int)role);
+            if (lessUsers)
+            {
+                query = query.Take(10);
+            }
+            return await query
+                           .Select(ug => new UserOutputModel
+                           {
+                               Id = ug.UserId,
+                               Username = ug.User.Username,
+                               Role = ug.Role
+                           }).ToListAsync();
+        }
 
         public async Task<bool> LeaveGroup(string userId, int groupId)
         {
