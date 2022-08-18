@@ -29,7 +29,7 @@ namespace DrawingsApp.Comments.Services
         private Comment GetComment(ICommentable parent, string id) 
             => parent.Comments
                 .FirstOrDefault(p => p.Id == id);
-        public async Task<bool> CreateCommentOnComment(string userId, string userName, int postId, string contents, List<string> commentsPath)
+        public async Task<bool> CreateCommentOnComment(string userId, string userName, string postId, string contents, List<string> commentsPath)
         {
             var post = await repo.GetPost(postId);
             if (!await ValidateValuesWhenCreatingComment(post, userId))
@@ -58,7 +58,7 @@ namespace DrawingsApp.Comments.Services
             return true;
         }
 
-        public async Task<bool> CreateCommentOnPost(string userId, string userName, int postId, string contents)
+        public async Task<bool> CreateCommentOnPost(string userId, string userName, string postId, string contents)
         {
             var post =await repo.GetPost(postId);
             if (!await ValidateValuesWhenCreatingComment(post, userId))

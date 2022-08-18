@@ -10,9 +10,9 @@ namespace DrawingsApp.Comments.Data.Repositories
         {
             collection = mongoDb.GetCollection<Post>(configuration.GetSection("MongoDbSettings:Collections:Comments").Value);
         }
-        public Task<Post> GetPost(int postId)
+        public Task<Post> GetPost(string postId)
         {
-            return collection.Find(p => p.OuterId == postId).FirstOrDefaultAsync();
+            return collection.Find(p => p.Id == postId).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Post>> GetPosts()

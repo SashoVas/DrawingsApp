@@ -1,7 +1,7 @@
 import { IComment } from "./IComment";
 
 export interface IPostFull{
-    outerId:number,
+    id:string,
     imgUrls:Array<string>,
     description:string,
     postedOn:string,

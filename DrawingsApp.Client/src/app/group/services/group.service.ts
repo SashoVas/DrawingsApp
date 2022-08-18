@@ -31,11 +31,8 @@ export class GroupService {
     }
     return this.http.get<Array<IGroup>>(url);
   }
-  getGroupsByName(name:string,userId:string|null,order:number,tags:Array<number>):Observable<any>{
-    let tagsString="";
-    for(let i=0;i<tags.length;i++){
-      tagsString+="&tags["+i+"]="+tags[i];
-    }
-    return this.http.get<Array<IGroup>>(environment.groupApi+"Group?name="+name+"&userId="+(userId!=null?userId:"")+"&order="+order+tagsString);
+  search(name:string,userId:string|null,order:number,tags:Array<number>,page:number):Observable<any>{
+    let s:string=userId!=null?userId:"";
+    return this.http.get<Array<IGroup>>(environment.groupApi+"Group",{params:{name,order,tags,page,userId:s}});
   }
 }

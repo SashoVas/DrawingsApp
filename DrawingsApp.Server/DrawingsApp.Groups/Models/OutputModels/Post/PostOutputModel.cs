@@ -2,7 +2,7 @@
 {
     public class PostOutputModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public List<string> ImgUrls { get; set; }
         public string PostedOn { get; set; }
         public string Title { get; set; }

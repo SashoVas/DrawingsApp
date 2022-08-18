@@ -40,7 +40,7 @@ namespace DrawingsApp.Groups.Services
             return true;
         }
 
-        public async Task<IEnumerable<GroupListingOutputModel>> Search(string name, List<int>? tags, string? userId, GroupType? groupType, SortType orderType,string callerId)
+        public async Task<IEnumerable<GroupListingOutputModel>> Search(string name, List<int>? tags, string? userId, GroupType? groupType, SortType orderType,string callerId,int page)
         {
             var query = context.Groups
                            .Where(g => g.Title.ToLower().StartsWith(name.ToLower()));
@@ -72,6 +72,7 @@ namespace DrawingsApp.Groups.Services
                 }
             }
             return await query
+                    .Skip(page*20)
                     .Take(20)
                     .Select(g => new GroupListingOutputModel
                     {
@@ -117,22 +118,6 @@ namespace DrawingsApp.Groups.Services
                         .Select(ug=>ug.Role)
                         .FirstOrDefault()
                 }).FirstOrDefaultAsync();
-
-        public Task<GroupDataForPostCreationOutputModel> GetGroupDataForNewPost(int groupId)
-            => context.Groups
-                .Where(g => g.Id == groupId)
-                .Select(g => new GroupDataForPostCreationOutputModel
-                {
-                    GroupName = g.Title,
-                    PostType = (int)g.GroupType == 0 ? 0 : 1
-                }).FirstOrDefaultAsync();
-
-        public Task<GroupType> GetGroupType(int id) 
-            => context.Groups
-                .Where(g => g.Id == id)
-                .Select(g => g.GroupType)
-                .FirstOrDefaultAsync();
-
         public async Task<IEnumerable<GroupListingOutputModel>> GetTopGroups(string userId, bool isLess)
         {
             var query = context.Groups

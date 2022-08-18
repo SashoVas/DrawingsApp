@@ -16,12 +16,13 @@ namespace DrawingsApp.Groups.Services
             this.userService = userService;
         }
 
-        public async Task<int> CreatePost(string senderId, string title, int groupId, List<string> imgUrls)
+        public async Task<int> CreatePost(string senderId, string title, int groupId, List<string> imgUrls,string outerId)
         {
             var post = new Post
             {
                 GroupId=groupId,
                 SenderId= senderId,
+                OuterId=outerId,
                 Title=title,
                 Images=imgUrls.Select(i=>new Image {Url=i }).ToList(),
                 PostedOn=DateTime.UtcNow
@@ -31,17 +32,13 @@ namespace DrawingsApp.Groups.Services
             return post.Id;
         }
 
-        public async Task<bool> DeletePost(string userId,int postId)
+        public async Task<bool> DeletePost(string postId)
         {
             var postData = await context.Posts
-                .Where(p => p.Id == postId)
+                .Where(p => p.OuterId == postId)
                 .Include(p=>p.Likes)
                 .FirstOrDefaultAsync();
-            if (postData is null || postData.SenderId!=userId || !await userService.IsAdmin(userId, postData.GroupId))
-            {
-                return false;
-            }
-
+    
             context.Likes.RemoveRange(postData.Likes);
             context.Posts.Remove(postData);
             await context.SaveChangesAsync();
@@ -57,7 +54,7 @@ namespace DrawingsApp.Groups.Services
                 .Select(p => new PostOutputModel
                 {
                     PostedOn = p.PostedOn.ToString("yyyy/MM/d"),
-                    Id = p.Id,
+                    Id = p.OuterId,
                     GroupName=p.Group.Title,
                     ImgUrls = p.Images.Select(i=>i.Url).ToList(),
                     SenderUserName = p.Sender.Username,
@@ -76,7 +73,7 @@ namespace DrawingsApp.Groups.Services
                 .Select(p => new PostOutputModel
                 {
                     PostedOn = p.PostedOn.ToString("yyyy/MM/d"),
-                    Id = p.Id,
+                    Id = p.OuterId,
                     GroupName=p.Group.Title,
                     ImgUrls = p.Images.Select(i => i.Url).ToList(),
                     SenderUserName = p.Sender.Username,
@@ -85,10 +82,13 @@ namespace DrawingsApp.Groups.Services
                     GroupId=p.GroupId
                 }).ToListAsync();
 
-        public async Task<int> LikePost(string userId,int postId, bool isLike)
+        public async Task<int> LikePost(string userId,string postId, bool isLike)
         {
             var like =await context.Likes
-                .Where(l => l.PostId == postId && l.UserId == userId)
+                .Where(l => l.Post.OuterId == postId && l.UserId == userId)
+                .FirstOrDefaultAsync();
+            var post = await context.Posts
+                .Where(p => p.OuterId == postId)
                 .FirstOrDefaultAsync();
             int changeAmounth = 0;
             if (like is null)
@@ -96,7 +96,7 @@ namespace DrawingsApp.Groups.Services
                 changeAmounth = isLike?1:-1;
                 await context.Likes.AddAsync(new PostUserLikes 
                 { 
-                    PostId=postId,
+                    PostId=post.Id,
                     UserId=userId,
                     IsLike=isLike
                 });
@@ -119,14 +119,11 @@ namespace DrawingsApp.Groups.Services
             return changeAmounth;
         }
 
-        public async Task<bool> UpdatePost(string senderId, int postId, string title)
+        public async Task<bool> UpdatePost(  string outerId, string title)
         {
-            var post =await context.Posts
-                .FindAsync(postId);
-            if (post.SenderId!=senderId)
-            {
-                return false;
-            }
+            var post = await context.Posts
+                .Where(p => p.OuterId == outerId)
+                .FirstOrDefaultAsync();
             post.Title = title;
             context.Posts.Update(post);
             await context.SaveChangesAsync();

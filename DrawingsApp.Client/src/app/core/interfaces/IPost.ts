@@ -1,5 +1,5 @@
 export interface IPost{
-    id:number,
+    id:string,
     imgUrls:Array<string>,
     postedOn:string,
     title:string,

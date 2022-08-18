@@ -10,7 +10,7 @@
         public string Contents { get; set; }
         public string UserId { get; set; }
         public string UserName { get; set; }
-        public int PostId { get; set; }
+        public string PostId { get; set; }
         public DateTime CommentedOn { get; set; } = DateTime.UtcNow;
         public ICollection<Comment> Comments { get; set; }
     }

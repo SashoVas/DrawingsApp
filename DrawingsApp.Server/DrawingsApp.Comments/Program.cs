@@ -15,12 +15,9 @@ builder.Services.AddControllers();
 builder.AddCors();
 builder.AddAuthenticationWithJWT();
 builder.AddMessages(
-    typeof(PostCreatedConsumer),
-    typeof(PostDeletedConsumer),
-    typeof(PostUpdatedConsumer),
-    typeof(PostLikedConsumer),
     typeof(PromoteUserRoleInGroupConsumer),
-    typeof(RemoveRoleFromUserMessageConsumer));
+    typeof(RemoveRoleFromUserMessageConsumer),
+    typeof(LikePostConsumer));
 builder.Services.AddSingleton<MongoDbCommentsDb>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

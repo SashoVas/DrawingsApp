@@ -9,5 +9,6 @@ namespace DrawingsApp.Groups.Models.InputModels.Group
         public string? UserId { get; set; }
         public SortType Order { get; set; }
         public GroupType? GroupType { get; set; }
+        public int Page { get; set; } 
     }
 }

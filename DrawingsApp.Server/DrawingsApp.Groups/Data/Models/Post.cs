@@ -11,6 +11,7 @@ namespace DrawingsApp.Groups.Data.Models
             Likes = new HashSet<PostUserLikes>();
         }
         public int Id { get; set; }
+        public string OuterId { get; set; }
         public DateTime PostedOn { get; set; }
         [MaxLength(DataConstants.PostTitleMaxLength)]
         [MinLength(DataConstants.PostTitleMinLength)]

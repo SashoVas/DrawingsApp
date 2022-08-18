@@ -38,7 +38,8 @@ namespace DrawingsApp.Groups.Controllers
                 input.UserId=="mine"?GetUserId():input.UserId,
                 input.GroupType,
                 input.Order,
-                GetUserId()));
+                GetUserId(),
+                input.Page));
         [HttpGet("User")]
         public async Task<ActionResult> GetGroupsByUser(bool isLess=false) 
             => Ok(await groupService.GetGropusByUser(GetUserId(),isLess));

@@ -12,14 +12,12 @@ namespace DrawingsApp.Comments.Data.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        public int OuterId { get; set; }
-        public DateTime PostedOn { get; set; }
+        public DateTime PostedOn { get; set; } = DateTime.UtcNow;
         public string Title { get; set; }
         public int GroupId { get; set; }
         public int Likes { get; set; }
         public string GroupName { get; set; }
         public string SenderId { get; set; }
-        public PostType PostType { get; set; }
         public string Description { get; set; }
         public string SenderName { get; set; }
         public bool IsDeleated { get; set; } = false;

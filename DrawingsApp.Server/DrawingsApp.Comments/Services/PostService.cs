@@ -8,48 +8,57 @@ namespace DrawingsApp.Comments.Services
     public class PostService : IPostService
     {
         private readonly IPostRepository repo;
+        private readonly IUserRoleInGroupRepository roleRepo;
+        public PostService(IPostRepository repo, IUserRoleInGroupRepository roleRepo)
+        {
+            this.repo = repo;
+            this.roleRepo = roleRepo;
+        }
 
-        public PostService(IPostRepository repo) 
-            => this.repo = repo;
-
-        public async Task<bool> CreatePost(
-            int outerId,
-            int groupId,
+        public async Task<string> CreatePost(
             string groupName,
+            int groupId,
             string title,
             string description,
             string senderId,
             string senderName,
-            ICollection<string> ImgUrls,
-            PostType postType)
+            ICollection<string> ImgUrls)
         {
-            await repo.CreatePost(new Post
+            var post = new Post
             {
                 PostedOn = DateTime.UtcNow,
                 SenderId = senderId,
-                SenderName =senderName,
+                SenderName = senderName,
                 Description = description,
                 GroupId = groupId,
-                OuterId = outerId,
                 GroupName = groupName,
                 Title = title,
-                ImgUrls=ImgUrls,
-                PostType=postType
-            }) ;
-            return true;
+                ImgUrls = ImgUrls,
+            };
+            await repo.CreatePost(post);
+            return post.Id;
         }
 
-        public async Task DeletePost(int outerid)
+        public async Task<bool> DeletePost(string postId,string userId)
         {
-            var post = await repo.GetPost(outerid);
-            post.IsDeleated = true;
-            await repo.UpdatePost(post);
+            var post = await repo.GetPost(postId);
+            if (post is null)
+            {
+                return false;
+            }
+            if (post.SenderId == userId || (int)await roleRepo.GetRole(userId, post.GroupId) == 3)
+            {
+                post.IsDeleated = true;
+                await repo.UpdatePost(post);
+                return true;
+            }
+            return false;
         }
 
         public async Task DeletePosts() 
             => await repo.DeletePosts();
 
-        public async Task<PostOutputModel> GetPost(int id)
+        public async Task<PostOutputModel> GetPost(string id)
         {
             var post = await repo.GetPost(id);
             if (post is null)
@@ -58,6 +67,7 @@ namespace DrawingsApp.Comments.Services
             }
             return new PostOutputModel
             {
+                Id=post.Id,
                 ImgUrls = post.ImgUrls,
                 Description = post.Description,
                 SenderId = post.SenderId,
@@ -65,29 +75,36 @@ namespace DrawingsApp.Comments.Services
                 GroupId = post.GroupId,
                 GroupName = post.GroupName,
                 Likes = post.Likes,
-                OuterId = post.OuterId,
                 PostedOn = post.PostedOn.ToString("yyyy,MM,dd"),
                 SenderName = post.SenderName,
                 Title = post.Title,
-                PostType=post.PostType
             };
         }
 
         public Task<IEnumerable<Post>> GetPosts() => repo.GetPosts();
 
-        public async Task LikePost(int outerId,int changeAmounth)
+        public async Task LikePost(string postId, int changeAmounth)
         {
-            var post =await repo.GetPost(outerId);
+            var post =await repo.GetPost(postId);
             post.Likes += changeAmounth;
             await repo.UpdatePost(post);
         }
 
-        public async Task UpdatePost(int outerId,string title,string description)
+        public async Task<bool> UpdatePost(string postId, string title,string description,string userId)
         {
-            var post = await repo.GetPost(outerId);
-            post.Title = title;
-            post.Description = description;
-            await repo.UpdatePost(post);
+            var post = await repo.GetPost(postId);
+            if (post is null)
+            {
+                return false;
+            }
+            if(post.SenderId==userId ||(int)await roleRepo.GetRole(userId,post.GroupId)==3)
+            {
+                post.Title = title;
+                post.Description = description;
+                await repo.UpdatePost(post);
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -40,7 +40,7 @@ export class GroupListingComponent implements OnInit {
     this.tagService.getTags().subscribe(data=>this.tags=data);
   }
   fetchData(name:string){
-    this.groupService.getGroupsByName(name,this.userId,this.order,this.selectedTags.map(t=>t.tagId)).subscribe(data=>this.groups=data);
+    this.groupService.search(name,this.userId,this.order,this.selectedTags.map(t=>t.tagId),0).subscribe(data=>this.groups=data);
   }
   selectTag(tag:ITag){
     tag.isSelected=!tag.isSelected;

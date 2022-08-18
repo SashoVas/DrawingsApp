@@ -1,7 +1,7 @@
 ﻿using DrawingsApp.Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace DrawingsApp.Groups.Models.InputModels.Post
+namespace DrawingsApp.Comments.Models.InputModels.Post
 {
     public class CreatePostInputModel
     {

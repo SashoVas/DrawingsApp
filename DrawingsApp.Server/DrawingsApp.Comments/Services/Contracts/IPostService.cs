@@ -5,21 +5,19 @@ namespace DrawingsApp.Comments.Services.Contracts
 {
     public interface IPostService
     {
-        Task<bool> CreatePost(
-            int outerId,
-            int groupId,
+        Task<string> CreatePost(
             string groupName,
+            int groupId,
             string title,
             string description,
             string senderId,
             string senderName,
-            ICollection<string>ImgUrls,
-            PostType postType);
-        Task<PostOutputModel> GetPost(int id);
+            ICollection<string>ImgUrls);
+        Task<PostOutputModel> GetPost(string id);
         Task<IEnumerable<Post>> GetPosts();
-        Task DeletePost(int outerId);
-        Task UpdatePost(int outerId,string title,string description);
-        Task LikePost(int outerId, int changeAmounth);
+        Task<bool> DeletePost(string postId,string userId);
+        Task<bool> UpdatePost(string postId, string title,string description, string userId);
+        Task LikePost(string postId, int changeAmounth);
         Task DeletePosts();
     }
 }

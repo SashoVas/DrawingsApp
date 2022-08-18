@@ -5,7 +5,7 @@ namespace DrawingsApp.Comments.Models.OutputModels.Post
 {
     public class PostOutputModel
     {
-        public int OuterId { get; set; }
+        public string Id { get; set; }
         public string PostedOn { get; set; }
         public string Title { get; set; }
         public int GroupId { get; set; }

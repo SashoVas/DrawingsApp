@@ -2,7 +2,7 @@
 {
     public interface ICommentsService
     {
-        Task<bool> CreateCommentOnPost(string userId,string userName,int postId,string contents);
-        Task<bool> CreateCommentOnComment(string userId,string userName,int postId,string contents,List<string>commentsPath);
+        Task<bool> CreateCommentOnPost(string userId,string userName,string postId,string contents);
+        Task<bool> CreateCommentOnComment(string userId,string userName,string postId,string contents,List<string>commentsPath);
     }
 }
