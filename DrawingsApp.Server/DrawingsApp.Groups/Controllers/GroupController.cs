@@ -2,6 +2,7 @@
 using DrawingsApp.Data.Common;
 using DrawingsApp.Groups.Models.InputModels.Group;
 using DrawingsApp.Groups.Services.Contracts;
+using DrawingsApp.Messages.Group;
 using DrawingsApp.Messages.User;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
@@ -58,11 +59,12 @@ namespace DrawingsApp.Groups.Controllers
             var groupId = await groupService.CreateGroup(input.Title, input.MoreInfo,input.ImgUrl, input.GroupType, input.Tags);
             await userService.JoinGroup(userId, groupId);
             await userService.PromoteUser(userId, groupId);
-            await publisher.Publish(new PromoteUserRoleInGroupMessage
+            await publisher.Publish(new GroupCreateMessage
             {
-                UserId = GetUserId(),
                 GroupId = groupId,
-                Role = Role.Admin
+                GroupName=input.Title,
+                GroupType=input.GroupType,
+                UserId=GetUserId()
             });
             return CreatedAtAction(nameof(Get), new { id = groupId },groupId);
         }

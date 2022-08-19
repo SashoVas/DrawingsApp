@@ -14,12 +14,10 @@ namespace DrawingsApp.Comments.Data.Models
         public string Id { get; set; }
         public DateTime PostedOn { get; set; } = DateTime.UtcNow;
         public string Title { get; set; }
-        public int GroupId { get; set; }
         public int Likes { get; set; }
-        public string GroupName { get; set; }
-        public string SenderId { get; set; }
+        public SenderInfo Sender { get; set; }
+        public GroupInfo Group { get; set; }
         public string Description { get; set; }
-        public string SenderName { get; set; }
         public bool IsDeleated { get; set; } = false;
         public ICollection<Comment> Comments { get; set; }
         public ICollection<string> ImgUrls { get; set; }

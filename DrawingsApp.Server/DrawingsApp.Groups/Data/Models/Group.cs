@@ -1,4 +1,5 @@
 ﻿using DrawingsApp.Data;
+using DrawingsApp.Data.Common;
 using System.ComponentModel.DataAnnotations;
 
 namespace DrawingsApp.Groups.Data.Models

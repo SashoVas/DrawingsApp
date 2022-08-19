@@ -1,4 +1,4 @@
-﻿using DrawingsApp.Groups.Data.Models;
+﻿using DrawingsApp.Data.Common;
 
 namespace DrawingsApp.Groups.Models.InputModels.Group
 {

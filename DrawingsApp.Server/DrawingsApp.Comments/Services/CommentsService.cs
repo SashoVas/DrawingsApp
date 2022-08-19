@@ -20,7 +20,7 @@ namespace DrawingsApp.Comments.Services
             {
                 return false;
             }
-            if ((int)await roles.GetRole(userId, post.GroupId) < (int)Role.User)
+            if ((int)await roles.GetRole(userId, post.Group.GroupId) < (int)Role.User)
             {
                 throw new UnauthorizedAccessException();
             }
@@ -41,8 +41,12 @@ namespace DrawingsApp.Comments.Services
                 Id = Guid.NewGuid().ToString(),
                 Contents = contents,
                 PostId = postId,
-                UserName = userName,
-                UserId = userId,
+                Sender=new SenderInfo
+                {
+                    SenderName = userName,
+                    SenderId = userId,
+                }
+                
             };
             ICommentable current = post;
             foreach (var id in commentsPath)
@@ -70,8 +74,11 @@ namespace DrawingsApp.Comments.Services
                 Id=Guid.NewGuid().ToString(),
                 Contents=contents,
                 PostId=postId,
-                UserName=userName,
-                UserId=userId,
+                Sender = new SenderInfo
+                {
+                    SenderName = userName,
+                    SenderId = userId,
+                }
             };
             post.Comments.Add(comment);
             await repo.UpdatePost(post);

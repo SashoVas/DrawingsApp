@@ -12,7 +12,7 @@
                     <div class="d-inline-flex flex-column pointer">
                         <div class="p-3 pb-0">
                             <div class="d-flex justify-content-between">
-                                <p class="name"><b class="hover_underline" routerLink="/group/{{post.groupId}}">{{post.groupName}}</b> <span class="text-secondary"> posted by <span class="hover_underline">{{post.senderName}}</span> on {{post.postedOn}}</span></p>
+                                <p class="name"><b class="hover_underline" routerLink="/group/{{post.group.groupId}}">{{post.group.groupName}}</b> <span class="text-secondary"> posted by <span class="hover_underline">{{post.user.userName}}</span> on {{post.postedOn}}</span></p>
                                 <p *ngIf="post.role==3" class="delete"><i class="fa-solid fa-x"></i></p>  
                             </div>
                             

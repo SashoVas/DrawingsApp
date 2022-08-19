@@ -24,10 +24,10 @@ export class PostFullComponent implements OnInit {
     });
   }
   likePost(){
-    this.postService.likePost(this.post.groupId,this.post.id,true).subscribe();
+    this.postService.likePost(this.post.group.groupId,this.post.id,true).subscribe();
   }
   disLikePost(){
-    this.postService.likePost(this.post.groupId,this.post.id,false).subscribe();
+    this.postService.likePost(this.post.group.groupId,this.post.id,false).subscribe();
   }
   changeImgRight(){
     this.current_img++;

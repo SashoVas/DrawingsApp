@@ -6,7 +6,6 @@ namespace DrawingsApp.Comments.Services.Contracts
     public interface IPostService
     {
         Task<string> CreatePost(
-            string groupName,
             int groupId,
             string title,
             string description,

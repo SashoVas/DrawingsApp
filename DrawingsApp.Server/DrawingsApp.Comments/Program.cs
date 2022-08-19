@@ -1,5 +1,6 @@
 using DrawingsApp.Comments.Data;
 using DrawingsApp.Comments.Data.Repositories;
+using DrawingsApp.Comments.Messages.Group;
 using DrawingsApp.Comments.Messages.Post;
 using DrawingsApp.Comments.Messages.User;
 using DrawingsApp.Comments.Services;
@@ -17,11 +18,13 @@ builder.AddAuthenticationWithJWT();
 builder.AddMessages(
     typeof(PromoteUserRoleInGroupConsumer),
     typeof(RemoveRoleFromUserMessageConsumer),
-    typeof(LikePostConsumer));
+    typeof(LikePostConsumer),
+    typeof(GroupCreateConsumer));
 builder.Services.AddSingleton<MongoDbCommentsDb>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IPostRepository, PostRepository>();
+builder.Services.AddTransient<IGroupRepository, GroupRepository>();
 builder.Services.AddTransient<IUserRoleInGroupRepository, UserRoleInGroupRepository>();
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<ICommentsService, CommentsService>();

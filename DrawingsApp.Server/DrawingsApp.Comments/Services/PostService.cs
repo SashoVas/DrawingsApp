@@ -1,6 +1,7 @@
 ﻿using DrawingsApp.Comments.Data.Models;
 using DrawingsApp.Comments.Data.Repositories;
 using DrawingsApp.Comments.Models.OutputModels.Post;
+using DrawingsApp.Comments.Models.OutputModels.User;
 using DrawingsApp.Comments.Services.Contracts;
 
 namespace DrawingsApp.Comments.Services
@@ -9,14 +10,15 @@ namespace DrawingsApp.Comments.Services
     {
         private readonly IPostRepository repo;
         private readonly IUserRoleInGroupRepository roleRepo;
-        public PostService(IPostRepository repo, IUserRoleInGroupRepository roleRepo)
+        private readonly IGroupRepository groupRepo;
+        public PostService(IPostRepository repo, IUserRoleInGroupRepository roleRepo, IGroupRepository groupRepo)
         {
             this.repo = repo;
             this.roleRepo = roleRepo;
+            this.groupRepo = groupRepo;
         }
 
         public async Task<string> CreatePost(
-            string groupName,
             int groupId,
             string title,
             string description,
@@ -27,11 +29,13 @@ namespace DrawingsApp.Comments.Services
             var post = new Post
             {
                 PostedOn = DateTime.UtcNow,
-                SenderId = senderId,
-                SenderName = senderName,
+                Sender=new SenderInfo
+                {
+                    SenderId=senderId,
+                    SenderName=senderName
+                },
                 Description = description,
-                GroupId = groupId,
-                GroupName = groupName,
+                Group=await groupRepo.GetGroup(groupId),
                 Title = title,
                 ImgUrls = ImgUrls,
             };
@@ -46,7 +50,7 @@ namespace DrawingsApp.Comments.Services
             {
                 return false;
             }
-            if (post.SenderId == userId || (int)await roleRepo.GetRole(userId, post.GroupId) == 3)
+            if (post.Sender.SenderId == userId || (int)await roleRepo.GetRole(userId, post.Group.GroupId) == 3)
             {
                 post.IsDeleated = true;
                 await repo.UpdatePost(post);
@@ -70,13 +74,20 @@ namespace DrawingsApp.Comments.Services
                 Id=post.Id,
                 ImgUrls = post.ImgUrls,
                 Description = post.Description,
-                SenderId = post.SenderId,
+                User=new UserOutputModel
+                {
+                    UserName = post.Sender.SenderName,
+                    UserId=post.Sender.SenderId
+                },
                 Comments = post.Comments,
-                GroupId = post.GroupId,
-                GroupName = post.GroupName,
+                Group=new Models.OutputModels.Group.GroupOutputModel
+                {
+                    GroupId=post.Group.GroupId,
+                    GroupName = post.Group.GroupName,
+                    GroupType=post.Group.GroupType
+                },
                 Likes = post.Likes,
                 PostedOn = post.PostedOn.ToString("yyyy,MM,dd"),
-                SenderName = post.SenderName,
                 Title = post.Title,
             };
         }
@@ -97,7 +108,7 @@ namespace DrawingsApp.Comments.Services
             {
                 return false;
             }
-            if(post.SenderId==userId ||(int)await roleRepo.GetRole(userId,post.GroupId)==3)
+            if(post.Sender.SenderId==userId ||(int)await roleRepo.GetRole(userId,post.Group.GroupId)==3)
             {
                 post.Title = title;
                 post.Description = description;

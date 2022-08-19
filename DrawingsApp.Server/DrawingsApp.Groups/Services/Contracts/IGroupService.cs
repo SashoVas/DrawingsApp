@@ -1,4 +1,4 @@
-﻿using DrawingsApp.Groups.Data.Models;
+﻿using DrawingsApp.Data.Common;
 using DrawingsApp.Groups.Models.InputModels.Group;
 using DrawingsApp.Groups.Models.OutputModels.Group;
 

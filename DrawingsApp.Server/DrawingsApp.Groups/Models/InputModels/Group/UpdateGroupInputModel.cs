@@ -1,5 +1,5 @@
 ﻿using DrawingsApp.Data;
-using DrawingsApp.Groups.Data.Models;
+using DrawingsApp.Data.Common;
 using System.ComponentModel.DataAnnotations;
 
 namespace DrawingsApp.Groups.Models.InputModels.Group

@@ -1,4 +1,5 @@
-﻿using DrawingsApp.Data.Seeders;
+﻿using DrawingsApp.Data.Common;
+using DrawingsApp.Data.Seeders;
 using DrawingsApp.Groups.Data.Models;
 
 namespace DrawingsApp.Groups.Data.Seeders

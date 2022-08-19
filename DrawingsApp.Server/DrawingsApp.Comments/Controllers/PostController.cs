@@ -1,5 +1,4 @@
-﻿using DrawingsApp.Comments.Data.Models;
-using DrawingsApp.Comments.Data.Repositories;
+﻿using DrawingsApp.Comments.Data.Repositories;
 using DrawingsApp.Comments.Models.InputModels.Post;
 using DrawingsApp.Comments.Services.Contracts;
 using DrawingsApp.Controllers;
@@ -29,8 +28,8 @@ namespace DrawingsApp.Comments.Controllers
             {
                 return NotFound();
             }
-            post.Role = await userRoleInGroupRepo.GetRole(GetUserId(), post.GroupId);
-            if (post.PostType==PostType.Private )
+            post.Role = await userRoleInGroupRepo.GetRole(GetUserId(), post.Group.GroupId);
+            if (post.Group.GroupType>=DrawingsApp.Data.Common.GroupType.Restricted )
             {
                 if ((int)post.Role<1)
                 {
@@ -50,7 +49,7 @@ namespace DrawingsApp.Comments.Controllers
             {
                 return Unauthorized();
             }
-            var id=await postService.CreatePost("DummyName",input.GroupId,input.Title,input.Description,GetUserId(),User.Identity.Name,input.ImgUrls);
+            var id=await postService.CreatePost(input.GroupId,input.Title,input.Description,GetUserId(),User.Identity.Name,input.ImgUrls);
             await publisher.Publish(new PostCreatedMessage
             {
                 GroupId = input.GroupId,
