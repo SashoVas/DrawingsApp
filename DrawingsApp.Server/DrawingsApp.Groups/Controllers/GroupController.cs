@@ -76,6 +76,13 @@ namespace DrawingsApp.Groups.Controllers
                 return Unauthorized();
             }
             await groupService.UpdateGroup(input.GroupId,input.Title,input.MoreInfo,input.ImgUrl,input.GroupType,input.Tags);
+            await publisher.Publish(new GroupUpdateMessage
+            {
+                GroupId = input.GroupId,
+                GroupName = input.Title,
+                GroupType = input.GroupType,
+                UserId = GetUserId()
+            });
             return Ok();
         }
 

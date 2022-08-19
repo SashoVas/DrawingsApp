@@ -19,7 +19,9 @@ builder.AddMessages(
     typeof(PromoteUserRoleInGroupConsumer),
     typeof(RemoveRoleFromUserMessageConsumer),
     typeof(LikePostConsumer),
-    typeof(GroupCreateConsumer));
+    typeof(GroupCreateConsumer),
+    typeof(GroupUpdateConsumer),
+    typeof(GroupDeleteConsumer));
 builder.Services.AddSingleton<MongoDbCommentsDb>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

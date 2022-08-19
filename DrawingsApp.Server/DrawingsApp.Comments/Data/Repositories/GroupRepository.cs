@@ -22,5 +22,10 @@ namespace DrawingsApp.Comments.Data.Repositories
 
         public Task UpdateGroup(GroupInfo group) 
             => collection.ReplaceOneAsync(g => g.GroupId == group.GroupId, group);
+
+        public Task DeleteGroup(int groupId)
+        {
+            return collection.DeleteOneAsync(g=>g.GroupId==groupId);
+        }
     }
 }

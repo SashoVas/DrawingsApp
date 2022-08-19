@@ -9,5 +9,6 @@ namespace DrawingsApp.Comments.Data.Repositories
         Task CreateGroup(GroupInfo group);
         Task UpdateGroup(GroupInfo group);
         Task DeleteAllGroups();
+        Task DeleteGroup(int groupId);
     }
 }
