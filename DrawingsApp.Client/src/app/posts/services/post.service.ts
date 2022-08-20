@@ -29,4 +29,7 @@ export class PostService {
   createPost(title:string,groupId:number,description:string,imgUrls:Array<string>):Observable<any>{
     return this.http.post(environment.commentApi+"Post",{title,groupId,description,imgUrls},{responseType: 'text'});
   }
+  updatePost(postId:string,title:string,description:string):Observable<any>{
+    return this.http.put(environment.commentApi+"Post",{postId,title,description})
+  }
 }

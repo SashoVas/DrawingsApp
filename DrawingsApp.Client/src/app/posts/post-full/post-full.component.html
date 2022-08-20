@@ -17,7 +17,12 @@
                             </div>
                             
                             <div>
-                                <p>{{post.title}}</p>
+                                <p *ngIf="!editMode else editTitle">{{post.title}} <span class="name hover_underline" (click)="editMode=!editMode">edit</span></p>
+                                <ng-template #editTitle>
+                                    <input #titleEdit [value]="post.title">
+                                    <button class="btn btn-secondary btn-sm" (click)="editMode=!editMode">Close</button>
+                                    <button (click)="editPost()" class="btn btn-secondary btn-sm">Edit</button>
+                                </ng-template>
                                 <div class="d-inline-flex">
                                     <button *ngIf="post.imgUrls.length>1" class="btn btn-secondary" (click)="changeImgLeft()"><i class="fa-solid fa-angle-left"></i></button>
                                     <div class="image">

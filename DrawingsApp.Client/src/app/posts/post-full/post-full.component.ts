@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IPostFull } from 'src/app/core/interfaces/IPostFull';
@@ -15,6 +15,8 @@ export class PostFullComponent implements OnInit {
   imagesUrl:string=environment.imageApi;
   current_img:number=0;
   commentForm!:FormGroup;
+  editMode:boolean=false;
+  @ViewChild("titleEdit")title!:ElementRef;
   constructor(private activatedRoute:ActivatedRoute,private postService:PostService,private fb:FormBuilder,private router:Router) { }
 
   ngOnInit(): void {
@@ -43,5 +45,14 @@ export class PostFullComponent implements OnInit {
   }
   deletePost(){
     this.postService.deletePost(this.post.id).subscribe(()=>this.router.navigate(["/"]));
+  }
+  editPost(){
+    let newTitle:string=this.title.nativeElement.value;
+    if(newTitle!=this.post.title){
+      this.postService.updatePost(this.post.id,newTitle,"").subscribe(()=>{
+        this.post.title=newTitle
+        this.editMode=!this.editMode;
+      });
+    }
   }
 }

@@ -105,7 +105,7 @@ namespace DrawingsApp.Comments.Services
         public async Task<bool> UpdatePost(string postId, string title,string description,string userId)
         {
             var post = await repo.GetPost(postId);
-            if (post is null)
+            if (post is null || post.IsDeleated)
             {
                 return false;
             }
