@@ -23,7 +23,7 @@ namespace DrawingsApp.Comments.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<object>> GetPost(string id)
         {
-            var post = await postService.GetPost(id);
+            var post = await postService.GetPost(id,GetUserId());
             if (post is null)
             {
                 return NotFound();

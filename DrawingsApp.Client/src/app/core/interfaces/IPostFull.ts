@@ -6,6 +6,7 @@ export interface IPostFull{
     description:string,
     postedOn:string,
     title:string,
+    isMe:boolean,
     likes:number,
     user:{
         userId:string,

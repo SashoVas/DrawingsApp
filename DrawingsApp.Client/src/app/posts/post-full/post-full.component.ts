@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IPostFull } from 'src/app/core/interfaces/IPostFull';
 import { environment } from 'src/environments/environment';
 import { PostService } from '../services/post.service';
@@ -15,7 +15,7 @@ export class PostFullComponent implements OnInit {
   imagesUrl:string=environment.imageApi;
   current_img:number=0;
   commentForm!:FormGroup;
-  constructor(private activatedRoute:ActivatedRoute,private postService:PostService,private fb:FormBuilder) { }
+  constructor(private activatedRoute:ActivatedRoute,private postService:PostService,private fb:FormBuilder,private router:Router) { }
 
   ngOnInit(): void {
     this.post=this.activatedRoute.snapshot.data["data"];
@@ -34,12 +34,14 @@ export class PostFullComponent implements OnInit {
     if(this.current_img>=this.post.imgUrls.length){
       this.current_img=0;
     }
-    console.log(this.post)
   }
   changeImgLeft(){
     this.current_img--;
     if(this.current_img<=-1){
       this.current_img=this.post.imgUrls.length-1;
     }
+  }
+  deletePost(){
+    this.postService.deletePost(this.post.id).subscribe(()=>this.router.navigate(["/"]));
   }
 }

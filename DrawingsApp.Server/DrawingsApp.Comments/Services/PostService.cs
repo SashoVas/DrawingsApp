@@ -62,10 +62,10 @@ namespace DrawingsApp.Comments.Services
         public async Task DeletePosts() 
             => await repo.DeletePosts();
 
-        public async Task<PostOutputModel> GetPost(string id)
+        public async Task<PostOutputModel> GetPost(string id,string userId)
         {
             var post = await repo.GetPost(id);
-            if (post is null)
+            if (post is null ||post.IsDeleated)
             {
                 return null;
             }
@@ -80,6 +80,7 @@ namespace DrawingsApp.Comments.Services
                     UserId=post.Sender.SenderId
                 },
                 Comments = post.Comments,
+                IsMe=post.Sender.SenderId==userId,
                 Group=new Models.OutputModels.Group.GroupOutputModel
                 {
                     GroupId=post.Group.GroupId,

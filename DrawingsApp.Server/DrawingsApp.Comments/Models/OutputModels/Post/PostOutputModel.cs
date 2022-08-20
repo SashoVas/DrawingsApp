@@ -13,6 +13,7 @@ namespace DrawingsApp.Comments.Models.OutputModels.Post
         public int Likes { get; set; }
         public Role Role { get; set; }
         public string Description { get; set; }
+        public bool IsMe { get; set; }
         public UserOutputModel User { get; set; }
         public GroupOutputModel Group { get; set; }
         public ICollection<Comment> Comments { get; set; }

@@ -4,7 +4,7 @@ import { ActivatedRoute,Router } from '@angular/router';
 import { IGroup } from 'src/app/core/interfaces/IGroup';
 import { GroupService } from 'src/app/group/services/group.service';
 import { UserImagesComponent } from '../../images/user-images/user-images.component';
-import { CommentService } from '../services/comment.service';
+import { PostService } from '../services/post.service';
 
 @Component({
   selector: 'app-create-post',
@@ -17,7 +17,7 @@ export class CreatePostComponent implements OnInit {
   groups:Array<IGroup>=[];
   group!:IGroup;
   groupId!:number;
-  constructor(private fb:FormBuilder,private commentService:CommentService,private groupService:GroupService,private router:Router,private activatedRoute:ActivatedRoute) {
+  constructor(private fb:FormBuilder,private postService:PostService,private groupService:GroupService,private router:Router,private activatedRoute:ActivatedRoute) {
     this.createPostForm=fb.group({
       "title":['',Validators.required],
       "description":[''],
@@ -42,7 +42,7 @@ export class CreatePostComponent implements OnInit {
     return this.createPostForm.get("title");
   }
   createPost(){
-    this.commentService.createPost(this.createPostForm.value.title,this.group.id,this.createPostForm.value.description,this.images.getSelectedImages())
+    this.postService.createPost(this.createPostForm.value.title,this.group.id,this.createPostForm.value.description,this.images.getSelectedImages())
     .subscribe(r=>this.router.navigate(["/"]));
   }
 }

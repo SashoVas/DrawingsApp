@@ -12,7 +12,7 @@ namespace DrawingsApp.Comments.Services.Contracts
             string senderId,
             string senderName,
             ICollection<string>ImgUrls);
-        Task<PostOutputModel> GetPost(string id);
+        Task<PostOutputModel> GetPost(string id, string userId);
         Task<IEnumerable<Post>> GetPosts();
         Task<bool> DeletePost(string postId,string userId);
         Task<bool> UpdatePost(string postId, string title,string description, string userId);

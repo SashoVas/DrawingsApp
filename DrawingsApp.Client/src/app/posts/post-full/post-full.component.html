@@ -13,7 +13,7 @@
                         <div class="p-3 pb-0">
                             <div class="d-flex justify-content-between">
                                 <p class="name"><b class="hover_underline" routerLink="/group/{{post.group.groupId}}">{{post.group.groupName}}</b> <span class="text-secondary"> posted by <span class="hover_underline">{{post.user.userName}}</span> on {{post.postedOn}}</span></p>
-                                <p *ngIf="post.role==3" class="delete"><i class="fa-solid fa-x"></i></p>  
+                                <p *ngIf="post.role==3 || post.isMe" (click)="deletePost()" class="delete"><i class="fa-solid fa-x"></i></p>  
                             </div>
                             
                             <div>

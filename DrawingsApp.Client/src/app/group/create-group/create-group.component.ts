@@ -33,9 +33,6 @@ export class CreateGroupComponent implements OnInit {
     this.selectedTags=this.tags.filter(t=>t.isSelected);
   }
   createGroup(){
-    console.log(this.createGroupForm.value);
-    console.log(this.tags.filter(t=>t.isSelected).map(t=>t.tagId))
-    console.log(this.groupType);
     this.groupService.createGroup(this.createGroupForm.value.title,
       this.createGroupForm.value.moreInfo,
       "",this.groupType,this.tags.filter(t=>t.isSelected).map(t=>t.tagId))
