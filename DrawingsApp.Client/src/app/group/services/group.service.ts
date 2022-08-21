@@ -35,4 +35,7 @@ export class GroupService {
     let s:string=userId!=null?userId:"";
     return this.http.get<Array<IGroup>>(environment.groupApi+"Group",{params:{name,order,tags,page,userId:s}});
   }
+  editGroup(groupId:number,title:string,moreInfo:string,imgUrl:string,groupType:number,tags:Array<number>){
+    return this.http.put(environment.groupApi+"Group",{groupId,title,moreInfo,imgUrl,groupType,tags})
+  }
 }

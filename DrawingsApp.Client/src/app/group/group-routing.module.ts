@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateGroupComponent } from '../group/create-group/create-group.component';
 import { GroupListingComponent } from '../group/group-listing/group-listing.component';
+import { EditGroupComponent } from './edit-group/edit-group.component';
 import { GroupComponent } from './group/group.component';
 import { GroupResolver } from './resolvers/group.resolver';
 import { UserListResolver } from './resolvers/user-list.resolver';
@@ -21,6 +22,13 @@ const routes: Routes = [
     component:UsersListComponent,
     resolve:{
       data:UserListResolver
+    }
+  },
+  {
+    path:":id/edit",
+    component:EditGroupComponent,
+    resolve:{
+      data:GroupResolver
     }
   },
   {

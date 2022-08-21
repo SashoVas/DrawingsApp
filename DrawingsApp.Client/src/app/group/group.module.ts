@@ -10,6 +10,7 @@ import { GroupRoutingModule } from './group-routing.module';
 import { LandingComponent } from './landing/landing.component';
 import { CreateTagComponent } from './create-tag/create-tag.component';
 import { UsersListComponent } from './users-list/users-list.component';
+import { EditGroupComponent } from './edit-group/edit-group.component';
 
 
 
@@ -21,7 +22,8 @@ import { UsersListComponent } from './users-list/users-list.component';
     PopularGroupsComponent,
     LandingComponent,
     CreateTagComponent,
-    UsersListComponent
+    UsersListComponent,
+    EditGroupComponent
   ],
   imports: [
     CommonModule,

@@ -75,7 +75,10 @@ namespace DrawingsApp.Groups.Controllers
             {
                 return Unauthorized();
             }
-            await groupService.UpdateGroup(input.GroupId,input.Title,input.MoreInfo,input.ImgUrl,input.GroupType,input.Tags);
+            if (!await groupService.UpdateGroup(input.GroupId,input.Title,input.MoreInfo,input.ImgUrl,input.GroupType,input.Tags))
+            {
+                return BadRequest();
+            }
             await publisher.Publish(new GroupUpdateMessage
             {
                 GroupId = input.GroupId,

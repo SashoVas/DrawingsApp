@@ -9,7 +9,7 @@
                     <button *ngIf="group.role==0;else leaveButton" (click)="join()" class="btn btn-secondary align-self-center no-wrap join">Join</button>
                     <ng-template #leaveButton>
                         <button class="btn btn-secondary align-self-center no-wrap join" (click)="leave()">Leave</button>
-                        <button *ngIf="group.role==3" class="btn btn-secondary align-self-center no-wrap join">Edit</button>
+                        <button routerLink="edit" *ngIf="group.role==3" class="btn btn-secondary align-self-center no-wrap join">Edit</button>
                         <button *ngIf="group.role==3" routerLink="/group/users" [queryParams]="{id:group.id,role: 1}"  class="btn btn-secondary align-self-center no-wrap join">Requests</button>                        
                     </ng-template>
                 </div>

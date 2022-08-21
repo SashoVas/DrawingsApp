@@ -144,8 +144,10 @@ namespace DrawingsApp.Groups.Services
 
         public async Task<bool> UpdateGroup(int groupId, string title, string moreInfo,string imgUrl, GroupType groupType, List<int> tags)
         {
-            var group =await context.Groups
-                .FindAsync(groupId);
+            var group = await context.Groups
+                .Include(g=>g.GroupTags)
+                .Where(g => g.Id == groupId)
+                .FirstOrDefaultAsync();
             if (group is null)
             {
                 return false;
@@ -154,18 +156,19 @@ namespace DrawingsApp.Groups.Services
             group.GroupType = groupType;
             group.MoreInfo = moreInfo;
             group.ImgUrl = imgUrl;
-            try
+
+            foreach (var tagId in tags) 
             {
-                await context.GroupTag.AddRangeAsync(tags.Select(t => new GroupTag
+                if (group.GroupTags.Any(gt=>gt.TagId==tagId))
                 {
-                    GroupId = groupId,
-                    TagId = t
-                }));
+                    return false;
+                }
             }
-            catch (Exception)
+            await context.GroupTag.AddRangeAsync(tags.Select(t => new GroupTag
             {
-                return false;
-            }
+                GroupId = groupId,
+                TagId = t
+            }));
             context.Update(group);
             await context.SaveChangesAsync();
             return true;
