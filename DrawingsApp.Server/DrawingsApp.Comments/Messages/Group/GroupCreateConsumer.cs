@@ -1,5 +1,5 @@
 ﻿using DrawingsApp.Comments.Data.Models;
-using DrawingsApp.Comments.Data.Repositories;
+using DrawingsApp.Comments.Services.Contracts;
 using DrawingsApp.Messages.Group;
 using MassTransit;
 
@@ -7,30 +7,17 @@ namespace DrawingsApp.Comments.Messages.Group
 {
     public class GroupCreateConsumer : IConsumer<GroupCreateMessage>
     {
-        private readonly IGroupRepository groupRepo;
-        private readonly IUserRoleInGroupRepository userRoleInGroupRepo;
-
-        public GroupCreateConsumer(IGroupRepository groupRepo, IUserRoleInGroupRepository userRoleInGroupRepo)
+        private readonly IGroupService groupService;
+        public GroupCreateConsumer(IGroupService groupService)
         {
-            this.groupRepo = groupRepo;
-            this.userRoleInGroupRepo = userRoleInGroupRepo;
+            this.groupService = groupService;
         }
-
         public async Task Consume(ConsumeContext<GroupCreateMessage> context)
         {
-            await groupRepo.CreateGroup(new GroupInfo 
-            {
-                GroupId=context.Message.GroupId,
-                GroupName=context.Message.GroupName,
-                GroupType=context.Message.GroupType
-            });
-
-            await userRoleInGroupRepo.UpdateRole(new UserRoleInGroup
-            {
-                GroupId=context.Message.GroupId,
-                Role=DrawingsApp.Data.Common.Role.Admin,
-                UserId=context.Message.UserId
-            });
+            await groupService.CreateGroup(context.Message.GroupId,
+                context.Message.GroupName,
+                context.Message.GroupType,
+                context.Message.UserId);
         }
     }
 }

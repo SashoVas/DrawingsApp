@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IGroup } from 'src/app/core/interfaces/IGroup';
 import { ITag } from 'src/app/core/interfaces/ITag';
 import { GroupService } from '../services/group.service';
@@ -18,7 +18,7 @@ export class EditGroupComponent implements OnInit {
   selectedTags:Array<ITag>=[];
   groupType=0;
   group!:IGroup;
-  constructor(private fb:FormBuilder,private tagService:TagsService,private activatedRoute:ActivatedRoute,private groupService:GroupService) { 
+  constructor(private fb:FormBuilder,private tagService:TagsService,private activatedRoute:ActivatedRoute,private groupService:GroupService,private router:Router) { 
     
   }
 
@@ -44,6 +44,12 @@ export class EditGroupComponent implements OnInit {
     this.selectedTags=this.tags.filter(t=>t.isSelected);
   }
   editGroup(){
-    this.groupService.editGroup(this.group.id,this.editGroupForm.value.title,this.editGroupForm.value.moreInfo,this.group.imgUrl,this.groupType,this.selectedTags.map(t=>t.tagId)).subscribe();
+    this.groupService
+    .editGroup(this.group.id,
+      this.editGroupForm.value.title,
+      this.editGroupForm.value.moreInfo,
+      this.group.imgUrl,this.groupType,
+      this.selectedTags.map(t=>t.tagId))
+      .subscribe(()=>this.router.navigate(["/"]));
   }
 }

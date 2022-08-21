@@ -18,16 +18,18 @@ builder.AddAuthenticationWithJWT();
 builder.AddMessages(
     typeof(PromoteUserRoleInGroupConsumer),
     typeof(RemoveRoleFromUserMessageConsumer),
+    typeof(CreateUserRoleConsumer),
     typeof(LikePostConsumer),
     typeof(GroupCreateConsumer),
     typeof(GroupUpdateConsumer),
-    typeof(GroupDeleteConsumer));
+    typeof(GroupDeleteConsumer)
+    );
 builder.Services.AddSingleton<MongoDbCommentsDb>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IPostRepository, PostRepository>();
 builder.Services.AddTransient<IGroupRepository, GroupRepository>();
-builder.Services.AddTransient<IUserRoleInGroupRepository, UserRoleInGroupRepository>();
+builder.Services.AddTransient<IGroupService, GroupService>();
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<ICommentsService, CommentsService>();
 

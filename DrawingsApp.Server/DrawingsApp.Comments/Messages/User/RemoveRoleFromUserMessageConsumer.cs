@@ -1,4 +1,4 @@
-﻿using DrawingsApp.Comments.Data.Repositories;
+﻿using DrawingsApp.Comments.Services.Contracts;
 using DrawingsApp.Messages.User;
 using MassTransit;
 
@@ -6,11 +6,11 @@ namespace DrawingsApp.Comments.Messages.User
 {
     public class RemoveRoleFromUserMessageConsumer : IConsumer<RemoveRoleFromUserMessage>
     {
-        private readonly IUserRoleInGroupRepository repo;
+        private readonly IGroupService groupService;
 
-        public RemoveRoleFromUserMessageConsumer(IUserRoleInGroupRepository repo) => this.repo = repo;
+        public RemoveRoleFromUserMessageConsumer(IGroupService groupService) => this.groupService = groupService;
 
         public async Task Consume(ConsumeContext<RemoveRoleFromUserMessage> context) 
-            => await repo.RemoveOne(context.Message.UserId, context.Message.GroupId);
+            => await groupService.RemoveRole( context.Message.GroupId, context.Message.UserId);
     }
 }

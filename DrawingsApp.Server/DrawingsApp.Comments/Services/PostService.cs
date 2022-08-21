@@ -9,13 +9,11 @@ namespace DrawingsApp.Comments.Services
     public class PostService : IPostService
     {
         private readonly IPostRepository repo;
-        private readonly IUserRoleInGroupRepository roleRepo;
-        private readonly IGroupRepository groupRepo;
-        public PostService(IPostRepository repo, IUserRoleInGroupRepository roleRepo, IGroupRepository groupRepo)
+        private readonly IGroupService groupService;
+        public PostService(IPostRepository repo, IGroupService groupService)
         {
             this.repo = repo;
-            this.roleRepo = roleRepo;
-            this.groupRepo = groupRepo;
+            this.groupService = groupService;
         }
 
         public async Task<string> CreatePost(
@@ -35,7 +33,7 @@ namespace DrawingsApp.Comments.Services
                     SenderName=senderName
                 },
                 Description = description,
-                Group=await groupRepo.GetGroup(groupId),
+                GroupId=groupId,
                 Title = title,
                 ImgUrls = ImgUrls,
             };
@@ -50,7 +48,7 @@ namespace DrawingsApp.Comments.Services
             {
                 return false;
             }
-            if (post.Sender.SenderId == userId || (int)await roleRepo.GetRole(userId, post.Group.GroupId) == 3)
+            if (post.Sender.SenderId == userId || (int)await groupService.GetRole(post.GroupId, userId) == 3)
             {
                 post.IsDeleated = true;
                 await repo.UpdatePost(post);
@@ -65,6 +63,7 @@ namespace DrawingsApp.Comments.Services
         public async Task<PostOutputModel> GetPost(string id,string userId)
         {
             var post = await repo.GetPost(id);
+            var group = await groupService.GetGroup(post.GroupId);
             if (post is null ||post.IsDeleated)
             {
                 return null;
@@ -83,13 +82,18 @@ namespace DrawingsApp.Comments.Services
                 IsMe=post.Sender.SenderId==userId,
                 Group=new Models.OutputModels.Group.GroupOutputModel
                 {
-                    GroupId=post.Group.GroupId,
-                    GroupName = post.Group.GroupName,
-                    GroupType=post.Group.GroupType
+                    GroupId=group.GroupId,
+                    GroupName = group.GroupName,
+                    GroupType=group.GroupType
                 },
                 Likes = post.Likes,
                 PostedOn = post.PostedOn.ToString("yyyy,MM,dd"),
                 Title = post.Title,
+                Role=group.Users
+                .Where(u=>u.UserId==userId)
+                .Select(u=>u.Role)
+                .FirstOrDefault()
+                
             };
         }
 
@@ -109,7 +113,7 @@ namespace DrawingsApp.Comments.Services
             {
                 return false;
             }
-            if(post.Sender.SenderId==userId ||(int)await roleRepo.GetRole(userId,post.Group.GroupId)==3)
+            if(post.Sender.SenderId==userId ||(int)await groupService.GetRole(post.GroupId, userId) ==3)
             {
                 post.Title = title;
                 post.Description = description;

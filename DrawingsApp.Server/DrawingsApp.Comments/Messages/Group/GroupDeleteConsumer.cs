@@ -1,4 +1,4 @@
-﻿using DrawingsApp.Comments.Data.Repositories;
+﻿using DrawingsApp.Comments.Services.Contracts;
 using DrawingsApp.Messages.Group;
 using MassTransit;
 
@@ -6,16 +6,16 @@ namespace DrawingsApp.Comments.Messages.Group
 {
     public class GroupDeleteConsumer : IConsumer<GroupDeleteMessage>
     {
-        private readonly IGroupRepository groupRepo;
+        private readonly IGroupService groupService;
 
-        public GroupDeleteConsumer(IGroupRepository groupRepo)
+        public GroupDeleteConsumer(IGroupService groupService)
         {
-            this.groupRepo = groupRepo;
+            this.groupService = groupService;
         }
 
         public async Task Consume(ConsumeContext<GroupDeleteMessage> context)
         {
-            await groupRepo.DeleteGroup(context.Message.GroupId);
+            await groupService.DeleteGroup(context.Message.GroupId);
         }
     }
 }

@@ -8,11 +8,11 @@ namespace DrawingsApp.Comments.Services
     public class CommentsService : ICommentsService
     {
         private readonly IPostRepository repo;
-        private readonly IUserRoleInGroupRepository roles;
-        public CommentsService(IPostRepository repo, IUserRoleInGroupRepository roles)
+        private readonly IGroupService groupService;
+        public CommentsService(IPostRepository repo, IGroupService groupService)
         {
             this.repo = repo;
-            this.roles = roles;
+            this.groupService = groupService;
         }
         private async Task<bool> ValidateValuesWhenCreatingComment(Post post,string userId)
         {
@@ -20,7 +20,7 @@ namespace DrawingsApp.Comments.Services
             {
                 return false;
             }
-            if ((int)await roles.GetRole(userId, post.Group.GroupId) < (int)Role.User)
+            if ((int)await groupService.GetRole(post.GroupId,userId) < (int)Role.User)
             {
                 throw new UnauthorizedAccessException();
             }

@@ -11,13 +11,13 @@ namespace DrawingsApp.Comments.Controllers
     public class PostController : ApiController
     {
         private readonly IPostService postService;
-        private readonly IUserRoleInGroupRepository userRoleInGroupRepo;
+        private readonly IGroupService groupService;
         private readonly IBus publisher;
-        public PostController(IPostService postService, IUserRoleInGroupRepository userRoleInGroupRepo, IBus publisher)
+        public PostController(IPostService postService, IGroupService groupService, IBus publisher)
         {
             this.postService = postService;
-            this.userRoleInGroupRepo = userRoleInGroupRepo;
             this.publisher = publisher;
+            this.groupService = groupService;
         }
 
         [HttpGet("{id}")]
@@ -28,7 +28,6 @@ namespace DrawingsApp.Comments.Controllers
             {
                 return NotFound();
             }
-            post.Role = await userRoleInGroupRepo.GetRole(GetUserId(), post.Group.GroupId);
             if (post.Group.GroupType>=DrawingsApp.Data.Common.GroupType.Restricted )
             {
                 if ((int)post.Role<1)
@@ -45,7 +44,7 @@ namespace DrawingsApp.Comments.Controllers
             {
                 return BadRequest();
             }
-            if ((int)await userRoleInGroupRepo.GetRole(GetUserId(), input.GroupId) < 2)
+            if ((int)await groupService.GetRole(input.GroupId,GetUserId()) < 2)
             {
                 return Unauthorized();
             }
