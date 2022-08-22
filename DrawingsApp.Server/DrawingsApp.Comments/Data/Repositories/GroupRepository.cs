@@ -1,4 +1,5 @@
 ﻿using DrawingsApp.Comments.Data.Models;
+using DrawingsApp.Data.Common;
 using MongoDB.Driver;
 
 namespace DrawingsApp.Comments.Data.Repositories
@@ -27,5 +28,9 @@ namespace DrawingsApp.Comments.Data.Repositories
         {
             return collection.DeleteOneAsync(g=>g.GroupId==groupId);
         }
+        public Task<Role> GetRole(int groupId, string userId)
+            => collection.Find(g => g.GroupId == groupId)
+                .Project(g => g.Users.Where(u => u.UserId == userId).Select(r => r.Role).FirstOrDefault())
+                .FirstOrDefaultAsync();
     }
 }

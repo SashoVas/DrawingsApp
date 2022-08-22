@@ -54,7 +54,7 @@ namespace DrawingsApp.Groups.Controllers
                 UserName=User.Identity.Name,
                 ChangeAmounth= changeAmounth
             });
-            return Ok();
+            return Ok(changeAmounth);
         }
     }
 }

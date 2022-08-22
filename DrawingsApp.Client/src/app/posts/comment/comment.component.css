@@ -6,3 +6,7 @@
     height: inherit;
     margin-left: 14px;
 }
+textarea{
+    border-radius: 5px;
+    border: 2px solid rgb(52,53,54);
+}

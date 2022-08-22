@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IPostFull } from 'src/app/core/interfaces/IPostFull';
 import { environment } from 'src/environments/environment';
+import { CommentService } from '../services/comment.service';
 import { PostService } from '../services/post.service';
 
 @Component({
@@ -17,19 +18,19 @@ export class PostFullComponent implements OnInit {
   commentForm!:FormGroup;
   editMode:boolean=false;
   @ViewChild("titleEdit")title!:ElementRef;
-  constructor(private activatedRoute:ActivatedRoute,private postService:PostService,private fb:FormBuilder,private router:Router) { }
+  constructor(private activatedRoute:ActivatedRoute,private postService:PostService,private fb:FormBuilder,private router:Router,private commentService:CommentService) { }
 
   ngOnInit(): void {
     this.post=this.activatedRoute.snapshot.data["data"];
     this.commentForm=this.fb.group({
-      "content":[""]
+      "content":["",Validators.required]
     });
   }
   likePost(){
-    this.postService.likePost(this.post.group.groupId,this.post.id,true).subscribe();
+    this.postService.likePost(this.post.group.groupId,this.post.id,true).subscribe(changeAmounth=>this.post.likes+=changeAmounth);
   }
   disLikePost(){
-    this.postService.likePost(this.post.group.groupId,this.post.id,false).subscribe();
+    this.postService.likePost(this.post.group.groupId,this.post.id,false).subscribe(changeAmounth=>this.post.likes+=changeAmounth);
   }
   changeImgRight(){
     this.current_img++;
@@ -54,5 +55,8 @@ export class PostFullComponent implements OnInit {
         this.editMode=!this.editMode;
       });
     }
+  }
+  comment(){
+    this.commentService.commentPost(this.commentForm.value.content,this.post.id).subscribe();
   }
 }

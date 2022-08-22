@@ -8,6 +8,7 @@ import { IComment } from 'src/app/core/interfaces/IComment';
 })
 export class CommentListComponent implements OnInit {
   @Input()comments!:Array<IComment>;
+  @Input()commentPath:Array<string>=[];
   constructor() { }
 
   ngOnInit(): void {

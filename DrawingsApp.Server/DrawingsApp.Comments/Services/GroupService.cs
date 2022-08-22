@@ -47,11 +47,8 @@ namespace DrawingsApp.Comments.Services
         public Task<GroupInfo> GetGroup(int groupId) 
             => repo.GetGroup(groupId);
 
-        public async Task<Role> GetRole(int groupId, string userId) 
-            => (await repo.GetGroup(groupId)).Users
-                .Where(u => u.UserId == userId)
-                .Select(u => u.Role)
-                .FirstOrDefault();
+        public Task<Role> GetRole(int groupId, string userId)
+            => repo.GetRole(groupId,userId);
 
         public async Task RemoveRole(int groupId, string userId)
         {

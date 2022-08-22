@@ -1,9 +1,7 @@
 ﻿using DrawingsApp.Controllers;
-using DrawingsApp.Data.Common;
 using DrawingsApp.Groups.Models.InputModels.Group;
 using DrawingsApp.Groups.Services.Contracts;
 using DrawingsApp.Messages.Group;
-using DrawingsApp.Messages.User;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,6 +49,10 @@ namespace DrawingsApp.Groups.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(CreateGroupInputModel input)
         {
+            if (input.Tags.Count() > 5)
+            {
+                return BadRequest();
+            }
             var userId = GetUserId();
             if (!await userService.UserExists(userId))
             {

@@ -15,9 +15,9 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
   }
   likePost(){
-    this.postService.likePost(this.post.groupId,this.post.id,true).subscribe();
+    this.postService.likePost(this.post.groupId,this.post.id,true).subscribe(changeAmounth=>this.post.likes+=changeAmounth);
   }
   disLikePost(){
-    this.postService.likePost(this.post.groupId,this.post.id,false).subscribe();
+    this.postService.likePost(this.post.groupId,this.post.id,false).subscribe(changeAmounth=>this.post.likes+=changeAmounth);
   }
 }

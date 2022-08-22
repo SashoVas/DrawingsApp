@@ -1,17 +1,25 @@
 <div>
     <img class="profile-image m-1" src="../../../assets/resources/Untitled.png" width="30" height="30">
-    <small><span class="hover_underline">{{comment.userName}}</span><b> Role</b> {{comment.commentedOn}}</small>
+    <small><span class="hover_underline pointer">{{comment.sender.senderName}}</span><b> Role</b> {{comment.commentedOn}}</small>
 </div>
 <div class="d-flex">
     <div class="vertilcal-line"></div>
-    <div class="ps-3 ms-3">
+    <div class="ps-3 ms-3 w-100">
         <p >{{comment.contents}}</p>
         <div class="d-flex">
             <small class="mb-0 mx-1"><i class="fa fa-arrow-up" aria-hidden="true"></i></small>
             <small class="mb-0 mx-1">123</small>
             <small class="mb-0 mx-1"><i class="fa fa-arrow-down" aria-hidden="true"></i></small>
-            <small class="mb-0 mx-2 hover_underline"> <i class="fa fa-comment"></i>Reply</small>
+            <small (click)="replyMode=!replyMode" class="mb-0 mx-2 hover_underline pointer"> <i class="fa fa-comment"></i>Reply</small>
         </div>
-        <app-comment-list *ngIf="comment.comments.length>0" [comments]="comment.comments" ></app-comment-list>
+        <div *ngIf="replyMode">
+            <form [formGroup]="replyForm" (ngSubmit)="reply()">
+                <textarea formControlName="content" class="w-100" placeholder="Reply"></textarea>
+                <br>
+                <button [disabled]="!replyForm.valid" class="btn btn-light btn-sm btn-comment">Reply</button> 
+            </form>
+            
+        </div>
+        <app-comment-list *ngIf="comment.comments.length>0" [commentPath]="commentPath.concat(comment.id)" [comments]="comment.comments" ></app-comment-list>
     </div>
 </div>

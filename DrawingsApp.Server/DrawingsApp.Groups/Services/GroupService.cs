@@ -148,7 +148,7 @@ namespace DrawingsApp.Groups.Services
                 .Include(g=>g.GroupTags)
                 .Where(g => g.Id == groupId)
                 .FirstOrDefaultAsync();
-            if (group is null)
+            if (group is null || group.GroupTags.Count()+tags.Count()>5)
             {
                 return false;
             }

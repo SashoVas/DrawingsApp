@@ -1,4 +1,5 @@
 ﻿using DrawingsApp.Comments.Data.Models;
+using DrawingsApp.Data.Common;
 
 namespace DrawingsApp.Comments.Data.Repositories
 {
@@ -10,5 +11,6 @@ namespace DrawingsApp.Comments.Data.Repositories
         Task UpdateGroup(GroupInfo group);
         Task DeleteAllGroups();
         Task DeleteGroup(int groupId);
+        Task<Role> GetRole(int groupId, string userId);
     }
 }
