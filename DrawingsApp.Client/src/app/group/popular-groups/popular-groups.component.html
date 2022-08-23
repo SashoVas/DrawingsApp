@@ -5,7 +5,7 @@
     <div>
         <div *ngFor="let group of topGroups;let i=index" class="d-flex p-1">
             <p class="align-self-center mb-0 mx-1">{{i}}</p>      
-            <img class="align-self-center mx-1" src="../../../assets/resources/Untitled.png" width="30" height="30"  alt="">
+            <img class="align-self-center mx-1" src="{{imagesUrl}}Images/{{group.imgUrl}}.jpg" width="30" height="30"  alt="">
             <p routerLink="/group/{{group.id}}" class="align-self-center mb-0 mx-1 group-name pointer">{{group.title}}</p>
             <button class="btn btn-secondary btn-sm align-self-center mx-1">Join</button>
         </div>
@@ -29,7 +29,7 @@
     </div>
     <div>
         <div *ngFor="let group of yourGroups" class="d-flex p-1">   
-            <img class="align-self-center mx-1" src="../../../assets/resources/Untitled.png" width="30" height="30"  alt="">
+            <img class="align-self-center mx-1" src="{{imagesUrl}}Images/{{group.imgUrl}}.jpg" width="30" height="30"  alt="">
             <p class="align-self-center mb-0 mx-1 group-name pointer" routerLink="/group/{{group.id}}">{{group.title}}</p>
         </div>
     </div>

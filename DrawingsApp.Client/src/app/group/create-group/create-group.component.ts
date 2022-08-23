@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ITag } from 'src/app/core/interfaces/ITag';
+import { UserImagesComponent } from 'src/app/images/user-images/user-images.component';
 import { GroupService } from '../services/group.service';
 import { TagsService } from '../services/tags.service';
 
@@ -15,6 +16,8 @@ export class CreateGroupComponent implements OnInit {
   tags:Array<ITag>=[];
   selectedTags:Array<ITag>=[];
   groupType=1;
+  @ViewChild("images") images!:UserImagesComponent;
+
   constructor(private fb:FormBuilder,private groupService:GroupService,private tagService:TagsService,private router:Router) {
     this.createGroupForm=fb.group({
       "title":['',Validators.required],
@@ -35,7 +38,7 @@ export class CreateGroupComponent implements OnInit {
   createGroup(){
     this.groupService.createGroup(this.createGroupForm.value.title,
       this.createGroupForm.value.moreInfo,
-      "",this.groupType,this.tags.filter(t=>t.isSelected).map(t=>t.tagId))
+      this.images.getSelectedImages()[0],this.groupType,this.tags.filter(t=>t.isSelected).map(t=>t.tagId))
     .subscribe(r=>this.router.navigate(["/"]));
   }
 }

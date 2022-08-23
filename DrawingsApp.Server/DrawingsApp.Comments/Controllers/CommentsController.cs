@@ -16,11 +16,8 @@ namespace DrawingsApp.Comments.Controllers
         {
             try
             {
-                if (!await commentsService.CreateCommentOnPost(GetUserId(), User.Identity.Name, input.PostId, input.Contents))
-                {
-                    return NotFound();
-                }
-                return Created("",null);
+                var comment = await commentsService.CreateCommentOnPost(GetUserId(), User.Identity.Name, input.PostId, input.Contents);
+                return Created("",comment);
             }
             catch (Exception)
             {
@@ -33,11 +30,8 @@ namespace DrawingsApp.Comments.Controllers
         {
             try
             {
-                if (!await commentsService.CreateCommentOnComment(GetUserId(), User.Identity.Name, input.PostId, input.Contents, input.CommentsPath))
-                {
-                    return NotFound();
-                }
-                return Created("", null);
+                var comment = await commentsService.CreateCommentOnComment(GetUserId(), User.Identity.Name, input.PostId, input.Contents, input.CommentsPath);
+                return Created("", comment);
             }
             catch (Exception)
             {

@@ -5,7 +5,10 @@
         <p class="mb-0 pointer"(click)="disLikePost()"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
     </div>
     <div class="p-3 pb-0 pointer" >
-        <p class="name"><b routerLink="group/{{post.groupId}}" class="hover_underline">{{post.groupName}}</b> <span class="text-secondary"> posted by <span class="hover_underline">{{post.senderUserName}}</span> on {{post.postedOn}}</span></p>
+        <div class="d-flex">
+            <img class="groupImage align-self-center" src="{{imagesUrl}}Images/{{post.groupImgUrl}}.jpg"  width="30" height="30" alt="">
+            <p class="name mx-1 align-self-center mb-0"><b routerLink="group/{{post.groupId}}" class="hover_underline">{{post.groupName}}</b> <span class="text-secondary"> posted by <span class="hover_underline">{{post.senderUserName}}</span> on {{post.postedOn}}</span></p>
+        </div>
         <div routerLink="/post/{{post.id}}">
             <p>{{post.title}}</p>
             <div class="w-100 image">

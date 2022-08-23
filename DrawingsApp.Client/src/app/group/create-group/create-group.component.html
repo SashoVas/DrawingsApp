@@ -6,11 +6,13 @@
                 <h5 class="mb-0">Create a Group</h5>
                 <hr class="mt-0">
                 <div class="default_bg default_border d-flex flex-column p-2 main">
-                    <input formControlName="title" type="text" placeholder="Title" class="mt-3 default_bg text-light">
+                    <p class="mb-0"><b>Title</b></p>
+                    <input formControlName="title" type="text" placeholder="Title" class="default_bg text-light">
                     <div class="alert alert-danger p-2 mt-2" *ngIf="title?.touched && title?.errors?.['required']" >
                         Required
                     </div>
-                    <textarea formControlName="moreInfo" class="mt-3 default_bg text-light" name="" id="" cols="30" rows="7" placeholder="More Info"></textarea>
+                    <p class="mb-0"><b>More Info</b></p>
+                    <textarea formControlName="moreInfo" class="default_bg text-light" name="" id="" cols="30" rows="7" placeholder="More Info"></textarea>
                     <p class="mb-0"><b>Group Type</b></p>
                     <div>
                         <input type="radio" id="public" name="type" (click)="groupType=1" value="Public">
@@ -32,6 +34,11 @@
                             <li><a class="dropdown-item text-light pointer" data-bs-toggle="modal" data-bs-target="#CreateTagModal">Create</a></li>
                             <li *ngFor="let tag of tags; let i =index"><a (click)="selectTag(tag)" class="dropdown-item text-light pointer">{{tag.tagName}}</a></li>
                         </ul>
+                    </div>
+                    <p class="mb-0"><b>Choose Image</b></p>
+                    <hr class="mt-0">
+                    <div>
+                        <app-user-images #images [imagesMaxCount]="1"></app-user-images>
                     </div>
                     <div class="d-flex flex-row-reverse p-3">
                         <button [disabled]="!createGroupForm.valid" type="submit" class="btn btn-secondary" >Create Group</button>

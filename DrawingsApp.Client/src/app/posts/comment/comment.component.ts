@@ -23,7 +23,9 @@ export class CommentComponent implements OnInit {
   reply(){
     console.log(this.replyForm.value);
     console.log(this.commentPath.concat(this.comment.id));
-    this.commentService.replyOnComment(this.replyForm.value.content,this.comment.postId,this.commentPath.concat(this.comment.id)).subscribe();
+    this.commentService.replyOnComment(this.replyForm.value.content,this.comment.postId,this.commentPath.concat(this.comment.id))
+    .subscribe(new_comment=>this.comment.comments.push(new_comment));
+    this.replyMode=false;
 
   }
 }

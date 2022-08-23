@@ -44,3 +44,10 @@ textarea{
 .delete:hover{
     color: red;
 }
+.comments{
+    width: 42vw;
+    word-break: break-all;
+}
+.groupImage{
+    border-radius: 50px;
+}

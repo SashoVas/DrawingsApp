@@ -7,6 +7,7 @@ namespace DrawingsApp.Messages.Group
         public int GroupId { get; set; }
         public string GroupName { get; set; }
         public string UserId { get; set; }
+        public string GroupImageUrl { get; set; }
         public GroupType GroupType { get; set; }
     }
 }

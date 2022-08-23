@@ -4,6 +4,7 @@ import { IGroup } from 'src/app/core/interfaces/IGroup';
 import { IPost } from 'src/app/core/interfaces/IPost';
 import { IUser } from 'src/app/core/interfaces/IUser';
 import { PostService } from 'src/app/posts/services/post.service';
+import { environment } from 'src/environments/environment';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -12,11 +13,11 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./group.component.css']
 })
 export class GroupComponent implements OnInit {
-
-  constructor(private activatedRoute:ActivatedRoute,private userService:UserService,private postService:PostService) { }
   group!:IGroup;
   posts:Array<IPost>=[];
   admins!:Array<IUser>;
+  imagesUrl=environment.imageApi;
+  constructor(private activatedRoute:ActivatedRoute,private userService:UserService,private postService:PostService) { }
   ngOnInit(): void {
     this.group=this.activatedRoute.snapshot.data['data'];
     if(this.group.groupType==0 || this.group.role>=2)

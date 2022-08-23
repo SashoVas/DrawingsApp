@@ -31,3 +31,6 @@
 .image:hover .bottom-left{
     display:block;
 }
+.groupImage{
+    border-radius: 50px;
+}

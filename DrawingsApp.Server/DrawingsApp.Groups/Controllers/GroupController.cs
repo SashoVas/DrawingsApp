@@ -66,7 +66,8 @@ namespace DrawingsApp.Groups.Controllers
                 GroupId = groupId,
                 GroupName=input.Title,
                 GroupType=input.GroupType,
-                UserId=GetUserId()
+                UserId=GetUserId(),
+                GroupImageUrl=input.ImgUrl
             });
             return CreatedAtAction(nameof(Get), new { id = groupId },groupId);
         }

@@ -60,7 +60,8 @@ namespace DrawingsApp.Groups.Services
                     SenderUserName = p.Sender.Username,
                     Title = p.Title,
                     Likes = p.Likes.Count(l => l.IsLike) - p.Likes.Count(l => !l.IsLike),
-                    GroupId = p.GroupId
+                    GroupId = p.GroupId,
+                    GroupImgUrl=p.Group.ImgUrl
                 }).ToListAsync();
 
         public Task<List<PostOutputModel>> GetPostsByUser(string userId) 
@@ -79,7 +80,8 @@ namespace DrawingsApp.Groups.Services
                     SenderUserName = p.Sender.Username,
                     Title = p.Title,
                     Likes=p.Likes.Count(l=>l.IsLike)-p.Likes.Count(l=>!l.IsLike),
-                    GroupId=p.GroupId
+                    GroupId=p.GroupId,
+                    GroupImgUrl = p.Group.ImgUrl
                 }).ToListAsync();
 
         public async Task<int> LikePost(string userId,string postId, bool isLike)

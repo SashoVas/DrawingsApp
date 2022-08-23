@@ -1,64 +1,62 @@
 <div class="row container-fluid">
     <div class="col sidebar"></div>
-    <div class="col-6 main">
-        <div>
-            <div class="default_bg default_border m-3 post">
-                <div class="d-inline-flex">
-                    <div class="like p-1 px-2 text-center">
-                        <p class="mb-0 pointer" (click)="likePost()"><i class="fa fa-arrow-up" aria-hidden="true"></i></p>
-                        <p class="mb-0">{{post.likes}}</p>
-                        <p class="mb-0 pointer" (click)="disLikePost()"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
+    <div class="col-6 main default_bg default_border m-3 post w-auto p-0">
+        <div class="d-inline-flex">
+            <div class="like p-1 px-2 text-center">
+                <p class="mb-0 pointer" (click)="likePost()"><i class="fa fa-arrow-up" aria-hidden="true"></i></p>
+                <p class="mb-0">{{post.likes}}</p>
+                <p class="mb-0 pointer" (click)="disLikePost()"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
+            </div>
+            <div class="d-inline-flex flex-column pointer">
+                <div class="p-3 pb-0">
+                    <div class="d-flex align-items-center">
+                        <img class="groupImage " src="{{imagesUrl}}Images/{{post.group.groupImgUrl}}.jpg"  width="30" height="30" alt="">
+                        <p class="name mb-0 ms-1 me-auto"><b class="hover_underline" routerLink="/group/{{post.group.groupId}}">{{post.group.groupName}}</b> <span class="text-secondary"> posted by <span class="hover_underline">{{post.user.userName}}</span> on {{post.postedOn}}</span></p>
+                        <p class="mb-0" *ngIf="post.role==3 || post.isMe" (click)="deletePost()" class="delete"><i class="fa-solid fa-x"></i></p>  
                     </div>
-                    <div class="d-inline-flex flex-column pointer">
-                        <div class="p-3 pb-0">
-                            <div class="d-flex justify-content-between">
-                                <p class="name"><b class="hover_underline" routerLink="/group/{{post.group.groupId}}">{{post.group.groupName}}</b> <span class="text-secondary"> posted by <span class="hover_underline">{{post.user.userName}}</span> on {{post.postedOn}}</span></p>
-                                <p *ngIf="post.role==3 || post.isMe" (click)="deletePost()" class="delete"><i class="fa-solid fa-x"></i></p>  
+                    <div>
+                        <p *ngIf="!editMode else editTitle">{{post.title}} <span class="name hover_underline" (click)="editMode=!editMode">edit</span></p>
+                        <ng-template #editTitle>
+                            <input #titleEdit [value]="post.title">
+                            <button class="btn btn-secondary btn-sm" (click)="editMode=!editMode">Close</button>
+                            <button (click)="editPost()" class="btn btn-secondary btn-sm">Edit</button>
+                        </ng-template>
+                        <div class="d-inline-flex">
+                            <button *ngIf="post.imgUrls.length>1" class="btn btn-secondary" (click)="changeImgLeft()"><i class="fa-solid fa-angle-left"></i></button>
+                            <div class="image">
+                                <img src="{{imagesUrl}}Images/{{post.imgUrls[current_img]}}.jpg" class="img-fluid" alt="">
+                                <p class="bottom-left images-count">{{current_img+1}}/{{post.imgUrls.length}}</p>
                             </div>
-                            
-                            <div>
-                                <p *ngIf="!editMode else editTitle">{{post.title}} <span class="name hover_underline" (click)="editMode=!editMode">edit</span></p>
-                                <ng-template #editTitle>
-                                    <input #titleEdit [value]="post.title">
-                                    <button class="btn btn-secondary btn-sm" (click)="editMode=!editMode">Close</button>
-                                    <button (click)="editPost()" class="btn btn-secondary btn-sm">Edit</button>
-                                </ng-template>
-                                <div class="d-inline-flex">
-                                    <button *ngIf="post.imgUrls.length>1" class="btn btn-secondary" (click)="changeImgLeft()"><i class="fa-solid fa-angle-left"></i></button>
-                                    <div class="image">
-                                        <img src="{{imagesUrl}}Images/{{post.imgUrls[current_img]}}.jpg" class="img-fluid" alt="">
-                                        <p class="bottom-left images-count">{{current_img+1}}/{{post.imgUrls.length}}</p>
-                                    </div>
-                                    <button class="btn btn-secondary" *ngIf="post.imgUrls.length>1" (click)="changeImgRight()"><i class="fa-solid fa-chevron-right"></i></button>
-                                </div>
-                            </div>
-                            <div class="d-flex text-secondary bottom">
-                                <div class="px-3 py-2 aditional" >
-                                    <p class="mb-0"> <i class="fa fa-comment"></i>Comments</p>
-                                </div>
-                                <div class="px-3 py-2 aditional">
-                                    <p class="mb-0"> <i class="fa fa-mail-reply"></i>Share</p>
-                                </div>
-                            </div>
+                            <button class="btn btn-secondary" *ngIf="post.imgUrls.length>1" (click)="changeImgRight()"><i class="fa-solid fa-chevron-right"></i></button>
                         </div>
-                        <div>
-                            <div class="d-flex flex-column ms-1">
-                                <form [formGroup]="commentForm" (ngSubmit)="comment()">
-                                    <textarea formControlName="content" class="default_bg write-comment align-self-center text-light" placeholder="comment" rows="5"></textarea>
-                                    <div class="align-self-end me-3 p-1 pe-3">
-                                        <button [disabled]="!commentForm.valid" class="btn btn-light btn-sm btn-comment">Comment</button>
-                                    </div>
-                                </form>
-                                
-                            </div>
-                            <small >Sort By Recent</small>
-                            <hr>
+                    </div>
+                    <div class="d-flex text-secondary bottom">
+                        <div class="px-3 py-2 aditional" >
+                            <p class="mb-0"> <i class="fa fa-comment"></i>Comments</p>
+                        </div>
+                        <div class="px-3 py-2 aditional">
+                            <p class="mb-0"> <i class="fa fa-mail-reply"></i>Share</p>
                         </div>
                     </div>
                 </div>
-                <app-comment-list [commentPath]="[]" [comments]="post.comments"></app-comment-list>
+                <div>
+                    <div class="d-flex flex-column ms-1">
+                        <form [formGroup]="commentForm" (ngSubmit)="comment()">
+                            <textarea formControlName="content" class="default_bg write-comment align-self-center text-light" placeholder="comment" rows="5"></textarea>
+                            <div class="align-self-end me-3 p-1 pe-3">
+                                <button [disabled]="!commentForm.valid" class="btn btn-light btn-sm btn-comment">Comment</button>
+                            </div>
+                        </form>
+                    </div>
+                    <small >Sort By Recent</small>
+                    <hr>
+                </div>
             </div>
         </div>
+        <div class="comments">
+           <app-comment-list [commentPath]="[]" [comments]="post.comments.reverse()"></app-comment-list> 
+        </div>
+        
     </div>
     <div class="col sidebar">
     </div>

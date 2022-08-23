@@ -29,7 +29,7 @@
                     <b class="mb-0">Choose image</b>
                     <hr class="my-0">
                     <div>
-                        <app-user-images #images></app-user-images>
+                        <app-user-images #images [imagesMaxCount]="5"></app-user-images>
                     </div>
                     <div class="d-flex flex-row-reverse p-3">
                         <button [disabled]="!createPostForm.valid" type="submit" class="btn btn-secondary" >Post</button>

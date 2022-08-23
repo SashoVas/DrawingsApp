@@ -11,6 +11,7 @@ import { LandingComponent } from './landing/landing.component';
 import { CreateTagComponent } from './create-tag/create-tag.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { EditGroupComponent } from './edit-group/edit-group.component';
+import { ImagesModule } from '../images/images.module';
 
 
 
@@ -29,7 +30,8 @@ import { EditGroupComponent } from './edit-group/edit-group.component';
     CommonModule,
     GroupRoutingModule,
     PostsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImagesModule
     ],
   exports:[PopularGroupsComponent]
 })

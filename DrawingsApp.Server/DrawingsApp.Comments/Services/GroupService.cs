@@ -23,13 +23,14 @@ namespace DrawingsApp.Comments.Services
             await repo.UpdateGroup(group);
         }
 
-        public async Task CreateGroup(int groupId, string groupName, GroupType groupType, string userId)
+        public async Task CreateGroup(int groupId, string groupName, GroupType groupType, string userId, string groupImageUrl)
         {
             var group = new GroupInfo 
             { 
                 GroupId=groupId,
                 GroupName=groupName,
                 GroupType=groupType,
+                GroupImgUrl=groupImageUrl,
                 Users=new List<UserRoleInGroup> { 
                     new UserRoleInGroup 
                     { 

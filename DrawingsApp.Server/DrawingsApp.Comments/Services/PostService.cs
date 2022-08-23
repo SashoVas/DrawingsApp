@@ -84,7 +84,8 @@ namespace DrawingsApp.Comments.Services
                 {
                     GroupId=group.GroupId,
                     GroupName = group.GroupName,
-                    GroupType=group.GroupType
+                    GroupType=group.GroupType,
+                    GroupImgUrl=group.GroupImgUrl
                 },
                 Likes = post.Likes,
                 PostedOn = post.PostedOn.ToString("yyyy,MM,dd"),

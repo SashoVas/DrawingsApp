@@ -11,6 +11,7 @@ namespace DrawingsApp.Comments.Data.Models
         public string Id { get; set; }
         public int GroupId { get; set; }
         public string GroupName { get; set; }
+        public string GroupImgUrl { get; set; }
         public GroupType GroupType { get; set; }
         public ICollection<UserRoleInGroup> Users { get; set; }
     }

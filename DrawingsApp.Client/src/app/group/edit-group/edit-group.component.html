@@ -6,11 +6,13 @@
                 <h5 class="mb-0">Edit a Group</h5>
                 <hr class="mt-0">
                 <div class="default_bg default_border d-flex flex-column p-2 main">
-                    <input formControlName="title" type="text"  class="mt-3 default_bg text-light">
+                    <p class="mb-0"><b>Title</b></p>
+                    <input formControlName="title" type="text"  class="default_bg text-light">
                     <div class="alert alert-danger p-2 mt-2" *ngIf="title?.touched && title?.errors?.['required']" >
                         Required
                     </div>
-                    <textarea formControlName="moreInfo" class="mt-3 default_bg text-light" [value]="group.moreInfo" name="" id="" cols="30" rows="7" placeholder="More Info"></textarea>
+                    <p class="mb-0"><b>Description</b></p>
+                    <textarea formControlName="moreInfo" class="default_bg text-light" [value]="group.moreInfo" name="" id="" cols="30" rows="7" placeholder="More Info"></textarea>
                     <p class="mb-0"><b>Group Type</b></p>
                     <div>
                         <input type="radio" id="public" [checked]="groupType==1" name="type" (click)="groupType=1" value="Public">
@@ -39,7 +41,6 @@
                     </div>
                 </div>
             </form>
-            
         </div>
         <div class="col-lg-3"></div>
     </div>

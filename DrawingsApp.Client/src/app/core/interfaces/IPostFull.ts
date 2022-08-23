@@ -15,7 +15,8 @@ export interface IPostFull{
     group:{
         groupId:number,
         groupName:string,
-        groupType:number
+        groupType:number,
+        groupImgUrl:string
     }
     role:number,
     comments:Array<IComment>

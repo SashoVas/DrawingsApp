@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IImage } from 'src/app/core/interfaces/IImage';
 import { environment } from 'src/environments/environment';
 import { ImageService } from '../services/image.service';
@@ -10,7 +10,9 @@ import { ImageService } from '../services/image.service';
 export class UserImagesComponent implements OnInit {
   imagesUrl:string=environment.imageApi;
   data:Array<IImage>=[];
-    selectedImage:IImage|null=null;
+  selectedImage:IImage|null=null;
+  @Input()imagesMaxCount!:number;
+  imagesCount:number=0;
   constructor(private imageService:ImageService) { 
   }
   getSelectedImages(){
@@ -25,5 +27,11 @@ export class UserImagesComponent implements OnInit {
   }
   selectForPost():void{
     this.selectedImage!.isSelected=!this.selectedImage?.isSelected;
+    if(this.selectedImage!.isSelected)this.imagesCount++;
+    else this.imagesCount--;
+    if(this.imagesCount>this.imagesMaxCount){
+      this.selectedImage!.isSelected=false;
+      this.imagesCount--;
+    }
   }
 }

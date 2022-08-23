@@ -29,12 +29,12 @@ namespace DrawingsApp.Comments.Services
         private Comment GetComment(ICommentable parent, string id) 
             => parent.Comments
                 .FirstOrDefault(p => p.Id == id);
-        public async Task<bool> CreateCommentOnComment(string userId, string userName, string postId, string contents, List<string> commentsPath)
+        public async Task<Comment> CreateCommentOnComment(string userId, string userName, string postId, string contents, List<string> commentsPath)
         {
             var post = await repo.GetPost(postId);
             if (!await ValidateValuesWhenCreatingComment(post, userId))
             {
-                return false;
+                throw new ArgumentException();
             }
             var comment = new Comment
             {
@@ -54,20 +54,20 @@ namespace DrawingsApp.Comments.Services
                 current = GetComment(current, id);
                 if (current is null)
                 {
-                    return false;
+                    throw new ArgumentException();
                 }
             }
             current.Comments.Add(comment);
             await repo.UpdatePost(post);
-            return true;
+            return comment;
         }
 
-        public async Task<bool> CreateCommentOnPost(string userId, string userName, string postId, string contents)
+        public async Task<Comment> CreateCommentOnPost(string userId, string userName, string postId, string contents)
         {
             var post =await repo.GetPost(postId);
             if (!await ValidateValuesWhenCreatingComment(post, userId))
             {
-                return false;
+                throw new ArgumentException();
             }
             var comment = new Comment
             {
@@ -82,7 +82,7 @@ namespace DrawingsApp.Comments.Services
             };
             post.Comments.Add(comment);
             await repo.UpdatePost(post);
-            return true;
+            return comment;
         }
     }
 }

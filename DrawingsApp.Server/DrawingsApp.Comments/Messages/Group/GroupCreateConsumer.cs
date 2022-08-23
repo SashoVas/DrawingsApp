@@ -1,5 +1,4 @@
-﻿using DrawingsApp.Comments.Data.Models;
-using DrawingsApp.Comments.Services.Contracts;
+﻿using DrawingsApp.Comments.Services.Contracts;
 using DrawingsApp.Messages.Group;
 using MassTransit;
 
@@ -17,7 +16,8 @@ namespace DrawingsApp.Comments.Messages.Group
             await groupService.CreateGroup(context.Message.GroupId,
                 context.Message.GroupName,
                 context.Message.GroupType,
-                context.Message.UserId);
+                context.Message.UserId,
+                context.Message.GroupImageUrl);
         }
     }
 }

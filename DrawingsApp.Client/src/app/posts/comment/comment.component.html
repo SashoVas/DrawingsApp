@@ -20,6 +20,6 @@
             </form>
             
         </div>
-        <app-comment-list *ngIf="comment.comments.length>0" [commentPath]="commentPath.concat(comment.id)" [comments]="comment.comments" ></app-comment-list>
+        <app-comment-list *ngIf="comment.comments.length>0" [commentPath]="commentPath.concat(comment.id)" [comments]="comment.comments.reverse()" ></app-comment-list>
     </div>
-</div>
+</div> 

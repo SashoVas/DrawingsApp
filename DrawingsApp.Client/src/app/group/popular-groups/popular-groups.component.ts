@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IGroup } from 'src/app/core/interfaces/IGroup';
+import { environment } from 'src/environments/environment';
 import { GroupService } from '../services/group.service';
 
 @Component({
@@ -8,10 +9,11 @@ import { GroupService } from '../services/group.service';
   styleUrls: ['./popular-groups.component.css']
 })
 export class PopularGroupsComponent implements OnInit {
-
-  constructor(private groupService:GroupService) { }
   topGroups:Array<IGroup>=[];
   yourGroups:Array<IGroup>=[]
+  imagesUrl=environment.imageApi;
+  constructor(private groupService:GroupService) { }
+  
   ngOnInit(): void {
     this.groupService.getTopGroups(true).subscribe(data=>this.topGroups=data);
     this.groupService.getGroupsByUser(true).subscribe(data=>this.yourGroups=data)

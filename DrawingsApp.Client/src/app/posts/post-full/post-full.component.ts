@@ -57,6 +57,6 @@ export class PostFullComponent implements OnInit {
     }
   }
   comment(){
-    this.commentService.commentPost(this.commentForm.value.content,this.post.id).subscribe();
+    this.commentService.commentPost(this.commentForm.value.content,this.post.id).subscribe(comment=>this.post.comments.push(comment));
   }
 }
