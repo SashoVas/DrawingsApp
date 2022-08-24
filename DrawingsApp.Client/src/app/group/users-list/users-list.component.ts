@@ -22,4 +22,10 @@ export class UsersListComponent implements OnInit {
   acceptUser(userId:string){
     this.userService.acceptUser(this.groupId,userId).subscribe(()=>this.users=this.users.filter(u=>u.id!=userId));
   }
+  kick(userId:string){
+    this.userService.kickUser(this.groupId,userId).subscribe(()=>this.users=this.users.filter(u=>u.id!=userId));
+  }
+  promoteUser(user:IUser){
+    this.userService.promoteUser(this.groupId,user.id).subscribe(()=>user.role=3);
+  }
 }

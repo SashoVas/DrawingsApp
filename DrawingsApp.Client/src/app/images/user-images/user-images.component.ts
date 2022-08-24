@@ -13,14 +13,18 @@ export class UserImagesComponent implements OnInit {
   selectedImage:IImage|null=null;
   @Input()imagesMaxCount!:number;
   imagesCount:number=0;
+  page:number=0;
   constructor(private imageService:ImageService) { 
   }
   getSelectedImages(){
     return this.data.filter(i=>i.isSelected).map(i=>i.imgUrl);
   }
+  fetchData():void{
+    this.imageService.getImages(null,this.page)
+      .subscribe(data=>this.data=this.data.concat(data));
+  }
   ngOnInit(): void {
-    this.imageService.getImages(null)
-    .subscribe(data=>this.data=data);
+    this.fetchData();
   }
   selectImage(imgIndex:number):void{
     this.selectedImage=this.data[imgIndex];
@@ -33,5 +37,9 @@ export class UserImagesComponent implements OnInit {
       this.selectedImage!.isSelected=false;
       this.imagesCount--;
     }
+  }
+  loadMore(){
+    this.page++;
+    this.fetchData();
   }
 }

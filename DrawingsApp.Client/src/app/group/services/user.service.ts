@@ -19,7 +19,7 @@ export class UserService {
   getUsers(groupId:number,role:number,lessUsers:boolean=false):Observable<any>{
     let url=environment.groupApi+"User/"+groupId+"?role="+role;
     if(lessUsers){
-      url+="&lessUsers=true"
+      url+="&lessUsers=true";
     }
     return this.http.get<Array<IUser>>(url);
   }
@@ -27,6 +27,12 @@ export class UserService {
     return this.http.get<number>(environment.groupApi+"User/Role/"+groupId);
   }
   acceptUser(groupId:number,userId:string){
-    return this.http.put(environment.groupApi+"User/AcceptUser",{groupId,userId})
+    return this.http.put(environment.groupApi+"User/AcceptUser",{groupId,userId});
+  }
+  kickUser(groupId:number,userId:string){
+    return this.http.delete(environment.groupApi+"User/Kick",{params:{groupId,userId}});
+  }
+  promoteUser(groupId:number,userId:string){
+    return this.http.put(environment.groupApi+"User/PromoteUser",{groupId,userId});
   }
 }

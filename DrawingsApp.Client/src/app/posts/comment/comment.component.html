@@ -14,7 +14,7 @@
         </div>
         <div *ngIf="replyMode">
             <form [formGroup]="replyForm" (ngSubmit)="reply()">
-                <textarea formControlName="content" class="w-100" placeholder="Reply"></textarea>
+                <textarea formControlName="content" class="w-100 default_bg text-light" placeholder="Reply"></textarea>
                 <br>
                 <button [disabled]="!replyForm.valid" class="btn btn-light btn-sm btn-comment">Reply</button> 
             </form>

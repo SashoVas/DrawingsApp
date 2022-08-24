@@ -40,7 +40,7 @@ namespace DrawingsApp.Groups.Controllers
                 await userService.CreateUser(userId, User.Identity.Name);
             }
             var role=await userService.JoinGroup(userId, groupId);
-            await publisher.Publish(new PromoteUserRoleInGroupMessage
+            await publisher.Publish(new CreateUserRoleMessage
             {
                 UserId=GetUserId(),
                 GroupId=groupId,
@@ -62,7 +62,7 @@ namespace DrawingsApp.Groups.Controllers
             await userService.AcceptUser(input.UserId, input.GroupId);
             await publisher.Publish(new PromoteUserRoleInGroupMessage
             {
-                UserId = GetUserId(),
+                UserId = input.UserId,
                 GroupId = input.GroupId,
                 Role = Role.User
             });
@@ -95,6 +95,24 @@ namespace DrawingsApp.Groups.Controllers
             {
                 GroupId=id,
                 UserId=GetUserId()
+            });
+            return Ok();
+        }
+        [HttpDelete("Kick")]
+        public async Task<ActionResult> KickFromGroup(int groupId,string userId)
+        {
+            if (!await this.userService.IsAdmin(GetUserId(),groupId))
+            {
+                return Unauthorized();
+            }
+            if (!await this.userService.LeaveGroup(userId, groupId))
+            {
+                return NotFound();
+            }
+            await publisher.Publish(new RemoveRoleFromUserMessage
+            {
+                GroupId = groupId,
+                UserId = userId
             });
             return Ok();
         }

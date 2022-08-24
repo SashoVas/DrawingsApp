@@ -16,7 +16,7 @@ export class ImageService {
     payload.append("name",name);
     return this.http.post(environment.imageApi+"Image",payload);
   }
-  getImages(userId:string|null):Observable<any>{
-    return this.http.get<Array<IImage>>(environment.imageApi+"Image/"+(userId==null?"":userId));
+  getImages(userId:string|null,page:number):Observable<any>{
+    return this.http.get<Array<IImage>>(environment.imageApi+"Image/"+(userId==null?"":userId),{params:{page}});
   }
 }

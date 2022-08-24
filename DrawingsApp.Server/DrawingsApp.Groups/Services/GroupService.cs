@@ -109,7 +109,7 @@ namespace DrawingsApp.Groups.Services
                     MoreInfo = g.MoreInfo,
                     Title = g.Title,
                     ImgUrl=g.ImgUrl,
-                    Users=g.UserGrops.Count(ug=>(int)ug.Role>=(int)Role.User),
+                    Users=g.UserGrops.Count(ug=>ug.Role==Role.User),
                     GroupType=g.GroupType,
                     Admins= g.UserGrops.Count(ug => ug.Role == Role.Admin),
                     Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList(),

@@ -1,11 +1,13 @@
 
 <div class="row container-fluid">
     <div class="col-lg-3 "></div>
-    <div class="col-lg-6 main default_bg default_border p-0">
+    <div class="col-lg-6 main default_bg default_border p-0 py-3 mt-3">
         <form [formGroup]="form">
-            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                Show Options
-            </button>
+            <div class="text-center mb-3">
+                <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Show Options
+                </button>
+            </div>
             <div class="collapse p-3" id="collapseExample">
                 <h5 class="mb-0 mt-1">Group name</h5>
                 <input formControlName="name" type="text" class="form-control" placeholder="Search" >
@@ -61,7 +63,7 @@
             </thead>
             <tbody>
                 <tr class="pointer" routerLink="/group/{{group.id}}" *ngFor="let group of groups;let i=index">
-                    <th scope="row">{{i}}</th>
+                    <th scope="row">{{i+1}}</th>
                     <td><img class="group-img" src="../../../assets/resources/Untitled.png" width="30" height="30"  alt=""></td>
                     <td >{{group.title}}</td>
                     <td>{{group.users}}</td>
@@ -72,6 +74,10 @@
                 </tr>
             </tbody>
         </table>
+        <div *ngIf="groups.length%20==0" class="text-center mt-3">
+            <button class="btn btn-secondary">Load More</button>
+        </div>
+
     </div>
     <div class="col-lg-3">
     </div>

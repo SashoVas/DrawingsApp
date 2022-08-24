@@ -18,6 +18,7 @@ export class PostFullComponent implements OnInit {
   commentForm!:FormGroup;
   editMode:boolean=false;
   @ViewChild("titleEdit")title!:ElementRef;
+  @ViewChild("descriptionEdit")description!:ElementRef;
   constructor(private activatedRoute:ActivatedRoute,private postService:PostService,private fb:FormBuilder,private router:Router,private commentService:CommentService) { }
 
   ngOnInit(): void {
@@ -49,9 +50,11 @@ export class PostFullComponent implements OnInit {
   }
   editPost(){
     let newTitle:string=this.title.nativeElement.value;
-    if(newTitle!=this.post.title){
-      this.postService.updatePost(this.post.id,newTitle,"").subscribe(()=>{
-        this.post.title=newTitle
+    let newDescription:string=this.description.nativeElement.value;
+    if(newTitle!=this.post.title||newDescription!=this.post.description){
+      this.postService.updatePost(this.post.id,newTitle,newDescription).subscribe(()=>{
+        this.post.title=newTitle;
+        this.post.description=newDescription;
         this.editMode=!this.editMode;
       });
     }

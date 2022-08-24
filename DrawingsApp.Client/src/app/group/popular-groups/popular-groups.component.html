@@ -4,7 +4,7 @@
     </div>
     <div>
         <div *ngFor="let group of topGroups;let i=index" class="d-flex p-1">
-            <p class="align-self-center mb-0 mx-1">{{i}}</p>      
+            <p class="align-self-center mb-0 mx-1">{{i+1}}</p>      
             <img class="align-self-center mx-1" src="{{imagesUrl}}Images/{{group.imgUrl}}.jpg" width="30" height="30"  alt="">
             <p routerLink="/group/{{group.id}}" class="align-self-center mb-0 mx-1 group-name pointer">{{group.title}}</p>
             <button class="btn btn-secondary btn-sm align-self-center mx-1">Join</button>
@@ -14,9 +14,8 @@
         <button routerLink="/group/search" [queryParams]="{order:2}" class="btn btn-secondary w-100 align-self-center mx-1">View All</button>
     </div>
     <div class="d-flex mt-2">
-        <button class="btn btn-secondary btn-sm align-self-center mx-1">Tag1</button>
-        <button class="btn btn-secondary btn-sm align-self-center mx-1">Tag2</button>
-        <button class="btn btn-secondary btn-sm align-self-center mx-1">Tag3</button>
+        <button routerLink="/group/search" [queryParams]="{tags:[1]}" class="btn btn-secondary btn-sm align-self-center mx-1">Sport</button>
+        <button routerLink="/group/search" [queryParams]="{tags:[2]}" class="btn btn-secondary btn-sm align-self-center mx-1">News</button>
     </div>
     <div>
     </div>

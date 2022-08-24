@@ -5,7 +5,6 @@ import { IGroup } from 'src/app/core/interfaces/IGroup';
 import { ITag } from 'src/app/core/interfaces/ITag';
 import { GroupService } from '../services/group.service';
 import { TagsService } from '../services/tags.service';
-import { UserService } from '../services/user.service';
 @Component({
   selector: 'app-group-listing',
   templateUrl: './group-listing.component.html',
@@ -19,6 +18,7 @@ export class GroupListingComponent implements OnInit {
   order:number=0;
   tags:Array<ITag>=[];
   userId:string|null=null;
+  page=0;
   constructor(private groupService:GroupService,private activatedRoute:ActivatedRoute,private fb:FormBuilder,private tagService:TagsService) {
     
    }
@@ -32,7 +32,7 @@ export class GroupListingComponent implements OnInit {
         "name":name,
       });
       this.order=params["order"]==undefined?0:params["order"];
-      this.selectedTags=params["tags"]==undefined?[]:params["tags"];
+      this.selectedTags=params["tags"]==undefined?[]:params["tags"].filter((id:number)=>this.tags.find(t=>t.tagId==id));
       this.userId=params["userId"]==undefined?null:params["userId"];
       console.log(this.order,this.selectedTags);
       this.fetchData(name);
@@ -40,7 +40,7 @@ export class GroupListingComponent implements OnInit {
     this.tagService.getTags().subscribe(data=>this.tags=data);
   }
   fetchData(name:string){
-    this.groupService.search(name,this.userId,this.order,this.selectedTags.map(t=>t.tagId),0).subscribe(data=>this.groups=data);
+    this.groupService.search(name,this.userId,this.order,this.selectedTags.map(t=>t.tagId),this.page).subscribe(data=>this.groups=this.groups.concat(data));
   }
   selectTag(tag:ITag){
     tag.isSelected=!tag.isSelected;
@@ -48,6 +48,10 @@ export class GroupListingComponent implements OnInit {
   }
   search(){
     console.log(this.form.value.name);
+    this.fetchData(this.form.value.name);
+  }
+  loadMore(){
+    this.page++;
     this.fetchData(this.form.value.name);
   }
 }
