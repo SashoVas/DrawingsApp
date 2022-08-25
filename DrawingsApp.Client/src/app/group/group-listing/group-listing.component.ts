@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IGroup } from 'src/app/core/interfaces/IGroup';
 import { ITag } from 'src/app/core/interfaces/ITag';
@@ -12,14 +12,14 @@ import { TagsService } from '../services/tags.service';
 })
 export class GroupListingComponent implements OnInit {
   groups:Array<IGroup>=[];
-  form!:FormGroup;
+  form!:UntypedFormGroup;
   groupType:number|null=null;
   selectedTags:Array<ITag>=[];
   order:number=0;
   tags:Array<ITag>=[];
   userId:string|null=null;
   page=0;
-  constructor(private groupService:GroupService,private activatedRoute:ActivatedRoute,private fb:FormBuilder,private tagService:TagsService) {
+  constructor(private groupService:GroupService,private activatedRoute:ActivatedRoute,private fb:UntypedFormBuilder,private tagService:TagsService) {
     
    }
 

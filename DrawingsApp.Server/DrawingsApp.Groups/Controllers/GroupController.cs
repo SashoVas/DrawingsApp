@@ -9,6 +9,7 @@ namespace DrawingsApp.Groups.Controllers
 {
     public class GroupController : ApiController
     {
+        private const int MaxImagesCount= 5;
         private readonly IGroupService groupService;
         private readonly IUserService userService;
         private readonly IBus publisher;
@@ -25,7 +26,7 @@ namespace DrawingsApp.Groups.Controllers
             var group = await groupService.GetGroup(id,GetUserId());
             if (group is null)
             {
-                return NotFound();
+                return NotFound("There is no such group");
             }
             return Ok(group);
         }
@@ -49,9 +50,9 @@ namespace DrawingsApp.Groups.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(CreateGroupInputModel input)
         {
-            if (input.Tags.Count() > 5)
+            if (input.Tags.Count() > MaxImagesCount)
             {
-                return BadRequest();
+                return BadRequest("Invalid input");
             }
             var userId = GetUserId();
             if (!await userService.UserExists(userId))
@@ -76,11 +77,11 @@ namespace DrawingsApp.Groups.Controllers
         {
             if (!await userService.IsAdmin(GetUserId(),input.GroupId))
             {
-                return Unauthorized();
+                return Unauthorized("Not Authorized");
             }
             if (!await groupService.UpdateGroup(input.GroupId,input.Title,input.MoreInfo,input.ImgUrl,input.GroupType,input.Tags))
             {
-                return BadRequest();
+                return BadRequest("Invalid Input");
             }
             await publisher.Publish(new GroupUpdateMessage
             {
@@ -97,7 +98,7 @@ namespace DrawingsApp.Groups.Controllers
         {
             if (!await userService.IsAdmin(GetUserId(), id))
             {
-                return Unauthorized();
+                return Unauthorized("Not Authorized");
             }
             await groupService.DeleteGroup(id);
             return Ok();

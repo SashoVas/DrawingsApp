@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TagsService } from '../services/tags.service';
 
 @Component({
@@ -8,8 +8,8 @@ import { TagsService } from '../services/tags.service';
   styleUrls: ['./create-tag.component.css']
 })
 export class CreateTagComponent implements OnInit {
-  createTagForm:FormGroup;
-  constructor(private fb:FormBuilder,private tagService:TagsService) { 
+  createTagForm:UntypedFormGroup;
+  constructor(private fb:UntypedFormBuilder,private tagService:TagsService) { 
     this.createTagForm=fb.group({
       "name":['',Validators.required],
       "tagInfo":['',Validators.required]

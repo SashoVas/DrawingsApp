@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IPostFull } from 'src/app/core/interfaces/IPostFull';
 import { environment } from 'src/environments/environment';
@@ -15,11 +15,11 @@ export class PostFullComponent implements OnInit {
   post!:IPostFull;
   imagesUrl:string=environment.imageApi;
   current_img:number=0;
-  commentForm!:FormGroup;
+  commentForm!:UntypedFormGroup;
   editMode:boolean=false;
   @ViewChild("titleEdit")title!:ElementRef;
   @ViewChild("descriptionEdit")description!:ElementRef;
-  constructor(private activatedRoute:ActivatedRoute,private postService:PostService,private fb:FormBuilder,private router:Router,private commentService:CommentService) { }
+  constructor(private activatedRoute:ActivatedRoute,private postService:PostService,private fb:UntypedFormBuilder,private router:Router,private commentService:CommentService) { }
 
   ngOnInit(): void {
     this.post=this.activatedRoute.snapshot.data["data"];

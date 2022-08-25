@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IGroup } from 'src/app/core/interfaces/IGroup';
 import { ITag } from 'src/app/core/interfaces/ITag';
@@ -14,13 +14,13 @@ import { TagsService } from '../services/tags.service';
 })
 export class EditGroupComponent implements OnInit {
 
-  editGroupForm!:FormGroup
+  editGroupForm!:UntypedFormGroup
   tags:Array<ITag>=[];
   selectedTags:Array<ITag>=[];
   groupType=0;
   group!:IGroup;
   @ViewChild("images") images!:UserImagesComponent;
-  constructor(private fb:FormBuilder,private tagService:TagsService,private activatedRoute:ActivatedRoute,private groupService:GroupService,private router:Router) { 
+  constructor(private fb:UntypedFormBuilder,private tagService:TagsService,private activatedRoute:ActivatedRoute,private groupService:GroupService,private router:Router) { 
     
   }
 

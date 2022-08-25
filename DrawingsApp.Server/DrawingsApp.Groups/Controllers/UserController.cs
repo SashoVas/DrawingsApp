@@ -24,9 +24,9 @@ namespace DrawingsApp.Groups.Controllers
         public async Task<ActionResult> GetUsers(int id, [FromQuery] Role role,[FromQuery] bool lessUsers =false)
         {
             var groupTypeAndRole = await userService.GetRoleAndGroupTypeAsync(GetUserId(), id);
-            if ((int)groupTypeAndRole.GrouptType > 0 && (int)groupTypeAndRole.Role < 2)
+            if (groupTypeAndRole.GrouptType > GroupType.Public && groupTypeAndRole.Role < Role.User)
             {
-                return Unauthorized();
+                return Unauthorized("Not Authorized");
             }
             return Ok(await userService.GetUsersByGroup(id, role,lessUsers));
         }
@@ -57,7 +57,7 @@ namespace DrawingsApp.Groups.Controllers
         {
             if (!await userService.IsAdmin(GetUserId(), input.GroupId))
             {
-                return Unauthorized();
+                return Unauthorized("Not Authorized");
             }
             await userService.AcceptUser(input.UserId, input.GroupId);
             await publisher.Publish(new PromoteUserRoleInGroupMessage
@@ -73,7 +73,7 @@ namespace DrawingsApp.Groups.Controllers
         {
             if (!await userService.IsAdmin(GetUserId(), input.GroupId))
             {
-                return Unauthorized();
+                return Unauthorized("Not Authorized");
             }
             await userService.PromoteUser(input.UserId, input.GroupId);
             await publisher.Publish(new PromoteUserRoleInGroupMessage
@@ -89,7 +89,7 @@ namespace DrawingsApp.Groups.Controllers
         {
             if (!await this.userService.LeaveGroup(GetUserId(), id))
             {
-                return NotFound();
+                return NotFound("No such user in this group");
             }
             await publisher.Publish(new RemoveRoleFromUserMessage
             {
@@ -103,11 +103,11 @@ namespace DrawingsApp.Groups.Controllers
         {
             if (!await this.userService.IsAdmin(GetUserId(),groupId))
             {
-                return Unauthorized();
+                return Unauthorized("Not Authorized");
             }
             if (!await this.userService.LeaveGroup(userId, groupId))
             {
-                return NotFound();
+                return NotFound("No such user in the group");
             }
             await publisher.Publish(new RemoveRoleFromUserMessage
             {

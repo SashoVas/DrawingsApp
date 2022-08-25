@@ -1,4 +1,5 @@
 ﻿using DrawingsApp.Controllers;
+using DrawingsApp.Data.Common;
 using DrawingsApp.Groups.Models.InputModels.Post;
 using DrawingsApp.Groups.Models.OutputModels.Post;
 using DrawingsApp.Groups.Services.Contracts;
@@ -27,9 +28,9 @@ namespace DrawingsApp.Groups.Controllers
         public async Task<ActionResult<IEnumerable<PostOutputModel>>> GetPostsByGroup(int id)
         {
             var groupTypeAndRole =await userService.GetRoleAndGroupTypeAsync(GetUserId(), id);
-            if ((int)groupTypeAndRole.GrouptType>0&& (int)groupTypeAndRole.Role<2)
+            if (groupTypeAndRole.GrouptType>GroupType.Public && groupTypeAndRole.Role<Role.User)
             {
-                return Unauthorized();
+                return Unauthorized("Not Authorized");
             }
             return Ok(await postService.GetPosts(id));
         }
@@ -40,9 +41,9 @@ namespace DrawingsApp.Groups.Controllers
         [HttpPut("Like")]
         public async Task<ActionResult>LikePost(LikePostInputModel input)
         {
-            if ((int)(await userService.GetRole(GetUserId(), input.GroupId)) < 2)
+            if (await userService.GetRole(GetUserId(), input.GroupId) < Role.User)
             {
-                return Unauthorized();
+                return Unauthorized("Not Authorized");
             }
             var changeAmounth = await postService.LikePost(GetUserId(), input.PostId,input.IsLike);
 

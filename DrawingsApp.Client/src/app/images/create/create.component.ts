@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ImageService } from '../services/image.service';
 
 @Component({
@@ -8,14 +8,14 @@ import { ImageService } from '../services/image.service';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit,AfterViewInit {
- constructor(private imageService:ImageService,private fb:FormBuilder){
+ constructor(private imageService:ImageService,private fb:UntypedFormBuilder){
   }
   ngOnInit(): void {
     this.nameForm=this.fb.group({
       name:[""]
     });
   }
-  nameForm!:FormGroup;
+  nameForm!:UntypedFormGroup;
   @ViewChild('drawingBoard')
   private canvas!: ElementRef<HTMLCanvasElement>;
   private isDrawing:boolean=false;

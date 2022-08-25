@@ -20,14 +20,28 @@ namespace DrawingsApp.Identity.Controllers
         public async Task<ActionResult<object>> Login(LoginInputModel input)
         {
             var secret = configuration.GetSection("AppSettings:Secret").Value;
-            var token= await identityServer.Login(input.UserName, input.Password, secret);
-            return Ok(new {Token=token });
+            try
+            {
+                var token= await identityServer.Login(input.UserName, input.Password, secret);
+                return Ok(new {Token=token });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
         [HttpPost("Register")]
         public async Task<ActionResult> Register(RegisterInputModel input)
         {
-            var id =await identityServer.Register(input.UserName,input.Password,input.ConfirmPassword);
-            return Ok();
+            try
+            {
+                var id =await identityServer.Register(input.UserName,input.Password,input.ConfirmPassword);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

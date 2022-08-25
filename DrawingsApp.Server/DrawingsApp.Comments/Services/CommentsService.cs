@@ -22,7 +22,7 @@ namespace DrawingsApp.Comments.Services
             }
             if ((int)await groupService.GetRole(post.GroupId,userId) < (int)Role.User)
             {
-                throw new UnauthorizedAccessException();
+                throw new UnauthorizedAccessException("Not Authorized");
             }
             return true;
         }
@@ -34,7 +34,7 @@ namespace DrawingsApp.Comments.Services
             var post = await repo.GetPost(postId);
             if (!await ValidateValuesWhenCreatingComment(post, userId))
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Invalid Input");
             }
             var comment = new Comment
             {
@@ -54,7 +54,7 @@ namespace DrawingsApp.Comments.Services
                 current = GetComment(current, id);
                 if (current is null)
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("Invalid Input");
                 }
             }
             current.Comments.Add(comment);
@@ -67,7 +67,7 @@ namespace DrawingsApp.Comments.Services
             var post =await repo.GetPost(postId);
             if (!await ValidateValuesWhenCreatingComment(post, userId))
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Invalid Input");
             }
             var comment = new Comment
             {

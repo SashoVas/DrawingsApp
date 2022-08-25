@@ -32,7 +32,7 @@ namespace DrawingsApp.Groups.Controllers
         {
             if (!await userService.IsAdmin(GetUserId(), input.GroupId))
             {
-                return Unauthorized();
+                return Unauthorized("Not Authorized");
             }
             await tagService.SetTagToGroup(GetUserId(), input.GroupId,input.TagId);
             return Ok();

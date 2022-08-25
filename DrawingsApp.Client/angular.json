@@ -27,7 +27,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -102,5 +103,7 @@
       }
     }
   },
-  "defaultProject": "DrawingsApp.Client"
+  "cli": {
+    "analytics": "8acca537-0ec4-4a5c-b16d-ca6ff3ddf45c"
+  }
 }

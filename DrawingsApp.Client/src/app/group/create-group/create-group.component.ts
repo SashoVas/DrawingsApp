@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ITag } from 'src/app/core/interfaces/ITag';
 import { UserImagesComponent } from 'src/app/images/user-images/user-images.component';
@@ -12,13 +12,13 @@ import { TagsService } from '../services/tags.service';
   styleUrls: ['./create-group.component.css']
 })
 export class CreateGroupComponent implements OnInit {
-  createGroupForm:FormGroup
+  createGroupForm:UntypedFormGroup
   tags:Array<ITag>=[];
   selectedTags:Array<ITag>=[];
   groupType=1;
   @ViewChild("images") images!:UserImagesComponent;
 
-  constructor(private fb:FormBuilder,private groupService:GroupService,private tagService:TagsService,private router:Router) {
+  constructor(private fb:UntypedFormBuilder,private groupService:GroupService,private tagService:TagsService,private router:Router) {
     this.createGroupForm=fb.group({
       "title":['',Validators.required],
       "moreInfo":['']

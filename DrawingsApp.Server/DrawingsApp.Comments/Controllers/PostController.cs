@@ -1,7 +1,7 @@
-﻿using DrawingsApp.Comments.Data.Repositories;
-using DrawingsApp.Comments.Models.InputModels.Post;
+﻿using DrawingsApp.Comments.Models.InputModels.Post;
 using DrawingsApp.Comments.Services.Contracts;
 using DrawingsApp.Controllers;
+using DrawingsApp.Data.Common;
 using DrawingsApp.Messages.Post;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +10,7 @@ namespace DrawingsApp.Comments.Controllers
 {
     public class PostController : ApiController
     {
+        private const int MaxImagesCount = 5;
         private readonly IPostService postService;
         private readonly IGroupService groupService;
         private readonly IBus publisher;
@@ -26,27 +27,24 @@ namespace DrawingsApp.Comments.Controllers
             var post = await postService.GetPost(id,GetUserId());
             if (post is null)
             {
-                return NotFound();
+                return NotFound("No such post");
             }
-            if (post.Group.GroupType>=DrawingsApp.Data.Common.GroupType.Restricted )
+            if (post.Group.GroupType>=GroupType.Restricted && post.Role<Role.User)
             {
-                if ((int)post.Role<1)
-                {
-                    return Unauthorized();
-                }
+                return Unauthorized("Not Authorized");
             }
             return Ok(post);
         }
         [HttpPost]
         public async Task<ActionResult> CreatePost(CreatePostInputModel input)
         {
-            if (input.ImgUrls.Count()>5)
+            if (input.ImgUrls.Count()> MaxImagesCount)
             {
-                return BadRequest();
+                return BadRequest("Invalid input");
             }
-            if ((int)await groupService.GetRole(input.GroupId,GetUserId()) < 2)
+            if (await groupService.GetRole(input.GroupId,GetUserId()) < Role.User)
             {
-                return Unauthorized();
+                return Unauthorized("Not Authorized");
             }
             var id=await postService.CreatePost(input.GroupId,input.Title,input.Description,GetUserId(),User.Identity.Name,input.ImgUrls);
             await publisher.Publish(new PostCreatedMessage
@@ -67,7 +65,7 @@ namespace DrawingsApp.Comments.Controllers
         {
             if (!await postService.UpdatePost(input.PostId,input.Title,input.Description,GetUserId()))
             {
-                return BadRequest();
+                return BadRequest("Invalid Input");
             }
             await publisher.Publish(new PostUpdateMessage 
             { 
@@ -83,7 +81,7 @@ namespace DrawingsApp.Comments.Controllers
         {
             if (!await postService.DeletePost(id,GetUserId()))
             {
-                return BadRequest();
+                return BadRequest("Invalid Input");
             }
             await publisher.Publish(new PostDeleteMessage
             {

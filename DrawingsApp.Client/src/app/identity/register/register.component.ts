@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IdentityService } from '../services/identity.service';
 
@@ -10,8 +10,8 @@ import { IdentityService } from '../services/identity.service';
 })
 export class RegisterComponent implements OnInit {
 
-  registerForm:FormGroup;  
-  constructor(private fb:FormBuilder,private identityService:IdentityService,private router:Router) {
+  registerForm:UntypedFormGroup;  
+  constructor(private fb:UntypedFormBuilder,private identityService:IdentityService,private router:Router) {
     this.registerForm=this.fb.group({
       'username':['',Validators.required],
       'password':['',Validators.required],

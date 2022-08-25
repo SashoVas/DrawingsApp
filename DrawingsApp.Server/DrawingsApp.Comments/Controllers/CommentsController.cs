@@ -19,9 +19,13 @@ namespace DrawingsApp.Comments.Controllers
                 var comment = await commentsService.CreateCommentOnPost(GetUserId(), User.Identity.Name, input.PostId, input.Contents);
                 return Created("",comment);
             }
-            catch (Exception)
+            catch (UnauthorizedAccessException e)
             {
-                return Unauthorized();
+                return Unauthorized(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
             }
             
         }
@@ -33,13 +37,14 @@ namespace DrawingsApp.Comments.Controllers
                 var comment = await commentsService.CreateCommentOnComment(GetUserId(), User.Identity.Name, input.PostId, input.Contents, input.CommentsPath);
                 return Created("", comment);
             }
-            catch (Exception)
+            catch (UnauthorizedAccessException e)
             {
-                return Unauthorized();
-                throw;
+                return Unauthorized(e.Message);
             }
-            
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
-
     }
 }

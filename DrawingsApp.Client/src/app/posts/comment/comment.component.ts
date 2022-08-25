@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { IComment } from 'src/app/core/interfaces/IComment';
 import { CommentService } from '../services/comment.service';
 
@@ -11,9 +11,9 @@ import { CommentService } from '../services/comment.service';
 export class CommentComponent implements OnInit {
   @Input()comment!:IComment;
   replyMode:boolean=false;
-  replyForm!:FormGroup;
+  replyForm!:UntypedFormGroup;
   @Input()commentPath:Array<string>=[];
-  constructor(private fb:FormBuilder,private commentService:CommentService) { }
+  constructor(private fb:UntypedFormBuilder,private commentService:CommentService) { }
 
   ngOnInit(): void {
     this.replyForm=this.fb.group({
