@@ -11,7 +11,7 @@ namespace DrawingsApp.Infrastructure
 {
     public static class ApplicationBuilderExtensions
     {
-        public static void AddAuthenticationWithJWT(this WebApplicationBuilder builder)
+        public static void AddAuthenticationWithJWT(this WebApplicationBuilder builder, JwtBearerEvents events = null)
         {
             var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("AppSettings:Secret").Value);
             builder.Services.AddAuthentication(options =>
@@ -29,6 +29,10 @@ namespace DrawingsApp.Infrastructure
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
+                if(!(events is null))
+                {
+                    o.Events = events;
+                }
             });
         }
         public static void AddCors(this WebApplicationBuilder builder)

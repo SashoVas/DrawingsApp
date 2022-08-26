@@ -24,20 +24,20 @@ export class GroupListingComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    
-    this.activatedRoute.queryParams.subscribe(params=>{
-      console.log(params)
+    this.tagService.getTags().subscribe(data=>{
+      this.tags=data;
+      this.activatedRoute.queryParams.subscribe(params=>{
       let name=params["name"]==undefined?"":params["name"];
       this.form=this.fb.group({
-        "name":name,
+        "name":[name],
       });
       this.order=params["order"]==undefined?0:params["order"];
-      this.selectedTags=params["tags"]==undefined?[]:params["tags"].filter((id:number)=>this.tags.find(t=>t.tagId==id));
+      this.selectedTags=params["tags"]==undefined?[]:params["tags"].filter((id:string)=>parseInt(id)).map((id:number)=>this.tags.find(t=>t.tagId==id));
+      console.log(this.selectedTags);
       this.userId=params["userId"]==undefined?null:params["userId"];
-      console.log(this.order,this.selectedTags);
       this.fetchData(name);
     });
-    this.tagService.getTags().subscribe(data=>this.tags=data);
+    });
   }
   fetchData(name:string){
     this.groupService.search(name,this.userId,this.order,this.selectedTags.map(t=>t.tagId),this.page).subscribe(data=>this.groups=this.groups.concat(data));
@@ -47,7 +47,6 @@ export class GroupListingComponent implements OnInit {
     this.selectedTags=this.tags.filter(t=>t.isSelected);
   }
   search(){
-    console.log(this.form.value.name);
     this.fetchData(this.form.value.name);
   }
   loadMore(){

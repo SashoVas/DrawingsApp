@@ -7,7 +7,8 @@ export const environment = {
   identityApi:"https://localhost:7011/",
   imageApi:"https://localhost:7019/",
   groupApi:"https://localhost:5000/",
-  commentApi:"https://localhost:7013/"
+  commentApi:"https://localhost:7013/",
+  notificationsApi:"https://localhost:7274/"
 };
 
 /*

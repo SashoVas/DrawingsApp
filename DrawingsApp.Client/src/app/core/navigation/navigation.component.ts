@@ -1,7 +1,8 @@
-import { Component, OnInit, ɵclearResolutionOfComponentResourcesQueue } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
+import { NotificationsService } from '../services/notifications.service';
 
 @Component({
   selector: 'app-navigation',
@@ -10,10 +11,11 @@ import { AccountService } from '../services/account.service';
 })
 export class NavigationComponent implements OnInit {
   searchGroupForm:UntypedFormGroup;
-  constructor(private accountService:AccountService,private router:Router,private fb:UntypedFormBuilder) {
+  constructor(private accountService:AccountService,private router:Router,private fb:UntypedFormBuilder,private notificationsService:NotificationsService) {
     this.searchGroupForm=fb.group({
       "groupName":[""]
     });
+    notificationsService.subscribe();
    }
 
   ngOnInit(): void {
