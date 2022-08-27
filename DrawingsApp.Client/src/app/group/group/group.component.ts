@@ -32,6 +32,9 @@ export class GroupComponent implements OnInit {
   }
   leave(){
     this.userService.leaveGroup(this.group.id).subscribe(()=>this.group.role=0);
-    
+  }
+  enableNotifications(){
+    console.log(this.group);
+    this.userService.enableNotifications(this.group.id).subscribe();
   }
 }

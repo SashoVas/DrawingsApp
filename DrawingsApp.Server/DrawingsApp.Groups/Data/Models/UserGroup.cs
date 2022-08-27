@@ -9,5 +9,6 @@ namespace DrawingsApp.Groups.Data.Models
         public int GroupId { get; set; }
         public Group Group { get; set; }
         public Role Role { get; set; }
+        public bool Notifications { get; set; }
     }
 }

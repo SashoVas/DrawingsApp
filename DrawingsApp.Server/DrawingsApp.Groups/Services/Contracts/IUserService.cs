@@ -15,5 +15,6 @@ namespace DrawingsApp.Groups.Services.Contracts
         Task<Role> GetRole(string userId, int groupId);
         Task<bool> LeaveGroup(string userId, int groupId);
         Task<UserRoleAndGroupTypeOutputModel> GetRoleAndGroupTypeAsync(string userId, int groupId);
+        Task<bool> EnableNotifications(string userId,int groupId);
     }
 }

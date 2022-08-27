@@ -52,6 +52,20 @@ namespace DrawingsApp.Groups.Controllers
                 id=groupId,
             }, null);
         }
+        [HttpPut("Notifications/{id}")]
+        public async Task<ActionResult> Notifications(int id)
+        {
+            if (!await userService.EnableNotifications(GetUserId(),id))
+            {
+                return NotFound("User not in group");
+            }
+            await publisher.Publish(new EnableNotificationsMessage
+            {
+                GroupId=id,
+                UserId=GetUserId()
+            });
+            return Ok();
+        }
         [HttpPut("AcceptUser")]
         public async Task<ActionResult> AcceptUser(UpdateUserInputModel input)
         {

@@ -35,4 +35,7 @@ export class UserService {
   promoteUser(groupId:number,userId:string){
     return this.http.put(environment.groupApi+"User/PromoteUser",{groupId,userId});
   }
+  enableNotifications(groupId:number):Observable<any>{
+    return this.http.put(environment.groupApi+"User/Notifications/"+groupId,{});
+  }
 }

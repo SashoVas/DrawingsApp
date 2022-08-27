@@ -124,5 +124,20 @@ namespace DrawingsApp.Groups.Services
                     Role = g.UserGrops.Where(ug=>ug.UserId==userId).Select(ug=>ug.Role).FirstOrDefault()
                 })
                 .FirstOrDefaultAsync();
+
+        public async Task<bool> EnableNotifications(string userId, int groupId)
+        {
+            var userGroup =await context.UserGroups
+                .Where(ug=>ug.UserId==userId&&ug.GroupId==groupId)
+                .FirstOrDefaultAsync();
+            if (userGroup is null)
+            {
+                return false;
+            }
+            userGroup.Notifications = !userGroup.Notifications;
+            context.Update(userGroup);
+            await context.SaveChangesAsync();
+            return true;
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace DrawingsApp.Notifications.Messages.Post
 
         public async Task Consume(ConsumeContext<PostCreatedMessage> context)
         {
-            await hub.Clients.Group("Group").SendAsync("ShowNotification",context.Message);
+            await hub.Clients.Group(context.Message.GroupId.ToString()).SendAsync("ShowNotification",context.Message);
         }
     }
 }
