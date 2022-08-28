@@ -10,7 +10,7 @@ namespace DrawingsApp.Groups.Services
     public class UserService : IUserService
     {
         private readonly DrawingsAppGroupsDbContext context;
-
+        private const int EntitiesPerSmallPage = 10;
         public UserService(DrawingsAppGroupsDbContext context) 
             => this.context = context;
         private async Task ChangeRole(string userId, int groupId,Role role)
@@ -90,7 +90,7 @@ namespace DrawingsApp.Groups.Services
                            .Where(ug => ug.GroupId == groupId && (int)ug.Role == (int)role);
             if (lessUsers)
             {
-                query = query.Take(10);
+                query = query.Take(EntitiesPerSmallPage);
             }
             return await query
                            .Select(ug => new UserOutputModel

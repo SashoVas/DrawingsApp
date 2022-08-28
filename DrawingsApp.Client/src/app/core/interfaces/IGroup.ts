@@ -8,5 +8,6 @@ export interface IGroup{
     users:number,
     admins:number,
     role:number,
-    isJoined:boolean
+    isJoined:boolean,
+    notifications:boolean
 }

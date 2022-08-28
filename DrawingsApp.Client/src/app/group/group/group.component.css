@@ -2,6 +2,9 @@
     border: 3px solid white;
     border-radius:50px ;
 }
+.bell{
+    font-size: 23px;
+}
 .selected-section{
     background-color: rgb(3,3,3);
     border-radius: 10px 10px 0 0;

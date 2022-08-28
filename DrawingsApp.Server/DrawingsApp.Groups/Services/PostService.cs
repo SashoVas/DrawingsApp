@@ -9,11 +9,10 @@ namespace DrawingsApp.Groups.Services
     public class PostService : IPostService
     {
         private readonly DrawingsAppGroupsDbContext context;
-        private readonly IUserService userService;
-        public PostService(DrawingsAppGroupsDbContext context, IUserService userService)
+        private const int EntitiesPerSmallPage = 10;
+        public PostService(DrawingsAppGroupsDbContext context)
         {
             this.context = context;
-            this.userService = userService;
         }
 
         public async Task<int> CreatePost(string senderId, string title, int groupId, List<string> imgUrls,string outerId)
@@ -49,8 +48,7 @@ namespace DrawingsApp.Groups.Services
             =>context.Posts
                 .Where(p => p.GroupId == groupId)
                 .OrderByDescending(p => p.PostedOn)
-                .Take(10)
-                //.TakeLast(10)
+                .Take(EntitiesPerSmallPage)
                 .Select(p => new PostOutputModel
                 {
                     PostedOn = p.PostedOn.ToString("yyyy/MM/d"),
@@ -69,8 +67,7 @@ namespace DrawingsApp.Groups.Services
                 .Where(p => p.Group.UserGrops
                     .Any(gu => gu.UserId == userId && (int)gu.Role>1))
                 .OrderByDescending(p => p.PostedOn)
-                .Take(10)
-                //.TakeLast(10)
+                .Take(EntitiesPerSmallPage)
                 .Select(p => new PostOutputModel
                 {
                     PostedOn = p.PostedOn.ToString("yyyy/MM/d"),

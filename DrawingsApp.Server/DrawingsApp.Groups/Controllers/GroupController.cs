@@ -10,6 +10,7 @@ namespace DrawingsApp.Groups.Controllers
     public class GroupController : ApiController
     {
         private const int MaxImagesCount= 5;
+        private const int MaxTagsCount= 5;
         private readonly IGroupService groupService;
         private readonly IUserService userService;
         private readonly IBus publisher;
@@ -50,7 +51,7 @@ namespace DrawingsApp.Groups.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(CreateGroupInputModel input)
         {
-            if (input.Tags.Count() > MaxImagesCount)
+            if (input.Tags.Count() > MaxImagesCount || input.Tags.Count()> MaxTagsCount)
             {
                 return BadRequest("Invalid input");
             }

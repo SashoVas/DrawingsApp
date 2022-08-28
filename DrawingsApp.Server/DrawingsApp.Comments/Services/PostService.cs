@@ -63,11 +63,12 @@ namespace DrawingsApp.Comments.Services
         public async Task<PostOutputModel> GetPost(string id,string userId)
         {
             var post = await repo.GetPost(id);
-            var group = await groupService.GetGroup(post.GroupId);
             if (post is null ||post.IsDeleated)
             {
                 return null;
             }
+            var group = await groupService.GetGroup(post.GroupId);
+            
             return new PostOutputModel
             {
                 Id=post.Id,
@@ -88,7 +89,7 @@ namespace DrawingsApp.Comments.Services
                     GroupImgUrl=group.GroupImgUrl
                 },
                 Likes = post.Likes,
-                PostedOn = post.PostedOn.ToString("yyyy,MM,dd"),
+                PostedOn = post.PostedOn.ToString("yyyy.MM.dd"),
                 Title = post.Title,
                 Role=group.Users
                 .Where(u=>u.UserId==userId)

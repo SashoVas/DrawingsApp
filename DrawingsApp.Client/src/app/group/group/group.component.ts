@@ -35,6 +35,6 @@ export class GroupComponent implements OnInit {
   }
   enableNotifications(){
     console.log(this.group);
-    this.userService.enableNotifications(this.group.id).subscribe();
+    this.userService.enableNotifications(this.group.id).subscribe(()=>this.group.notifications=!this.group.notifications);
   }
 }

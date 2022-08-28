@@ -14,5 +14,6 @@ namespace DrawingsApp.Groups.Models.OutputModels.Group
         public GroupType GroupType { get; set; }
         public List<string> Tags { get; set; }
         public Role Role { get; set; }
+        public bool Notifications { get; set; }
     }
 }

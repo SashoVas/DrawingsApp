@@ -20,11 +20,23 @@ namespace DrawingsApp.Comments.Services
             {
                 return false;
             }
-            if ((int)await groupService.GetRole(post.GroupId,userId) < (int)Role.User)
+            if (await groupService.GetRole(post.GroupId,userId) < Role.User)
             {
                 throw new UnauthorizedAccessException("Not Authorized");
             }
             return true;
+        }
+        private void AddReplyToComment(ICommentable current,List<string> commentsPath,Comment comment)
+        {
+            foreach (var id in commentsPath)
+            {
+                current = GetComment(current, id);
+                if (current is null)
+                {
+                    throw new ArgumentException("Invalid Input");
+                }
+            }
+            current.Comments.Add(comment);
         }
         private Comment GetComment(ICommentable parent, string id) 
             => parent.Comments
@@ -46,18 +58,8 @@ namespace DrawingsApp.Comments.Services
                     SenderName = userName,
                     SenderId = userId,
                 }
-                
             };
-            ICommentable current = post;
-            foreach (var id in commentsPath)
-            {
-                current = GetComment(current, id);
-                if (current is null)
-                {
-                    throw new ArgumentException("Invalid Input");
-                }
-            }
-            current.Comments.Add(comment);
+            AddReplyToComment(post,commentsPath,comment);
             await repo.UpdatePost(post);
             return comment;
         }

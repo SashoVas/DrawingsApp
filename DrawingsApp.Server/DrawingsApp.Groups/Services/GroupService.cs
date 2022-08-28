@@ -10,6 +10,9 @@ namespace DrawingsApp.Groups.Services
 {
     public class GroupService : IGroupService
     {
+        private const int MaxTagsPerGroup = 5;
+        private const int EntitiesPerPage = 20;
+        private const int EntitiesPerSmallPage = 10;
         private readonly DrawingsAppGroupsDbContext context;
         public GroupService(DrawingsAppGroupsDbContext context) 
             => this.context = context;
@@ -72,8 +75,8 @@ namespace DrawingsApp.Groups.Services
                 }
             }
             return await query
-                    .Skip(page*20)
-                    .Take(20)
+                    .Skip(page* EntitiesPerPage)
+                    .Take(EntitiesPerPage)
                     .Select(g => new GroupListingOutputModel
                     {
                         Id = g.Id,
@@ -90,7 +93,7 @@ namespace DrawingsApp.Groups.Services
                         .Where(g => g.UserGrops.Any(ug => ug.UserId == userId));
             if (isLess)
             {
-                query = query.Take(10);
+                query = query.Take(EntitiesPerSmallPage);
             }
             return await query
                     .Select(g => new GroupListingOutputModel
@@ -113,6 +116,10 @@ namespace DrawingsApp.Groups.Services
                     GroupType=g.GroupType,
                     Admins= g.UserGrops.Count(ug => ug.Role == Role.Admin),
                     Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList(),
+                    Notifications=g.UserGrops
+                        .Where(ug => ug.UserId == userId && ug.GroupId == g.Id)
+                        .Select(ug => ug.Notifications)
+                        .FirstOrDefault(),
                     Role=g.UserGrops
                         .Where(ug=>ug.UserId==userId && ug.GroupId==g.Id)
                         .Select(ug=>ug.Role)
@@ -124,7 +131,8 @@ namespace DrawingsApp.Groups.Services
                         .OrderByDescending(g => g.UserGrops.Count());
             if (isLess)
             {
-                return await query.Take(10).Select(g => new GroupListingOutputModel
+                return await query.Take(EntitiesPerSmallPage)
+                    .Select(g => new GroupListingOutputModel
                     {
                         Id = g.Id,
                         ImgUrl = g.ImgUrl,
@@ -141,14 +149,24 @@ namespace DrawingsApp.Groups.Services
                             IsJoined = g.UserGrops.Any(ug => ug.UserId == userId && ug.GroupId == g.Id)
                         }).ToListAsync();
         }
-
+        private bool ValidateTags(Group group, List<int> tags)
+        {
+            foreach (var tagId in tags)
+            {
+                if (group.GroupTags.Any(gt => gt.TagId == tagId))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         public async Task<bool> UpdateGroup(int groupId, string title, string moreInfo,string imgUrl, GroupType groupType, List<int> tags)
         {
             var group = await context.Groups
                 .Include(g=>g.GroupTags)
                 .Where(g => g.Id == groupId)
                 .FirstOrDefaultAsync();
-            if (group is null || group.GroupTags.Count()+tags.Count()>5)
+            if (group is null || group.GroupTags.Count()+tags.Count()> MaxTagsPerGroup)
             {
                 return false;
             }
@@ -156,13 +174,9 @@ namespace DrawingsApp.Groups.Services
             group.GroupType = groupType;
             group.MoreInfo = moreInfo;
             group.ImgUrl = imgUrl;
-
-            foreach (var tagId in tags) 
+            if (!ValidateTags(group, tags))
             {
-                if (group.GroupTags.Any(gt=>gt.TagId==tagId))
-                {
-                    return false;
-                }
+                return false;
             }
             await context.GroupTag.AddRangeAsync(tags.Select(t => new GroupTag
             {
