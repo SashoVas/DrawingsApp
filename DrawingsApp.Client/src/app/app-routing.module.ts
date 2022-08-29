@@ -28,6 +28,10 @@ const routes: Routes = [{
   path:"identity",
   loadChildren:()=>import("./identity/identity.module").then(i=>i.IdentityModule)
 },
+{
+  path:"users",
+  loadChildren:()=>import("./profiles/profiles.module").then(p=>p.ProfilesModule)
+}
 ];
 
 @NgModule({
