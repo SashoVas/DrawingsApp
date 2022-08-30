@@ -9,10 +9,13 @@
         
         <button class="btn btn-light" (click)="search()">Search</button>
         <a class="btn btn-secodary text-light me-auto" routerLink="/images/create">Create Image</a>
+        <div routerLink="/users/profile" class="d-flex justify-content-center align-items-center default_bg default_border p-1 pointer rounded">
+          <img class="mx-1 rounded" src="./././assets/resources/Untitled.png" width="30" height="30" alt="">
+          <p class="mb-0 mx-1">UserName</p>
+        </div>
         <a class="btn btn-secodary text-light" *ngIf="!isLogedIn()" routerLink="/identity/register">Register</a>
         <a class="btn btn-secodary text-light" *ngIf="!isLogedIn()" routerLink="/identity/login">Login</a>
         <a class="btn btn-secodary text-light" (click)="logOut()" *ngIf="isLogedIn()" >LogOut</a>
-
       </div>
     </div>
   </nav>
