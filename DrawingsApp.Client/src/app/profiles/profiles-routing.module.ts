@@ -9,6 +9,11 @@ const routes: Routes = [
   path:"profile",
   component:UserProfileComponent,
   resolve:{data:ProfileResolver}
+},
+{
+  path:"profile/:id",
+  component:UserProfileComponent,
+  resolve:{data:ProfileResolver}
 }
 ];
 

@@ -13,6 +13,7 @@ export class UserProfileComponent implements OnInit {
   posts!:Array<IPost>;
   profile!:IProfile;
   groups!:Array<IGroup>;
+  postsMode:boolean=true;
   constructor(private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {

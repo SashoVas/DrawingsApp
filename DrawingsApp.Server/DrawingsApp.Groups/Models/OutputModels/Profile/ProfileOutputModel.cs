@@ -7,6 +7,8 @@ namespace DrawingsApp.Groups.Models.OutputModels.Profile
     {
         public string UserId { get; set; }
         public string UserName { get; set; }
+        public string ImgUrl { get; set; }
+        public string Description { get; set; }
         public IEnumerable<PostOutputModel> Posts { get; set; }
         public IEnumerable<GroupListingOutputModel> Groups { get; set; }
     }

@@ -13,6 +13,7 @@ import { ProfileService } from '../services/profile.service';
 export class ProfileResolver implements Resolve<boolean> {
   constructor(private profileService:ProfileService){}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.profileService.getProfile();
+    let id=route.paramMap.get('id');
+    return this.profileService.getProfile(id);
   }
 }

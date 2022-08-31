@@ -1,4 +1,4 @@
-<div class="countainer main mt-3 text-center ">
+<div class="countainer main mt-3 text-center default_bg">
     <div class="d-flex flex-wrap justify-content-center">
         <div *ngFor="let img of data; index as i" class="m-2 text-center">
             <img src="{{imagesUrl}}Images/{{img.imgUrl}}.jpg" data-bs-toggle="modal" class="{{img.isSelected?'selected':''}}" data-bs-target="#Modal" width="200" height="200"  alt="" (click)="selectImage(i)">

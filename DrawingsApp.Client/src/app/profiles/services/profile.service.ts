@@ -9,7 +9,10 @@ import { environment } from 'src/environments/environment';
 export class ProfileService {
 
   constructor(private http:HttpClient) { }
-  getProfile():Observable<any>{
+  getProfile(userId:string|null):Observable<any>{
+    if(userId==null){
+      userId="";
+    }
     return this.http.get(environment.groupApi+"Profile/");
   }
 }

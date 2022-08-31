@@ -1,15 +1,33 @@
 <div class="row container-fluid">
     <div class="col-lg"></div>
     <div class="col-lg-6 p-3">
-        <app-post *ngFor="let post of posts" [post]="post"></app-post>
+        <div class="p-3 mt-3 default_bg default_border rounded d-flex">
+            <p class="mb-0 mx-3 pointer" (click)="postsMode=true">Posts <i class="fa-solid fa-address-card"></i></p>
+            <p class="mb-0 mx-3 pointer" (click)="postsMode=false">Images <i class="fa-solid fa-image"></i></p>
+        </div>
+        <ng-container *ngIf="postsMode else imagesMode">
+            <app-post *ngFor="let post of posts" [post]="post"></app-post>
+        </ng-container>
+        <ng-template #imagesMode>
+            <app-user-images #images [imagesMaxCount]="10"></app-user-images>
+            <div class="text-center">
+                <div class="default_bg default_border rounded mt-3 d-inline-flex p-3 ">
+                    <button class="btn btn-secondary me-3">Delete</button>
+                    <button class="btn btn-secondary">Open</button>
+                </div>
+            </div>
+            
+        </ng-template>
     </div>
     <div class="col-lg">
         <div class="default_bg default_border p-3 mt-3 rounded d-inline-flex flex-column text-center">
-            <img src="./././assets/resources/Untitled.png" width="300" height="300" alt="">
+            <img src="{{profile.imgUrl??'./././assets/resources/Untitled.png'}}" width="300" height="300" alt="">
             <h3>{{profile.userName}}</h3>
             <div>
                 <p>Posts Count:{{posts.length}}</p>
             </div>
+            <h5>Description:</h5>
+            <p>{{profile.description??"No description"}}</p>
         </div>
         <div class="default_bg default_border main mt-3 p-3 d-inline-flex flex-column rounded">
             <div class="text-center">
@@ -18,7 +36,7 @@
             <div>
                 <div *ngFor="let group of groups" class="d-flex p-1">   
                     <img class="align-self-center mx-1 icon" src="./././assets/resources/Untitled.png" width="30" height="30"  alt="">
-                    <p class="align-self-center mb-0 mx-1 group-name pointer">{{group.title}}</p>
+                    <p routerLink="/group/{{group.id}}" class="align-self-center mb-0 mx-1 group-name pointer">{{group.title}}</p>
                 </div>
             </div>
             <div class="px-2 mt-2">

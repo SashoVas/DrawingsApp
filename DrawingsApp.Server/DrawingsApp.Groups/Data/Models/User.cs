@@ -10,6 +10,8 @@
         }
         public string Id { get; set; }
         public string Username { get; set; }
+        public string? Description { get; set; }
+        public string? ImgUrl { get; set; }
         public ICollection<Post> Posts { get; set; }
         public ICollection<PostUserLikes> LikedPosts { get; set; }
         public ICollection<UserGroup> UserGrops { get; set; }
