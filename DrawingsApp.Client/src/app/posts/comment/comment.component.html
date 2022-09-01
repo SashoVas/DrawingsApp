@@ -1,6 +1,6 @@
 <div>
     <img class="profile-image m-1" src="../../../assets/resources/Untitled.png" width="30" height="30">
-    <small><span class="hover_underline pointer">{{comment.sender.senderName}}</span>{{comment.commentedOn}}</small>
+    <small><span routerLink="/users/profile/{{comment.sender.senderId}}" class="hover_underline pointer">{{comment.sender.senderName}}</span> on {{comment.commentedOn}}</small>
 </div>
 <div class="d-flex">
     <div class="vertilcal-line"></div>

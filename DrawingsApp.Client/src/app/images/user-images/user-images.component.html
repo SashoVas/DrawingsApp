@@ -1,14 +1,17 @@
 <div class="countainer main mt-3 text-center default_bg">
     <div class="d-flex flex-wrap justify-content-center">
         <div *ngFor="let img of data; index as i" class="m-2 text-center">
-            <img src="{{imagesUrl}}Images/{{img.imgUrl}}.jpg" data-bs-toggle="modal" class="{{img.isSelected?'selected':''}}" data-bs-target="#Modal" width="200" height="200"  alt="" (click)="selectImage(i)">
+            <img *ngIf="useSelect else noSelect" src="{{imagesUrl}}Images/{{img.imgUrl}}.jpg" data-bs-toggle="modal" class="{{img.isSelected?'selected':''}}" data-bs-target="#Modal" width="200" height="200" (click)="selectImage(i)">
+            <ng-template #noSelect>
+                <img src="{{imagesUrl}}Images/{{img.imgUrl}}.jpg" class="{{img.isSelected?'selected':''}}"  width="200" height="200" (click)="selectImage(i)">
+            </ng-template>
             <p>{{img.name}}</p>
         </div>
     </div>
     <button *ngIf="data.length%20==0" type="button" class="btn btn-secondary" (click)="loadMore()">Load More</button>
 </div>
     
-<div class="modal  fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+<div *ngIf="useSelect" class="modal  fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content default_bg">
         <div class="modal-header">

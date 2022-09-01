@@ -12,6 +12,7 @@ export class UserImagesComponent implements OnInit {
   data:Array<IImage>=[];
   selectedImage:IImage|null=null;
   @Input()imagesMaxCount!:number;
+  @Input()useSelect:boolean=true;
   imagesCount:number=0;
   page:number=0;
   constructor(private imageService:ImageService) { 
@@ -28,6 +29,9 @@ export class UserImagesComponent implements OnInit {
   }
   selectImage(imgIndex:number):void{
     this.selectedImage=this.data[imgIndex];
+    if(!this.useSelect){
+      this.selectForPost();
+    }
   }
   selectForPost():void{
     this.selectedImage!.isSelected=!this.selectedImage?.isSelected;

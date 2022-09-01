@@ -11,7 +11,7 @@
                 <div class="p-3 pb-0">
                     <div class="d-flex align-items-center limiting-text-width">
                         <img class="groupImage " src="{{imagesUrl}}Images/{{post.group.groupImgUrl}}.jpg"  width="30" height="30" alt="">
-                        <p class="name mb-0 ms-1 me-auto"><b class="hover_underline pointer" routerLink="/group/{{post.group.groupId}}">{{post.group.groupName}}</b> <span class="text-secondary"> posted by <span class="hover_underline pointer">{{post.user.userName}}</span> on {{post.postedOn}}</span></p>
+                        <p class="name mb-0 ms-1 me-auto"><b class="hover_underline pointer" routerLink="/group/{{post.group.groupId}}">{{post.group.groupName}}</b> <span class="text-secondary"> posted by <span routerLink="{{post.user.userId}}" class="hover_underline pointer">{{post.user.userName}}</span> on {{post.postedOn}}</span></p>
                         <p class="mb-0" *ngIf="post.role==3 || post.isMe" (click)="deletePost()" class="delete"><i class="fa-solid fa-x pointer"></i></p>  
                     </div>
                     <div>

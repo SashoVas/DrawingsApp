@@ -18,10 +18,10 @@ namespace DrawingsApp.Groups.Controllers
             this.userService = userService;
         }
 
-        [HttpGet("{id?}")]
+        [HttpGet("Full/{id?}")]
         public async Task<ActionResult> GetUserProfile(string? id)
         {
-            var result = await profileService.GetProfile(id ?? GetUserId());
+            var result = await profileService.GetFullProfile(id ?? GetUserId());
             if (result is null && id is null)
             {
                 await this.userService.CreateUser(GetUserId(),User.Identity.Name);
@@ -35,5 +35,8 @@ namespace DrawingsApp.Groups.Controllers
             }
             return Ok(result);
         }
+        [HttpGet]
+        public async Task<ActionResult> GetProfile()
+            => Ok(await profileService.GetProfileInfo(GetUserId()));
     }
 }

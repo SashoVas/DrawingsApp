@@ -1,9 +1,9 @@
 <div class="row container-fluid">
     <div class="col-lg"></div>
     <div class="col-lg-6 p-3">
-        <div class="p-3 mt-3 default_bg default_border rounded d-flex">
-            <p class="mb-0 mx-3 pointer" (click)="postsMode=true">Posts <i class="fa-solid fa-address-card"></i></p>
-            <p class="mb-0 mx-3 pointer" (click)="postsMode=false">Images <i class="fa-solid fa-image"></i></p>
+        <div class="mt-3 default_bg default_border rounded d-flex">
+            <p class="p-3 mb-0 mr-3 rounded pointer" [ngClass]="postsMode?'chosen':''" (click)="postsMode=true">Posts <i class="fa-solid fa-address-card"></i></p>
+            <p class="p-3 mb-0 mr-3 rounded pointer" [ngClass]="postsMode?'':'chosen'" (click)="postsMode=false">Images <i class="fa-solid fa-image"></i></p>
         </div>
         <ng-container *ngIf="postsMode else imagesMode">
             <app-post *ngFor="let post of posts" [post]="post"></app-post>
@@ -21,13 +21,14 @@
     </div>
     <div class="col-lg">
         <div class="default_bg default_border p-3 mt-3 rounded d-inline-flex flex-column text-center">
-            <img src="{{profile.imgUrl??'./././assets/resources/Untitled.png'}}" width="300" height="300" alt="">
+            <img src="{{profile.imgUrl?imageApiUrl+'Images/'+profile.imgUrl+'.jpg':'./././assets/resources/Untitled.png'}}" width="300" height="300" alt="">
             <h3>{{profile.userName}}</h3>
             <div>
                 <p>Posts Count:{{posts.length}}</p>
             </div>
             <h5>Description:</h5>
             <p>{{profile.description??"No description"}}</p>
+            <button routerLink="/users/profile/edit" class="btn btn-secondary">Edit</button>
         </div>
         <div class="default_bg default_border main mt-3 p-3 d-inline-flex flex-column rounded">
             <div class="text-center">

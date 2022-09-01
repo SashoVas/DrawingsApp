@@ -13,6 +13,9 @@ export class ProfileService {
     if(userId==null){
       userId="";
     }
-    return this.http.get(environment.groupApi+"Profile/");
+    return this.http.get(environment.groupApi+"Profile/Full/");
+  }
+  getProfileInfo():Observable<any>{
+    return this.http.get(environment.groupApi+"Profile");
   }
 }

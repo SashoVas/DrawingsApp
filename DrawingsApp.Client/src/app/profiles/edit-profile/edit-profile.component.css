@@ -1,0 +1,19 @@
+textarea{
+    border-radius: 5px;
+    border: 2px solid rgb(52,53,54);
+}
+.image{
+    position: relative;
+    text-align: center;
+}
+.center-pos{
+    position: absolute;
+    bottom: 120px;
+    left: 87px;
+    color: gray;
+    display: none;
+    font-size: 20px;
+}
+.image:hover .center-pos{
+    display:block;
+}

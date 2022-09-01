@@ -13,7 +13,7 @@ namespace DrawingsApp.Groups.Services
             this.context = context;
         }
 
-        public Task<ProfileOutputModel> GetProfile(string userId) 
+        public Task<ProfileOutputModel> GetFullProfile(string userId) 
             => context.Users
                 .Where(u => u.Id == userId)
                 .Select(u => new ProfileOutputModel
@@ -42,5 +42,17 @@ namespace DrawingsApp.Groups.Services
                         IsJoined = true,
                     })
                 }).FirstOrDefaultAsync();
+
+        public Task<ProfileInfoOutputModel> GetProfileInfo(string userId) 
+            =>context.Users
+                .Where(u => u.Id == userId)
+                .Select(u => new ProfileInfoOutputModel
+                {
+                    UserId = u.Id,
+                    Description = u.Description,
+                    ImgUrl = u.ImgUrl,
+                    UserName = u.Username
+                })
+                .FirstOrDefaultAsync();
     }
 }

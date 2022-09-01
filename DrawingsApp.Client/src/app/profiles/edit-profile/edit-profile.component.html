@@ -1,0 +1,36 @@
+<div class="row container-fluid">
+    <div class="col-lg"></div>
+    <div class="col-lg-6 p-3 text-center">
+        <div class="default_bg default_border p-3 mt-3 rounded d-inline-flex flex-column text-center">
+            <form>
+                <div data-bs-toggle="modal" data-bs-target="#editModal" class="image">
+                    <img class="pointer"src="{{profile.imgUrl?imageApiUrl+'Images/'+profile.imgUrl+'.jpg':'./././assets/resources/Untitled.png'}}" width="300" height="300" alt="">
+                    <p class="center-pos images-count pointer">Change image</p>
+                </div>
+                <h3>{{profile.userName}}</h3>
+                <h5>Description</h5>
+                <textarea class="default_bg text-light" cols="30" rows="4" [value]="profile.description"></textarea>
+                <br>
+                <button class="btn btn-secondary">Edit</button>
+            </form>   
+        </div>
+    </div>
+    <div class="col-lg"></div>
+</div>
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header default_bg">
+          <h5 class="modal-title" id="editModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body default_bg">
+          <app-user-images #images [useSelect]="false" [imagesMaxCount]="1"></app-user-images>
+        </div>
+        <div class="modal-footer default_bg">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="setImg()">Choose</button>
+        </div>
+      </div>
+    </div>
+</div>

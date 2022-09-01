@@ -4,6 +4,7 @@ namespace DrawingsApp.Groups.Services.Contracts
 {
     public interface IProfileService
     {
-        Task<ProfileOutputModel> GetProfile(string userId);
+        Task<ProfileOutputModel> GetFullProfile(string userId);
+        Task<ProfileInfoOutputModel> GetProfileInfo(string userId);
     }
 }
