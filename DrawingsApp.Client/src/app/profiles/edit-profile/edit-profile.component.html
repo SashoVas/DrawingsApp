@@ -2,14 +2,14 @@
     <div class="col-lg"></div>
     <div class="col-lg-6 p-3 text-center">
         <div class="default_bg default_border p-3 mt-3 rounded d-inline-flex flex-column text-center">
-            <form>
+            <form *ngIf="editProfileForm" [formGroup]="editProfileForm" (ngSubmit)="editProfile()">
                 <div data-bs-toggle="modal" data-bs-target="#editModal" class="image">
                     <img class="pointer"src="{{profile.imgUrl?imageApiUrl+'Images/'+profile.imgUrl+'.jpg':'./././assets/resources/Untitled.png'}}" width="300" height="300" alt="">
                     <p class="center-pos images-count pointer">Change image</p>
                 </div>
                 <h3>{{profile.userName}}</h3>
                 <h5>Description</h5>
-                <textarea class="default_bg text-light" cols="30" rows="4" [value]="profile.description"></textarea>
+                <textarea formControlName="description" class="default_bg text-light" cols="30" rows="4" [value]="profile.description"></textarea>
                 <br>
                 <button class="btn btn-secondary">Edit</button>
             </form>   

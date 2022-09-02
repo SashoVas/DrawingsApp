@@ -13,6 +13,20 @@ namespace DrawingsApp.Groups.Services
             this.context = context;
         }
 
+        public async Task<bool> EditProfile(string userId,string description, string imgUrl)
+        {
+            var user =await context.Users.FindAsync(userId);
+            if (user is null)
+            {
+                return false;
+            }
+            user.Description = description ?? user.Description;
+            user.ImgUrl = imgUrl ?? user.ImgUrl;
+            context.Update(user);
+            await context.SaveChangesAsync();
+            return true;
+        }
+
         public Task<ProfileOutputModel> GetFullProfile(string userId) 
             => context.Users
                 .Where(u => u.Id == userId)

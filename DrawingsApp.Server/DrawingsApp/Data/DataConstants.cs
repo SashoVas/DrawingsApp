@@ -12,5 +12,6 @@
         public const int TagNameMinLength = 3;
         public const int TagInfoMaxLength = 300;
         public const int CommentContentsMaxLength = 1000;
+        public const int ProfileDescriptionLength = 1000;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DrawingsApp.Controllers;
+using DrawingsApp.Groups.Models.InputModels.Profile;
 using DrawingsApp.Groups.Models.OutputModels.Group;
 using DrawingsApp.Groups.Models.OutputModels.Post;
 using DrawingsApp.Groups.Models.OutputModels.Profile;
@@ -38,5 +39,14 @@ namespace DrawingsApp.Groups.Controllers
         [HttpGet]
         public async Task<ActionResult> GetProfile()
             => Ok(await profileService.GetProfileInfo(GetUserId()));
+        [HttpPut]
+        public async Task<ActionResult> Edit(EditProfileInputModel input)
+        {
+            if (!await profileService.EditProfile(GetUserId(),input.Description,input.ImgUrl))
+            {
+                return Unauthorized();
+            }
+            return Ok();
+        }
     }
 }

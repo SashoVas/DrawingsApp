@@ -6,5 +6,6 @@ namespace DrawingsApp.Groups.Services.Contracts
     {
         Task<ProfileOutputModel> GetFullProfile(string userId);
         Task<ProfileInfoOutputModel> GetProfileInfo(string userId);
+        Task<bool> EditProfile(string userId,string description,string imgUrl);
     }
 }

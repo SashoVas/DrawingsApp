@@ -1,4 +1,7 @@
-﻿namespace DrawingsApp.Groups.Data.Models
+﻿using DrawingsApp.Data;
+using System.ComponentModel.DataAnnotations;
+
+namespace DrawingsApp.Groups.Data.Models
 {
     public class User
     {
@@ -10,6 +13,7 @@
         }
         public string Id { get; set; }
         public string Username { get; set; }
+        [MaxLength(DataConstants.ProfileDescriptionLength)]
         public string? Description { get; set; }
         public string? ImgUrl { get; set; }
         public ICollection<Post> Posts { get; set; }

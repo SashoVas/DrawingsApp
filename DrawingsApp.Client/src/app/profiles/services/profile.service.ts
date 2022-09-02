@@ -18,4 +18,7 @@ export class ProfileService {
   getProfileInfo():Observable<any>{
     return this.http.get(environment.groupApi+"Profile");
   }
+  editProfile(description:string|null,imgUrl:string|null):Observable<any>{
+    return this.http.put(environment.groupApi+"Profile/",{description,imgUrl});
+  }
 }
