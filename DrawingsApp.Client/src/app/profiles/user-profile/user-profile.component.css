@@ -7,3 +7,6 @@
 .chosen{
     background-color: rgb(70,70,70);
 }
+.description{
+    max-width: 300px;
+}

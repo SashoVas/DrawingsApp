@@ -20,6 +20,9 @@ export class UserImagesComponent implements OnInit {
   getSelectedImages(){
     return this.data.filter(i=>i.isSelected).map(i=>i.imgUrl);
   }
+  getSelectedImagesIds(){
+    return this.data.filter(i=>i.isSelected).map(i=>i.id);
+  }
   fetchData():void{
     this.imageService.getImages(null,this.page)
       .subscribe(data=>this.data=this.data.concat(data));

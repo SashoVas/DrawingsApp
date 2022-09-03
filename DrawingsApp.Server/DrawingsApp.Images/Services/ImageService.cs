@@ -47,8 +47,18 @@ namespace DrawingsApp.Images.Services
             => (await repo.GetByUser(userId, page))
             .Select(i => new ImageOutputModel
             {
+                Id=i.Id,
                 ImgUrl = i.ImageFolder + "/" + i.Id,
                 Name=i.Name
             });
+
+        public Task DeleteAll() 
+            => repo.DeleteAll();
+
+        public Task DeleteImages(string userId, IEnumerable<string> images) 
+            => repo.UpdateToDeleted(userId, images);
+
+        public async Task<IEnumerable<ImageFile>> GetAll() 
+            =>await repo.GetAll();
     }
 }

@@ -15,6 +15,7 @@ namespace DrawingsApp.Images.Data.Models
         public string ImageFolder { get; set; }
         public string Name { get; set; }
         public DateTime CreatedOn { get; set; }
+        public bool IsDeleted { get; set; }
         public string UserId { get; set; }
     }
 }

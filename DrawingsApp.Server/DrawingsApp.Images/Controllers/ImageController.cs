@@ -22,5 +22,23 @@ namespace DrawingsApp.Images.Controllers
         [HttpPost]
         public async Task<ActionResult<string>> CreateImage([FromForm]CreateImageInputModel input) 
             => Created("",await imageService.CreateImage(User.FindFirstValue(ClaimTypes.NameIdentifier), input.Image,input.Name));
+        [HttpDelete]
+        public async Task<ActionResult> DeleteImages([FromQuery]IEnumerable<string>images)
+        {
+            await imageService.DeleteImages(GetUserId(),images);
+            return Ok();
+        }
+        //For Debuging
+        [HttpGet("All")]
+        public async Task<ActionResult> GetImages()
+        {
+            return Ok(await imageService.GetAll());
+        }
+        [HttpDelete("All")]
+        public async Task<ActionResult> DeleteAll()
+        {
+            await imageService.DeleteAll();
+            return Ok();
+        }
     }
 }

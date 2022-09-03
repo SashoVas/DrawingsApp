@@ -12,7 +12,7 @@
             <app-user-images #images [imagesMaxCount]="10"></app-user-images>
             <div class="text-center">
                 <div class="default_bg default_border rounded mt-3 d-inline-flex p-3 ">
-                    <button class="btn btn-secondary me-3">Delete</button>
+                    <button (click)="deleteImages()" class="btn btn-secondary me-3">Delete</button>
                     <button class="btn btn-secondary">Open</button>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <p>Posts Count:{{posts.length}}</p>
             </div>
             <h5>Description:</h5>
-            <p>{{profile.description??"No description"}}</p>
+            <p class="description">{{profile.description??"No description"}}</p>
             <button routerLink="/users/profile/edit" class="btn btn-secondary">Edit</button>
         </div>
         <div class="default_bg default_border main mt-3 p-3 d-inline-flex flex-column rounded">

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IImage } from 'src/app/core/interfaces/IImage';
@@ -18,5 +18,8 @@ export class ImageService {
   }
   getImages(userId:string|null,page:number):Observable<any>{
     return this.http.get<Array<IImage>>(environment.imageApi+"Image/"+(userId==null?"":userId),{params:{page}});
+  }
+  deleteImages(images:Array<string>){
+    return this.http.delete(environment.imageApi+"Image/",{params:{images}});
   }
 }

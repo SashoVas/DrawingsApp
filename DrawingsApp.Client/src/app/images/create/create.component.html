@@ -16,7 +16,7 @@
                         <input formControlName="name" type="text" placeholder="Title" class="mt-0 default_bg text-light">
                     </form>
                 </div>
-                <button class="btn btn-secondary mx-2" (click)="createDrawing()">Create</button>
+                <button [disabled]="!nameForm.valid" class="btn btn-secondary mx-2" (click)="createDrawing()">Create</button>
                 <button class="btn btn-secondary mx-2" routerLink="/">Exit</button>                
             </div>
         </div>

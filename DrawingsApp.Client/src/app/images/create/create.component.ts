@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ImageService } from '../services/image.service';
 
 @Component({
@@ -8,11 +9,11 @@ import { ImageService } from '../services/image.service';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit,AfterViewInit {
- constructor(private imageService:ImageService,private fb:UntypedFormBuilder){
+ constructor(private imageService:ImageService,private fb:UntypedFormBuilder,private router:Router){
   }
   ngOnInit(): void {
     this.nameForm=this.fb.group({
-      name:[""]
+      name:["",[Validators.required]]
     });
   }
   nameForm!:UntypedFormGroup;
@@ -125,6 +126,6 @@ export class CreateComponent implements OnInit,AfterViewInit {
     this.isDrawing=false;
   }
   createDrawing(){
-    this.canvas.nativeElement.toBlob(blob=>this.imageService.sendImage(blob!,this.nameForm.value.name).subscribe());
+    this.canvas.nativeElement.toBlob(blob=>this.imageService.sendImage(blob!,this.nameForm.value.name).subscribe(()=>this.router.navigate(["/"])));
   }
 }
