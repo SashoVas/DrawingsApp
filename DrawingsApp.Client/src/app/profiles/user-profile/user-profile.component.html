@@ -13,7 +13,7 @@
             <div class="text-center">
                 <div class="default_bg default_border rounded mt-3 d-inline-flex p-3 ">
                     <button (click)="deleteImages()" class="btn btn-secondary me-3">Delete</button>
-                    <button class="btn btn-secondary">Open</button>
+                    <button routerLink="/images/create"[queryParams]="{image:this.images.getSelectedImages()[0]}" class="btn btn-secondary">Open</button>
                 </div>
             </div>
         </ng-template>

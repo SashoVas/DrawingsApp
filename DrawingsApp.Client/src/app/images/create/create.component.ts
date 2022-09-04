@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { ImageService } from '../services/image.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { ImageService } from '../services/image.service';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit,AfterViewInit {
- constructor(private imageService:ImageService,private fb:UntypedFormBuilder,private router:Router){
+ constructor(private activatedRoute:ActivatedRoute,private imageService:ImageService,private fb:UntypedFormBuilder,private router:Router){
   }
   ngOnInit(): void {
     this.nameForm=this.fb.group({
@@ -17,12 +18,16 @@ export class CreateComponent implements OnInit,AfterViewInit {
     });
   }
   nameForm!:UntypedFormGroup;
+  @ViewChild('loadImageUrl') private loadImageUrl!:ElementRef;
   @ViewChild('drawingBoard')
   private canvas!: ElementRef<HTMLCanvasElement>;
   private isDrawing:boolean=false;
   private drawingBoard: CanvasRenderingContext2D|null=null;
   private isFilling:boolean=false; 
   private filling:boolean=false;
+  private paddingSize=15;
+  private nav_height=60;
+  private drawing_screen_size=700;
   colorR=255;
   colorG=1;
   colorB=1;
@@ -30,20 +35,29 @@ export class CreateComponent implements OnInit,AfterViewInit {
   
   ngAfterViewInit(): void {
     this.drawingBoard=this.canvas!.nativeElement.getContext('2d');
-    this.canvas.nativeElement.height=700;
-    this.canvas.nativeElement.width=700;
+    this.canvas.nativeElement.height=this.drawing_screen_size;
+    this.canvas.nativeElement.width=this.drawing_screen_size;
     this.clear();
+    this.activatedRoute.queryParamMap.subscribe(data=>{
+      var img1 = new Image();
+      let drawingBoard=this.drawingBoard;
+      img1.onload = function () {
+        drawingBoard?.drawImage(img1, 0, 0);
+      }
+      img1.src =environment.imageApi+'Images/'+data.get("image")+'.jpg';
+      console.log(environment.imageApi+'Images/'+data.get("image")+'.jpg');
+    });
   }
   startLine(event:MouseEvent){
     if (this.isFilling)
     {
       let sectionLength=window.innerWidth*0.25;
-      let centerGaps=sectionLength*2 -700;
+      let centerGaps=sectionLength*2 -this.drawing_screen_size;
       if(centerGaps<0)
       {
         centerGaps=0
       }
-      this.fillAlgorihm(event.clientX-(sectionLength+(centerGaps/2)),event.clientY-60-15-15);
+      this.fillAlgorihm(event.clientX-(sectionLength+(centerGaps/2)),event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
     }
     else{
       this.drawingBoard?.beginPath();
@@ -60,13 +74,13 @@ export class CreateComponent implements OnInit,AfterViewInit {
       this.drawingBoard!.lineCap="round";
       this.drawingBoard!.strokeStyle="rgba("+this.colorR.toString()+","+this.colorG.toString()+","+this.colorB.toString()+",255)";
       let sectionLength=window.innerWidth*0.25;
-      let centerGaps=sectionLength*2 -700;
+      let centerGaps=sectionLength*2 -this.drawing_screen_size;
       if(centerGaps<0)
       {
         centerGaps=0
       }
       //mousePos-(leftSection+(paddingBoard/2)),mousePos-nav-paddingBoard-paddingAll  
-      this.drawingBoard?.lineTo(event.clientX-(sectionLength+(centerGaps/2)),event.clientY-60-15-15);
+      this.drawingBoard?.lineTo(event.clientX-(sectionLength+(centerGaps/2)),event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
 
       this.drawingBoard?.stroke();
     }
@@ -127,5 +141,14 @@ export class CreateComponent implements OnInit,AfterViewInit {
   }
   createDrawing(){
     this.canvas.nativeElement.toBlob(blob=>this.imageService.sendImage(blob!,this.nameForm.value.name).subscribe(()=>this.router.navigate(["/"])));
+  }
+  loadImage(){
+    let drawing_screen_size=this.drawing_screen_size;
+    let img1 = new Image();
+    let drawingBoard=this.drawingBoard;
+    img1.onload = function () {
+      drawingBoard?.drawImage(img1,0,0,drawing_screen_size,drawing_screen_size);
+    }
+    img1.src =this.loadImageUrl.nativeElement.value;
   }
 }
