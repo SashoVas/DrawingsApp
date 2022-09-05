@@ -44,6 +44,7 @@ namespace DrawingsApp.Infrastructure
                  .AllowAnyMethod()
                  .AllowAnyHeader()
                  .AllowCredentials());
+
             });
         }
         public static void SettupDb<T>(this WebApplication app,Type seederType=null) where T : DbContext

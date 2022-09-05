@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { ImageService } from '../services/image.service';
 
@@ -10,7 +11,8 @@ import { ImageService } from '../services/image.service';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit,AfterViewInit {
- constructor(private activatedRoute:ActivatedRoute,private imageService:ImageService,private fb:UntypedFormBuilder,private router:Router){
+  imgSrc:string="";
+ constructor(private activatedRoute:ActivatedRoute,private imageService:ImageService,private fb:UntypedFormBuilder,private router:Router,private toastr:ToastrService){
   }
   ngOnInit(): void {
     this.nameForm=this.fb.group({
@@ -19,6 +21,7 @@ export class CreateComponent implements OnInit,AfterViewInit {
   }
   nameForm!:UntypedFormGroup;
   @ViewChild('loadImageUrl') private loadImageUrl!:ElementRef;
+  @ViewChild('imageToLoad') private imageToLoad!:ElementRef;
   @ViewChild('drawingBoard')
   private canvas!: ElementRef<HTMLCanvasElement>;
   private isDrawing:boolean=false;
@@ -42,10 +45,10 @@ export class CreateComponent implements OnInit,AfterViewInit {
       var img1 = new Image();
       let drawingBoard=this.drawingBoard;
       img1.onload = function () {
-        drawingBoard?.drawImage(img1, 0, 0);
+        drawingBoard?.drawImage(img1, 0, 0,700,700);
       }
+      img1.crossOrigin ='Anonymous';    
       img1.src =environment.imageApi+'Images/'+data.get("image")+'.jpg';
-      console.log(environment.imageApi+'Images/'+data.get("image")+'.jpg');
     });
   }
   startLine(event:MouseEvent){
@@ -140,7 +143,10 @@ export class CreateComponent implements OnInit,AfterViewInit {
     this.isDrawing=false;
   }
   createDrawing(){
-    this.canvas.nativeElement.toBlob(blob=>this.imageService.sendImage(blob!,this.nameForm.value.name).subscribe(()=>this.router.navigate(["/"])));
+    this.canvas.nativeElement.toBlob(blob=>this.imageService.sendImage(blob!,this.nameForm.value.name).subscribe());
+    this.toastr.success("Image Created");
+      console.log("Image created");
+      this.router.navigate(["/"]);
   }
   loadImage(){
     let drawing_screen_size=this.drawing_screen_size;
@@ -149,6 +155,7 @@ export class CreateComponent implements OnInit,AfterViewInit {
     img1.onload = function () {
       drawingBoard?.drawImage(img1,0,0,drawing_screen_size,drawing_screen_size);
     }
+    img1.crossOrigin ='Anonymous';
     img1.src =this.loadImageUrl.nativeElement.value;
   }
 }

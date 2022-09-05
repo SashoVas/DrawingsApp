@@ -5,8 +5,6 @@ import { ImagesRoutingModule } from './images-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserImagesComponent } from './user-images/user-images.component';
 
-
-
 @NgModule({
   declarations: [
     CreateComponent,
@@ -16,7 +14,7 @@ import { UserImagesComponent } from './user-images/user-images.component';
     CommonModule,
     ImagesRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports:[UserImagesComponent]
 })

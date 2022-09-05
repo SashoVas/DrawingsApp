@@ -14,7 +14,7 @@ export class ImageService {
     let payload=new FormData();
     payload.append("image",blob!);
     payload.append("name",name);
-    return this.http.post(environment.imageApi+"Image",payload);
+    return this.http.post(environment.imageApi+"Image",payload,{responseType: 'text'});
   }
   getImages(userId:string|null,page:number):Observable<any>{
     return this.http.get<Array<IImage>>(environment.imageApi+"Image/"+(userId==null?"":userId),{params:{page}});

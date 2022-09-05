@@ -17,6 +17,7 @@ namespace DrawingsApp.Images.Infrastructure
                         MaxAge = TimeSpan.FromDays(1)
                     };
                     headers.Expires = new DateTimeOffset(DateTime.UtcNow.AddDays(1));
+                    preperation.Context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
                 }
             });
         }
