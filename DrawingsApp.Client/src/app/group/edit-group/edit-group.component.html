@@ -25,9 +25,7 @@
                     <p class="mb-0"><b>Tags</b></p>
                     <hr class="mt-0">
                     <div class="d-flex">
-                        <button *ngFor="let tagName of group.tags;let i =index;" type="none"  type="button" class="btn btn-outline-primary text-light mx-2 tag">{{tagName}}</button>
-                        <button *ngFor="let tag of selectedTags;let i =index;" type="none" class="btn btn-outline-danger text-light mx-2 tag" type="button" (click)="selectTag(tag)"  >{{tag.tagName}}</button>
-                        
+                        <button *ngFor="let tag of selectedTags;let i =index;" type="none" class="btn btn-outline-danger text-light mx-2 tag" type="button" (click)="selectTag(tag)"  >{{tag.tagName}}</button>                        
                         <button class="btn btn-outline-secondary mx-2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             +
                         </button>
@@ -49,4 +47,7 @@
         </div>
         <div class="col-lg-3"></div>
     </div>
+</div>
+<div class="modal fade" id="CreateTagModal" tabindex="-1" aria-labelledby="#CreateTagModal" aria-hidden="true">
+    <app-create-tag></app-create-tag>
 </div>

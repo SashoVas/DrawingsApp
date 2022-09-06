@@ -33,8 +33,18 @@ export class EditGroupComponent implements OnInit {
     this.groupType=this.group.groupType;
     console.log(this.groupType);
     this.tagService.getTags().subscribe(data=>{
-      this.tags=data
-      this.tags=this.tags.filter(t=>!this.group.tags.includes(t.tagName));
+      this.tags=data;
+      //this.tags=this.tags.filter(t=>!this.group.tags.includes(t));
+      
+      this.selectedTags=this.group.tags;
+      this.tags=this.tags.map(t=>{
+        if(!this.group.tags.map(t=>t.tagId).includes(t.tagId)){
+          return t;
+        }
+        t.isSelected=true
+        return t;
+      })
+      console.log(this.tags);
     });
     
   }

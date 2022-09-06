@@ -3,6 +3,7 @@ using DrawingsApp.Groups.Data;
 using DrawingsApp.Groups.Data.Models;
 using DrawingsApp.Groups.Models.InputModels.Group;
 using DrawingsApp.Groups.Models.OutputModels.Group;
+using DrawingsApp.Groups.Models.OutputModels.Tag;
 using DrawingsApp.Groups.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 
@@ -115,7 +116,11 @@ namespace DrawingsApp.Groups.Services
                     Users=g.UserGrops.Count(ug=>ug.Role==Role.User),
                     GroupType=g.GroupType,
                     Admins= g.UserGrops.Count(ug => ug.Role == Role.Admin),
-                    Tags = g.GroupTags.Select(gt => gt.Tag.TagName).ToList(),
+                    Tags = g.GroupTags.Select(gt => new TagOutputModel 
+                    {
+                        TagId=gt.Tag.Id,
+                        TagName=gt.Tag.TagName
+                    }),
                     Notifications=g.UserGrops
                         .Where(ug => ug.UserId == userId && ug.GroupId == g.Id)
                         .Select(ug => ug.Notifications)
@@ -149,24 +154,13 @@ namespace DrawingsApp.Groups.Services
                             IsJoined = g.UserGrops.Any(ug => ug.UserId == userId && ug.GroupId == g.Id)
                         }).ToListAsync();
         }
-        private bool ValidateTags(Group group, List<int> tags)
-        {
-            foreach (var tagId in tags)
-            {
-                if (group.GroupTags.Any(gt => gt.TagId == tagId))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
         public async Task<bool> UpdateGroup(int groupId, string title, string moreInfo,string imgUrl, GroupType groupType, List<int> tags)
         {
             var group = await context.Groups
                 .Include(g=>g.GroupTags)
                 .Where(g => g.Id == groupId)
                 .FirstOrDefaultAsync();
-            if (group is null || group.GroupTags.Count()+tags.Count()> MaxTagsPerGroup)
+            if (group is null ||tags.Count()> MaxTagsPerGroup)
             {
                 return false;
             }
@@ -174,14 +168,11 @@ namespace DrawingsApp.Groups.Services
             group.GroupType = groupType;
             group.MoreInfo = moreInfo;
             group.ImgUrl = imgUrl;
-            if (!ValidateTags(group, tags))
+            context.GroupTag.RemoveRange(group.GroupTags);
+            await context.AddRangeAsync(tags.Select(t=>new GroupTag
             {
-                return false;
-            }
-            await context.GroupTag.AddRangeAsync(tags.Select(t => new GroupTag
-            {
-                GroupId = groupId,
-                TagId = t
+                TagId=t,
+                GroupId=groupId
             }));
             context.Update(group);
             await context.SaveChangesAsync();

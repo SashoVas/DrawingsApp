@@ -1,10 +1,12 @@
+import { ITag } from "./ITag";
+
 export interface IGroup{
     id:number,
     title:string,
     moreInfo:string,
     imgUrl:string,
     groupType:number,
-    tags:Array<string>,
+    tags:Array<ITag>,
     users:number,
     admins:number,
     role:number,

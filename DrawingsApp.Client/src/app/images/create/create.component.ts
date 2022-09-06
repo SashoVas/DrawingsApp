@@ -21,7 +21,6 @@ export class CreateComponent implements OnInit,AfterViewInit {
   }
   nameForm!:UntypedFormGroup;
   @ViewChild('loadImageUrl') private loadImageUrl!:ElementRef;
-  @ViewChild('imageToLoad') private imageToLoad!:ElementRef;
   @ViewChild('drawingBoard')
   private canvas!: ElementRef<HTMLCanvasElement>;
   private isDrawing:boolean=false;
@@ -54,7 +53,7 @@ export class CreateComponent implements OnInit,AfterViewInit {
   startLine(event:MouseEvent){
     if (this.isFilling)
     {
-      let sectionLength=window.innerWidth*0.25;
+      let sectionLength=window.innerWidth>1400? window.innerWidth*0.25:((window.innerWidth-this.drawing_screen_size)/2);
       let centerGaps=sectionLength*2 -this.drawing_screen_size;
       if(centerGaps<0)
       {
@@ -76,15 +75,19 @@ export class CreateComponent implements OnInit,AfterViewInit {
       this.drawingBoard!.lineWidth=this.lineWidth;
       this.drawingBoard!.lineCap="round";
       this.drawingBoard!.strokeStyle="rgba("+this.colorR.toString()+","+this.colorG.toString()+","+this.colorB.toString()+",255)";
-      let sectionLength=window.innerWidth*0.25;
+      let sectionLength=window.innerWidth>1400? window.innerWidth*0.25:((window.innerWidth-this.drawing_screen_size)/2);
       let centerGaps=sectionLength*2 -this.drawing_screen_size;
       if(centerGaps<0)
       {
         centerGaps=0
       }
       //mousePos-(leftSection+(paddingBoard/2)),mousePos-nav-paddingBoard-paddingAll  
-      this.drawingBoard?.lineTo(event.clientX-(sectionLength+(centerGaps/2)),event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
-
+      if(window.innerWidth>1400){
+        this.drawingBoard?.lineTo(event.clientX-(sectionLength+(centerGaps/2)),event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
+      }
+      else{
+        this.drawingBoard?.lineTo(event.clientX-sectionLength+9,event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
+      }
       this.drawingBoard?.stroke();
     }
   }

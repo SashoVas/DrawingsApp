@@ -16,14 +16,16 @@
                 <p class="bottom-left images-count">1/{{post.imgUrls.length}}</p>
             </div> 
         </div>
-        <div routerLink="/post/{{post.id}}" class="d-flex text-secondary bottom">
-            <div class="px-3 py-2 aditional" >
+        <div class="d-flex text-secondary bottom">
+            <div routerLink="/post/{{post.id}}" class="px-3 py-2 aditional" >
                 <p class="mb-0"> <i class="fa fa-comment"></i>Comments</p>
             </div>
-            <div class="px-3 py-2 aditional">
+            <div routerLink="/post/{{post.id}}" class="px-3 py-2 aditional">
                 <p class="mb-0"> <i class="fa fa-mail-reply"></i>Share</p>
             </div>
-            
+            <div routerLink="/images/create"[queryParams]="{image:post.imgUrls[0]}" class="px-3 py-2 aditional pointer">
+                <p class="mb-0"> <i class="fa-solid fa-pen"></i>Open in editor</p>
+            </div>
         </div>
     </div>
 </div>

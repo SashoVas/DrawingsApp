@@ -1,5 +1,6 @@
 ﻿using DrawingsApp.Groups.Data.Models;
 using DrawingsApp.Data.Common;
+using DrawingsApp.Groups.Models.OutputModels.Tag;
 
 namespace DrawingsApp.Groups.Models.OutputModels.Group
 {
@@ -12,7 +13,7 @@ namespace DrawingsApp.Groups.Models.OutputModels.Group
         public int Users { get; set; }
         public int Admins { get; set; }
         public GroupType GroupType { get; set; }
-        public List<string> Tags { get; set; }
+        public IEnumerable<TagOutputModel> Tags { get; set; }
         public Role Role { get; set; }
         public bool Notifications { get; set; }
     }
