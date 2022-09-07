@@ -32,8 +32,8 @@ namespace DrawingsApp.Images.Services
         private async Task SaveOnFileSystem( IFormFile inputImage,string folder,string imageId)
         {
             using var imageResult = await Image.LoadAsync(inputImage.OpenReadStream());
-            imageResult.Mutate(i => i
-                .Resize(new Size(ImgWidth, ImgHeight)));
+            //imageResult.Mutate(i => i
+            //    .Resize(new Size(ImgWidth, ImgHeight)));
             imageResult.Metadata.ExifProfile = null;
             var path = "wwwroot/Images/" + folder + "/";
             var storagePath = Path.Combine(Directory.GetCurrentDirectory(), path).Replace("/", "\\");

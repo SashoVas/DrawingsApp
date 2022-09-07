@@ -22,7 +22,15 @@ namespace DrawingsApp.Groups.Controllers
         [HttpGet("Full/{id?}")]
         public async Task<ActionResult> GetUserProfile(string? id)
         {
-            var result = await profileService.GetFullProfile(id ?? GetUserId());
+            ProfileOutputModel result;
+            if (id is null)
+            {
+                result = await profileService.GetCallerFullProfile(GetUserId());
+            }
+            else
+            {
+                result=await profileService.GetFullProfile(id ,GetUserId());
+            }
             if (result is null && id is null)
             {
                 await this.userService.CreateUser(GetUserId(),User.Identity.Name);

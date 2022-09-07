@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class=" right-sidebar">
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column w-50">
             <div class="align-self-center default_bg default_border rounded-border p-3 d-flex flex-column">
                 <h4 class="text-center">Tools</h4>
                 <p class="mb-0">Red</p>
@@ -40,6 +40,13 @@
                 <button class="btn btn-primary align-self-center my-1" (click)="clear()"> <i class="fa-regular fa-file"></i>Clear</button>
                 <button class="btn btn-primary align-self-center my-1" (click)="loadImage()">LoadImage</button>
                 <input #loadImageUrl type="text" placeholder="ImageUrl">
+                <button class="btn btn-primary align-self-center my-1" (click)="changeDrawingImageDimensions()">Change dimensions</button>
+                <div>
+                    <input class="input-short" #width type="number" placeholder="Width">
+                    <input class="input-short" #height type="number" placeholder="Height">
+                </div>
+                
+                
             </div>
             
           </div>

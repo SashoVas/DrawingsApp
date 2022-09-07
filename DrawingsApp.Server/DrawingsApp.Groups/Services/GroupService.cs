@@ -44,10 +44,14 @@ namespace DrawingsApp.Groups.Services
             return true;
         }
 
-        public async Task<IEnumerable<GroupListingOutputModel>> Search(string name, List<int>? tags, string? userId, GroupType? groupType, SortType orderType,string callerId,int page)
+        public async Task<IEnumerable<GroupListingOutputModel>> Search(string? name, List<int>? tags, string? userId, GroupType? groupType, SortType orderType,string callerId,int page)
         {
-            var query = context.Groups
-                           .Where(g => g.Title.ToLower().StartsWith(name.ToLower()));
+            var query = context.Groups.AsQueryable();
+                           
+            if (name is not null)
+            {
+                query=query.Where(g =>g.Title.ToLower().StartsWith(name.ToLower()));
+            }
             if (!(userId is null))
             {
                 query = query.Where(g => g.UserGrops.Any(ug => ug.UserId == userId));

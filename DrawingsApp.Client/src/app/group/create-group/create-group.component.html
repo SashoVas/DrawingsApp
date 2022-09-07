@@ -15,11 +15,11 @@
                     <textarea formControlName="moreInfo" class="default_bg text-light" name="" id="" cols="30" rows="7" placeholder="More Info"></textarea>
                     <p class="mb-0"><b>Group Type</b></p>
                     <div>
-                        <input type="radio" id="public" name="type" (click)="groupType=1" value="Public">
+                        <input type="radio" id="public" name="type" (click)="groupType=0" value="Public">
                         <label for="public">Public</label><br>
-                        <input type="radio" id="restricted" name="type"(click)="groupType=2" value="Restricted">
+                        <input type="radio" id="restricted" name="type"(click)="groupType=1" value="Restricted">
                         <label for="restricted">Restricted</label><br>
-                        <input type="radio" id="private" name="type"(click)="groupType=3" value="Private">
+                        <input type="radio" id="private" name="type"(click)="groupType=2" value="Private">
                         <label for="private">Private</label>
                     </div>
                     <p class="mb-0"><b>Tags</b></p>

@@ -34,7 +34,7 @@ namespace DrawingsApp.Groups.Controllers
         [HttpGet]
         public async Task<ActionResult> Search([FromQuery]SearchGroupInputModel input)
             =>Ok(await groupService.Search(
-                input.Name??"",
+                input.Name,
                 input.Tags,
                 input.UserId=="mine"?GetUserId():input.UserId,
                 input.GroupType,

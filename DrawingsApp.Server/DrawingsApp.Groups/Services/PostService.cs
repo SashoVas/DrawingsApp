@@ -1,4 +1,5 @@
-﻿using DrawingsApp.Groups.Data;
+﻿using DrawingsApp.Data.Common;
+using DrawingsApp.Groups.Data;
 using DrawingsApp.Groups.Data.Models;
 using DrawingsApp.Groups.Models.OutputModels.Post;
 using DrawingsApp.Groups.Services.Contracts;
@@ -66,7 +67,7 @@ namespace DrawingsApp.Groups.Services
         public Task<List<PostOutputModel>> GetPostsByUser(string userId) 
             => context.Posts
                 .Where(p => p.Group.UserGrops
-                    .Any(gu => gu.UserId == userId && (int)gu.Role>1))
+                    .Any(gu => gu.UserId == userId && gu.Role>=Role.User))
                 .OrderByDescending(p => p.PostedOn)
                 .Take(EntitiesPerSmallPage)
                 .Select(p => new PostOutputModel

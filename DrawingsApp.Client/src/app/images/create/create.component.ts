@@ -21,6 +21,8 @@ export class CreateComponent implements OnInit,AfterViewInit {
   }
   nameForm!:UntypedFormGroup;
   @ViewChild('loadImageUrl') private loadImageUrl!:ElementRef;
+  @ViewChild('width') private widthInput!:ElementRef;
+  @ViewChild('height') private heightInput!:ElementRef;
   @ViewChild('drawingBoard')
   private canvas!: ElementRef<HTMLCanvasElement>;
   private isDrawing:boolean=false;
@@ -29,7 +31,8 @@ export class CreateComponent implements OnInit,AfterViewInit {
   private filling:boolean=false;
   private paddingSize=15;
   private nav_height=60;
-  private drawing_screen_size=700;
+  private drawing_screen_width=700;
+  private drawing_screen_height=700;
   colorR=255;
   colorG=1;
   colorB=1;
@@ -37,24 +40,45 @@ export class CreateComponent implements OnInit,AfterViewInit {
   
   ngAfterViewInit(): void {
     this.drawingBoard=this.canvas!.nativeElement.getContext('2d');
-    this.canvas.nativeElement.height=this.drawing_screen_size;
-    this.canvas.nativeElement.width=this.drawing_screen_size;
+    this.canvas.nativeElement.height=this.drawing_screen_height;
+    this.canvas.nativeElement.width=this.drawing_screen_width;
+    let canvas=this.canvas;
     this.clear();
+    let drawing_screen_height=this.drawing_screen_height;
+    let drawing_screen_width=this.drawing_screen_width;
     this.activatedRoute.queryParamMap.subscribe(data=>{
       var img1 = new Image();
       let drawingBoard=this.drawingBoard;
       img1.onload = function () {
-        drawingBoard?.drawImage(img1, 0, 0,700,700);
+        if(img1.width>700 || img1.height>700){
+          drawingBoard?.drawImage(img1, 0, 0,700,700);
+        }
+        else{
+          drawing_screen_width=img1.width;
+          drawing_screen_height=img1.height;
+          canvas.nativeElement.height=drawing_screen_height;
+          canvas.nativeElement.width=drawing_screen_width;
+          drawingBoard?.drawImage(img1, 0, 0,drawing_screen_width,drawing_screen_height);
+        }
       }
       img1.crossOrigin ='Anonymous';    
       img1.src =environment.imageApi+'Images/'+data.get("image")+'.jpg';
+      this.drawing_screen_height=drawing_screen_height;
+      this.drawing_screen_width=drawing_screen_width;
     });
+  }
+  changeDrawingImageDimensions(){
+    this.drawing_screen_width=this.widthInput.nativeElement.value;
+    this.drawing_screen_height=this.heightInput.nativeElement.value;
+    this.canvas.nativeElement.height=this.drawing_screen_height;
+    this.canvas.nativeElement.width=this.drawing_screen_width;
+    this.clear();
   }
   startLine(event:MouseEvent){
     if (this.isFilling)
     {
-      let sectionLength=window.innerWidth>1400? window.innerWidth*0.25:((window.innerWidth-this.drawing_screen_size)/2);
-      let centerGaps=sectionLength*2 -this.drawing_screen_size;
+      let sectionLength=window.innerWidth>1400? window.innerWidth*0.25:((window.innerWidth-this.drawing_screen_width)/2);
+      let centerGaps=sectionLength*2 -this.drawing_screen_width;
       if(centerGaps<0)
       {
         centerGaps=0
@@ -75,8 +99,8 @@ export class CreateComponent implements OnInit,AfterViewInit {
       this.drawingBoard!.lineWidth=this.lineWidth;
       this.drawingBoard!.lineCap="round";
       this.drawingBoard!.strokeStyle="rgba("+this.colorR.toString()+","+this.colorG.toString()+","+this.colorB.toString()+",255)";
-      let sectionLength=window.innerWidth>1400? window.innerWidth*0.25:((window.innerWidth-this.drawing_screen_size)/2);
-      let centerGaps=sectionLength*2 -this.drawing_screen_size;
+      let sectionLength=window.innerWidth>1400? window.innerWidth*0.25:((window.innerWidth-this.drawing_screen_width)/2);
+      let centerGaps=sectionLength*2 -this.drawing_screen_width;
       if(centerGaps<0)
       {
         centerGaps=0
@@ -152,11 +176,12 @@ export class CreateComponent implements OnInit,AfterViewInit {
       this.router.navigate(["/"]);
   }
   loadImage(){
-    let drawing_screen_size=this.drawing_screen_size;
+    let drawing_screen_width=this.drawing_screen_width;
+    let drawing_screen_height=this.drawing_screen_height;
     let img1 = new Image();
     let drawingBoard=this.drawingBoard;
     img1.onload = function () {
-      drawingBoard?.drawImage(img1,0,0,drawing_screen_size,drawing_screen_size);
+      drawingBoard?.drawImage(img1,0,0,drawing_screen_width,drawing_screen_height);
     }
     img1.crossOrigin ='Anonymous';
     img1.src =this.loadImageUrl.nativeElement.value;
