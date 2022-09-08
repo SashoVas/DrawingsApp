@@ -29,6 +29,17 @@ input{
 .input-short{
     width:50%;
 }
+.choose-color{
+    max-width: 200px;
+    max-height: 300px;
+    display: flex;
+    flex-flow: row wrap;  
+}
+.color-square{
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+}
 @media(max-width:1400px){
     .all{
         display:inline-flex;

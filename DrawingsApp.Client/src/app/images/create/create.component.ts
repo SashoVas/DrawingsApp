@@ -19,6 +19,12 @@ export class CreateComponent implements OnInit,AfterViewInit {
       name:["",[Validators.required]]
     });
   }
+  primaryColors:Array<Array<number>>=[
+    [255,0,0,255],[0,255,0,255],[0,0,255,255],[255,255,0,255],[255,0,255,255],[0,255,255,255],
+    [255,122,0,255],[255,0,122,255],[122,255,0,255],[0,255,122,255],[122,0,255,255],[0,122,255,255],
+    [122,122,122,255],[50,50,50,255],[200,200,200,255],
+    [255,122,122,255],[122,255,122,255],[122,122,255,255],[255,255,255,255],[0,0,0,255]
+  ];
   nameForm!:UntypedFormGroup;
   @ViewChild('loadImageUrl') private loadImageUrl!:ElementRef;
   @ViewChild('width') private widthInput!:ElementRef;
@@ -67,12 +73,32 @@ export class CreateComponent implements OnInit,AfterViewInit {
       this.drawing_screen_width=drawing_screen_width;
     });
   }
+  setColor(color:Array<number>){
+    this.colorR=color[0];
+    this.colorG=color[1];
+    this.colorB=color[2];
+  }
   changeDrawingImageDimensions(){
     this.drawing_screen_width=this.widthInput.nativeElement.value;
     this.drawing_screen_height=this.heightInput.nativeElement.value;
-    this.canvas.nativeElement.height=this.drawing_screen_height;
-    this.canvas.nativeElement.width=this.drawing_screen_width;
-    this.clear();
+    let drawing_screen_width=this.widthInput.nativeElement.value;
+    let drawing_screen_height=this.heightInput.nativeElement.value;
+    let canvas=this.canvas;
+    let img=new Image();
+    let drawingBoard=this.drawingBoard;
+    img.onload = function () {
+      canvas.nativeElement.height=drawing_screen_height;
+      canvas.nativeElement.width=drawing_screen_width;
+      drawingBoard!.fillStyle = "white";
+      drawingBoard?.fillRect(0, 0,canvas.nativeElement.width, canvas.nativeElement.height);
+      if(drawing_screen_width<img.width || drawing_screen_height<img.height){
+        drawingBoard?.drawImage(img,0,0,drawing_screen_width,drawing_screen_height);
+      }    
+      else{
+        drawingBoard?.drawImage(img,0,0);
+      }
+    }
+    img.src=this.canvas.nativeElement.toDataURL();
   }
   startLine(event:MouseEvent){
     if (this.isFilling)
@@ -83,7 +109,7 @@ export class CreateComponent implements OnInit,AfterViewInit {
       {
         centerGaps=0
       }
-      this.fillAlgorihm(event.clientX-(sectionLength+(centerGaps/2)),event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
+      this.fillAlgorihm(Math.round(event.clientX-(sectionLength+(centerGaps/2))),Math.round(event.clientY-this.nav_height-this.paddingSize-this.paddingSize));
     }
     else{
       this.drawingBoard?.beginPath();
@@ -119,10 +145,8 @@ export class CreateComponent implements OnInit,AfterViewInit {
     
     this.filling=true;
     let stack=[[x,y]]
-    let width=this.canvas.nativeElement.width;
-    let height=this.canvas.nativeElement.height;
-    let image=this.drawingBoard?.getImageData(0,0,width,height);
-    let startPos=(y*width+x)*4;
+    let image=this.drawingBoard?.getImageData(0,0,this.drawing_screen_width,this.drawing_screen_height);
+    let startPos=(y*this.drawing_screen_width+x)*4;
     if(image?.data[startPos]===this.colorR && image?.data[startPos+1]===this.colorG && image?.data[startPos+2]==this.colorB){
       this.filling=false;
       return;
@@ -131,14 +155,14 @@ export class CreateComponent implements OnInit,AfterViewInit {
     while(stack.length>0)
     {
       let posArr=stack.pop();
-      let pos=(width*posArr![1]+posArr![0])*4
+      let pos=(this.drawing_screen_width*posArr![1]+posArr![0])*4
       if(image?.data[pos]===colors[0] &&image?.data[pos+1]===colors[1] &&image?.data[pos+2]===colors[2] &&image?.data[pos+3]===colors[3])
       {
-        image!.data[pos]=this.colorR;
-        image!.data[pos+1]=this.colorG;
-        image!.data[pos+2]=this.colorB;
+        image!.data[pos]=this.colorR;//r
+        image!.data[pos+1]=this.colorG;//g
+        image!.data[pos+2]=this.colorB;//b
         image!.data[pos+3]=255;
-        if(posArr![0]<width)
+        if(posArr![0]<this.drawing_screen_width)
         {
           stack.push([posArr![0]+1,posArr![1]])
         }
@@ -146,7 +170,7 @@ export class CreateComponent implements OnInit,AfterViewInit {
         {
           stack.push([posArr![0]-1,posArr![1]])
         }
-        if(posArr![1]<height)
+        if(posArr![1]<this.drawing_screen_height)
         {
           stack.push([posArr![0],posArr![1]+1])
         }

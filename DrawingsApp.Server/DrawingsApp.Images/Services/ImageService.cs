@@ -3,7 +3,6 @@ using DrawingsApp.Images.Data.Models;
 using DrawingsApp.Images.Models.Output;
 using DrawingsApp.Images.Services.Contracts;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
 
 namespace DrawingsApp.Images.Services
 {

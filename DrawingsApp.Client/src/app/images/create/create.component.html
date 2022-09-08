@@ -17,7 +17,7 @@
                     </form>
                 </div>
                 <button [disabled]="!nameForm.valid" class="btn btn-secondary mx-2" (click)="createDrawing()">Create</button>
-                <button class="btn btn-secondary mx-2" routerLink="/">Exit</button>                
+                <button class="btn btn-secondary mx-2" routerLink="/">Exit</button>
             </div>
         </div>
     </div>
@@ -31,6 +31,10 @@
                 <input type="range" min="1" max="255" [(ngModel)]="colorG">
                 <p class="mb-0">Blue</p>
                 <input type="range" min="1" max="255" [(ngModel)]="colorB">
+                <label >Colors</label>
+                <div class="choose-color">
+                    <div *ngFor="let color of primaryColors;let i =index" (click)="setColor(color)" [ngStyle]="{ 'background-color': 'rgba('+color[0]+','+color[1]+','+color[2]+','+255+')'}" class="color-square mx-2 my-1"></div>
+                </div>                
                 <p class="mb-0">Line Width</p>
                 <input class="mb-3" type="number" min="1" max="25" [(ngModel)]="lineWidth">
                 <div class="color d-flex justify-content-center align-self-center" [ngStyle]="{'background-color':'rgba( '+colorR+','+colorG+','+colorB+',255)'}" >
