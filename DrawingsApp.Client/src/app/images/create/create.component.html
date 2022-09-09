@@ -1,9 +1,9 @@
+
 <div class="all container-fluid m-0 p-0 pt-3">
-    <div class="left-sidebar">
-    </div>
+    <div class="left-sidebar"></div>
     <div class="p-0 main text-center" >
         <div class="d-flex justify-content-center">
-            <div class="p-3 default_bg default_border rounded-border">
+            <div [style.cursor]="isFilling?'crosshair':'default'" class="p-3 default_bg default_border rounded-border">
                 <canvas #drawingBoard (mousedown)="startLine($event)"(mouseup)="finishLine($event)" (mousemove)="draw($event)"></canvas>
             </div>
         </div>
@@ -21,10 +21,10 @@
             </div>
         </div>
     </div>
-    <div class=" right-sidebar">
+    <div class="right-sidebar d-flex justify-content-center">
         <div class="d-flex flex-column w-50">
             <div class="align-self-center default_bg default_border rounded-border p-3 d-flex flex-column">
-                <h4 class="text-center">Tools</h4>
+                <h4 class="text-center">Tools <i class="fa-solid fa-pen"></i></h4>
                 <p class="mb-0">Red</p>
                 <input type="range" min="1" max="255"[(ngModel)]="colorR">
                 <p class="mb-0">Green</p>
@@ -40,19 +40,22 @@
                 <div class="color d-flex justify-content-center align-self-center" [ngStyle]="{'background-color':'rgba( '+colorR+','+colorG+','+colorB+',255)'}" >
                 <div class="bg-black rounded-circle align-self-center" [ngStyle]="{'width':lineWidth+'px','height':lineWidth+'px'}" ></div>
                 </div>
-                <button class="btn btn-primary align-self-center my-1" (click)="fill()"><i class="fa-solid fa-fill-drip"></i>Fill</button>
-                <button class="btn btn-primary align-self-center my-1" (click)="clear()"> <i class="fa-regular fa-file"></i>Clear</button>
-                <button class="btn btn-primary align-self-center my-1" (click)="loadImage()">LoadImage</button>
+                <button class="btn btn-primary align-self-center my-1" (click)="fill()"><i class="fa-solid fa-fill-drip"></i> Fill</button>
+                <button class="btn btn-primary align-self-center my-1" (click)="clear()"> <i class="fa-regular fa-file"></i> Clear</button>
+                <button class="btn btn-primary align-self-center my-1" (click)="loadImage()"><i class="fa-solid fa-upload"></i> LoadImage</button>
                 <input #loadImageUrl type="text" placeholder="ImageUrl">
-                <button class="btn btn-primary align-self-center my-1" (click)="changeDrawingImageDimensions()">Change dimensions</button>
+                <button class="btn btn-primary align-self-center my-1" (click)="changeDrawingImageDimensions()"><i class="fa-solid fa-expand"></i> Resize image</button>
                 <div>
-                    <input class="input-short" #width type="number" placeholder="Width">
-                    <input class="input-short" #height type="number" placeholder="Height">
+                    <input class="input-short" max="700" #width type="number" placeholder="Width">
+                    <input class="input-short" max="700" #height type="number" placeholder="Height">
                 </div>
-                
+                <div>
+                    <label class="mx-1">Keep Aspect ratio </label>
+                    <input #aspectRatio type="checkbox">
+                </div>                
                 
             </div>
             
           </div>
     </div>
-  </div>
+</div>

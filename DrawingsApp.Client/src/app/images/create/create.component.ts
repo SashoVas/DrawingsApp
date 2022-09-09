@@ -26,6 +26,7 @@ export class CreateComponent implements OnInit,AfterViewInit {
     [255,122,122,255],[122,255,122,255],[122,122,255,255],[255,255,255,255],[0,0,0,255]
   ];
   nameForm!:UntypedFormGroup;
+  @ViewChild('aspectRatio')private aspectRatio!:ElementRef;
   @ViewChild('loadImageUrl') private loadImageUrl!:ElementRef;
   @ViewChild('width') private widthInput!:ElementRef;
   @ViewChild('height') private heightInput!:ElementRef;
@@ -33,12 +34,12 @@ export class CreateComponent implements OnInit,AfterViewInit {
   private canvas!: ElementRef<HTMLCanvasElement>;
   private isDrawing:boolean=false;
   private drawingBoard: CanvasRenderingContext2D|null=null;
-  private isFilling:boolean=false; 
   private filling:boolean=false;
   private paddingSize=15;
   private nav_height=60;
   private drawing_screen_width=700;
   private drawing_screen_height=700;
+  isFilling:boolean=false; 
   colorR=255;
   colorG=1;
   colorB=1;
@@ -84,6 +85,7 @@ export class CreateComponent implements OnInit,AfterViewInit {
     let drawing_screen_width=this.widthInput.nativeElement.value;
     let drawing_screen_height=this.heightInput.nativeElement.value;
     let canvas=this.canvas;
+    let keepAspectRation=this.aspectRatio.nativeElement.checked;
     let img=new Image();
     let drawingBoard=this.drawingBoard;
     img.onload = function () {
@@ -91,7 +93,16 @@ export class CreateComponent implements OnInit,AfterViewInit {
       canvas.nativeElement.width=drawing_screen_width;
       drawingBoard!.fillStyle = "white";
       drawingBoard?.fillRect(0, 0,canvas.nativeElement.width, canvas.nativeElement.height);
-      if(drawing_screen_width<img.width || drawing_screen_height<img.height){
+      if(keepAspectRation){
+        let ratio=img.width/img.height;
+        if(ratio<1){
+          drawingBoard?.drawImage(img,0,0,drawing_screen_width,drawing_screen_width*ratio);
+        }
+        else{
+          drawingBoard?.drawImage(img,0,0,drawing_screen_height*ratio,drawing_screen_height);
+        }
+      }
+      else if(drawing_screen_width<img.width || drawing_screen_height<img.height){
         drawingBoard?.drawImage(img,0,0,drawing_screen_width,drawing_screen_height);
       }    
       else{
