@@ -43,3 +43,11 @@ img{
 .join{
     margin-left: 2%;
 }
+@media  (max-width: 750px) {
+    .sidebar{
+        display: none;
+    }
+    .main{
+        width:100%
+    }
+}

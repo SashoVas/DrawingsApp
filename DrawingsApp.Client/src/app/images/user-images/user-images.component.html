@@ -1,9 +1,9 @@
 <div class="countainer main mt-3 text-center default_bg">
     <div class="d-flex flex-wrap justify-content-center">
-        <div *ngFor="let img of data; index as i" class="m-2 text-center">
-            <img *ngIf="useSelect else noSelect" src="{{imagesUrl}}Images/{{img.imgUrl}}.jpg" data-bs-toggle="modal" class="{{img.isSelected?'selected':''}}" data-bs-target="#Modal" width="200" height="200" (click)="selectImage(i)">
+        <div *ngFor="let img of data; index as i" class="m-2 text-center align-self-center">
+            <img *ngIf="useSelect else noSelect" src="{{imagesUrl}}Images/{{img.imgUrl}}.thumbnail.jpg" data-bs-toggle="modal" class="{{img.isSelected?'selected':''}}" data-bs-target="#Modal" (click)="selectImage(i)">
             <ng-template #noSelect>
-                <img src="{{imagesUrl}}Images/{{img.imgUrl}}.jpg" class="{{img.isSelected?'selected':''}}"  width="200" height="200" (click)="selectImage(i)">
+                <img src="{{imagesUrl}}Images/{{img.imgUrl}}.thumbnail.jpg" class="{{img.isSelected?'selected':''}}" (click)="selectImage(i)">
             </ng-template>
             <p>{{img.name}}</p>
         </div>
@@ -15,7 +15,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content default_bg">
         <div class="modal-header">
-            <h5 class="modal-title" id="ModalLabel">Image Name</h5>
+            <h5 class="modal-title" id="ModalLabel">{{selectedImage?.name}}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">

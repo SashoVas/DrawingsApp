@@ -3,13 +3,13 @@ using DrawingsApp.Images.Data.Models;
 using DrawingsApp.Images.Models.Output;
 using DrawingsApp.Images.Services.Contracts;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 
 namespace DrawingsApp.Images.Services
 {
     public class ImageService : IImageService
     {
-        private const int ImgWidth = 700;
-        private const int ImgHeight = 700;
+        private const int ThumbnailSize = 200;
         private readonly MongoDbImagesRepository repo;
         public ImageService(MongoDbImagesRepository repo) 
             => this.repo = repo;
@@ -31,8 +31,6 @@ namespace DrawingsApp.Images.Services
         private async Task SaveOnFileSystem( IFormFile inputImage,string folder,string imageId)
         {
             using var imageResult = await Image.LoadAsync(inputImage.OpenReadStream());
-            //imageResult.Mutate(i => i
-            //    .Resize(new Size(ImgWidth, ImgHeight)));
             imageResult.Metadata.ExifProfile = null;
             var path = "wwwroot/Images/" + folder + "/";
             var storagePath = Path.Combine(Directory.GetCurrentDirectory(), path).Replace("/", "\\");
@@ -41,6 +39,19 @@ namespace DrawingsApp.Images.Services
                 Directory.CreateDirectory(storagePath);
             }
             await imageResult.SaveAsJpegAsync(storagePath+ imageId + ".jpg");
+            var ratio = imageResult.Width / imageResult.Height;
+            if (ratio<1)
+            {
+                imageResult.Mutate(i => i
+                    .Resize(new Size(ThumbnailSize * ratio, ThumbnailSize)));
+            }
+            else
+            {
+                imageResult.Mutate(i => i
+                    .Resize(new Size(ThumbnailSize, ThumbnailSize/ ratio)));
+            }
+            
+            await imageResult.SaveAsJpegAsync(storagePath + imageId +".thumbnail" +".jpg");
         }
         public async Task<IEnumerable<ImageOutputModel>> GetUserImages(string userId, int page)
             => (await repo.GetByUser(userId, page))
