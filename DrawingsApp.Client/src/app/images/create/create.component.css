@@ -9,6 +9,11 @@ canvas{
 .all{
     display:inline-flex;
 }
+.full-screen{
+    display:inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
 .left-sidebar{
     width: 25%;
 }

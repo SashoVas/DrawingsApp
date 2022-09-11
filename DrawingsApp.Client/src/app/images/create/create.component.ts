@@ -44,7 +44,7 @@ export class CreateComponent implements OnInit,AfterViewInit {
   colorG=1;
   colorB=1;
   lineWidth=10
-  
+  isFullScreen:boolean=false;
   ngAfterViewInit(): void {
     this.drawingBoard=this.canvas!.nativeElement.getContext('2d');
     this.canvas.nativeElement.height=this.drawing_screen_height;
@@ -84,6 +84,9 @@ export class CreateComponent implements OnInit,AfterViewInit {
     this.drawing_screen_height=this.heightInput.nativeElement.value;
     let drawing_screen_width=this.widthInput.nativeElement.value;
     let drawing_screen_height=this.heightInput.nativeElement.value;
+    if(this.widthInput.nativeElement.value>1000){
+      this.isFullScreen=true;
+    }
     let canvas=this.canvas;
     let keepAspectRation=this.aspectRatio.nativeElement.checked;
     let img=new Image();
@@ -143,11 +146,15 @@ export class CreateComponent implements OnInit,AfterViewInit {
         centerGaps=0
       }
       //mousePos-(leftSection+(paddingBoard/2)),mousePos-nav-paddingBoard-paddingAll  
-      if(window.innerWidth>1400){
-        this.drawingBoard?.lineTo(event.clientX-(sectionLength+(centerGaps/2)),event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
+      if(window.innerWidth>1400&&!this.isFullScreen){
+        //this.drawingBoard?.lineTo(event.clientX-(sectionLength+(centerGaps/2)),event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
+        sectionLength=window.innerWidth-this.drawing_screen_width;
+        this.drawingBoard?.lineTo(event.clientX-(sectionLength/2),event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
       }
       else{
-        this.drawingBoard?.lineTo(event.clientX-sectionLength+9,event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
+        //this.drawingBoard?.lineTo(event.clientX-sectionLength+9,event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
+        sectionLength=window.innerWidth-this.drawing_screen_width;
+        this.drawingBoard?.lineTo(event.clientX-(sectionLength/2)+9,event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
       }
       this.drawingBoard?.stroke();
     }
