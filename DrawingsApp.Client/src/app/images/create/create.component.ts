@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -79,6 +79,7 @@ export class CreateComponent implements OnInit,AfterViewInit {
     this.colorG=color[1];
     this.colorB=color[2];
   }
+
   changeDrawingImageDimensions(){
     this.drawing_screen_width=this.widthInput.nativeElement.value;
     this.drawing_screen_height=this.heightInput.nativeElement.value;
@@ -149,12 +150,12 @@ export class CreateComponent implements OnInit,AfterViewInit {
       if(window.innerWidth>1400&&!this.isFullScreen){
         //this.drawingBoard?.lineTo(event.clientX-(sectionLength+(centerGaps/2)),event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
         sectionLength=window.innerWidth-this.drawing_screen_width;
-        this.drawingBoard?.lineTo(event.clientX-(sectionLength/2),event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
+        this.drawingBoard?.lineTo(event.clientX-(sectionLength/2)+9,event.clientY-this.nav_height-this.paddingSize-this.paddingSize+window.scrollY);
       }
       else{
         //this.drawingBoard?.lineTo(event.clientX-sectionLength+9,event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
         sectionLength=window.innerWidth-this.drawing_screen_width;
-        this.drawingBoard?.lineTo(event.clientX-(sectionLength/2)+9,event.clientY-this.nav_height-this.paddingSize-this.paddingSize);
+        this.drawingBoard?.lineTo(event.clientX-(sectionLength/2)+9,event.clientY-this.nav_height-this.paddingSize-this.paddingSize+window.scrollY);
       }
       this.drawingBoard?.stroke();
     }
